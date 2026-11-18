@@ -1,0 +1,106 @@
+.ore-seamless-btn {
+	--ore-px: 2px;
+	--sb-color: #1e1e20;
+	--sb-hover: rgba(0, 0, 0, 0.3);
+
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: calc(14 * var(--ore-px));
+	min-height: calc(14 * var(--ore-px));
+	padding: var(--ore-px);
+	margin: 0;
+	border: 0;
+	background: transparent;
+	box-sizing: border-box;
+	cursor: pointer;
+	outline: none;
+	position: relative;
+	color: var(--sb-color);
+	font-family: "Minecraft Seven", monospace;
+	font-weight: 400;
+	font-synthesis: none;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.ore-seamless-btn--sm {
+	--ore-px: 2px;
+	--sb-font-size: 14px;
+}
+
+.ore-seamless-btn--md {
+	--ore-px: 2px;
+	--sb-font-size: 16px;
+}
+
+.ore-seamless-btn--lg {
+	--ore-px: 4px;
+	--sb-font-size: 32px;
+}
+
+.ore-seamless-btn--light {
+	--sb-color: #1e1e20;
+	--sb-hover: rgba(0, 0, 0, 0.3);
+}
+
+.ore-seamless-btn--dark {
+	--sb-color: #ffffff;
+	--sb-hover: rgba(255, 255, 255, 0.1);
+}
+
+.ore-seamless-btn__content {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: calc(4 * var(--ore-px));
+	padding: calc(1.5 * var(--ore-px)) calc(5 * var(--ore-px));
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	transition: background-color 100ms ease;
+}
+
+.ore-seamless-btn--icon-only .ore-seamless-btn__content {
+	padding: calc(1.5 * var(--ore-px));
+}
+
+.ore-seamless-btn__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: calc(8 * var(--ore-px));
+	height: calc(8 * var(--ore-px));
+	color: var(--sb-color);
+}
+
+.ore-seamless-btn__icon > svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.ore-seamless-btn__label {
+	color: var(--sb-color);
+	font-size: var(--sb-font-size, 16px);
+	line-height: 1;
+	white-space: nowrap;
+}
+
+.ore-seamless-btn:not(:disabled):hover .ore-seamless-btn__content,
+.ore-seamless-btn[data-state="hover"] .ore-seamless-btn__content {
+	background: var(--sb-hover);
+}
+
+.ore-seamless-btn:not(:disabled):focus-visible,
+.ore-seamless-btn[data-state="focus"] {
+	z-index: 2;
+	outline: var(--ore-px) solid var(--ore-focus-ring, #ffffff);
+	outline-offset: 0;
+}
+
+.ore-seamless-btn:disabled {
+	opacity: 0.45;
+	cursor: not-allowed;
+}

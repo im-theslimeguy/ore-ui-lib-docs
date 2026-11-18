@@ -1,0 +1,41 @@
+---
+title: Loading Bars
+description: Stationary 16px pixel-framed loading bar with light and dark themes.
+---
+
+import { LoadingBarShowcase } from "../../components/ExtrasShowcase";
+
+`ui.loadingBar(...)` renders a `16px` tall stationary `2px` pixel border whose inner progress fill grows from `0.0F` to `1.0F` with `2px` inner padding around the bar.
+
+<LoadingBarShowcase client:load />
+
+## Method Signatures (`OreUi`)
+
+```java
+// Default light frame & fill (for dark backgrounds)
+public void loadingBar(int x, int y, int w, float progress)
+
+// Explicit dark/light theme (dark = true uses OreTone.DARK for light backgrounds)
+public void loadingBar(int x, int y, int w, float progress, boolean dark)
+```
+
+## Parameters
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `x`, `y` | `int` | — | Top-left GUI pixel coordinates (height is fixed at `16px`). |
+| `w` | `int` | — | Total frame width in GUI pixels. |
+| `progress` | `float` | — | Progress fraction in `0.0F..1.0F`. |
+| `dark` | `boolean` | `false` | `false` uses white (`OreTone.TEXT`); `true` uses dark (`OreTone.DARK`). |
+
+## Example
+
+```java
+float loadProgress = 0.65F;
+
+// White loading bar on dark panel
+ui.loadingBar(x, y, 220, loadProgress);
+
+// Dark loading bar on light surface
+ui.loadingBar(x, y + 24, 220, loadProgress, true);
+```

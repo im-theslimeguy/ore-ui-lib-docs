@@ -1,0 +1,192 @@
+.ore-navbar {
+	--ore-px: 2px;
+	--ore-nav-font-size: 16px;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	width: 100%;
+	background: #313233;
+	box-sizing: border-box;
+	font-family: "Minecraft Seven", monospace;
+	font-weight: 400;
+	font-synthesis: none;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.ore-navbar--sm {
+	--ore-px: 2px;
+	--ore-nav-font-size: 14px;
+}
+
+.ore-navbar--md {
+	--ore-px: 2px;
+	--ore-nav-font-size: 16px;
+}
+
+.ore-navbar--lg {
+	--ore-px: 4px;
+	--ore-nav-font-size: 32px;
+}
+
+.ore-navbar__groups {
+	display: flex;
+	flex-direction: column;
+	gap: calc(8 * var(--ore-px));
+	width: 100%;
+}
+
+.ore-navbar__group {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.ore-nav-item {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	justify-content: center;
+	width: 100%;
+	min-height: calc(25 * var(--ore-px));
+	padding: 0;
+	margin: 0;
+	border: 0;
+	background: transparent;
+	box-sizing: border-box;
+	position: relative;
+	outline: none;
+	text-align: left;
+	font-family: "Minecraft Seven", monospace;
+	font-weight: 400;
+	font-synthesis: none;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.ore-nav-item--item {
+	cursor: pointer;
+}
+
+.ore-nav-item--header {
+	cursor: default;
+}
+
+/* Header resting double divider */
+.ore-nav-item--header:not(.ore-nav-item--selected):not([data-state="selected"]):not([data-state="selected-focus"]) {
+	border-bottom: var(--ore-px) solid #1d1e1f;
+}
+
+.ore-nav-item__bg {
+	display: flex;
+	flex: 1 0 auto;
+	flex-direction: column;
+	justify-content: center;
+	width: 100%;
+	box-sizing: border-box;
+	padding: calc(3 * var(--ore-px));
+}
+
+.ore-nav-item--header:not(.ore-nav-item--selected):not([data-state="selected"]):not([data-state="selected-focus"]) .ore-nav-item__bg {
+	border-bottom: var(--ore-px) solid #454647;
+}
+
+/* Selected item / header */
+.ore-nav-item--selected,
+.ore-nav-item[data-state="selected"],
+.ore-nav-item[data-state="selected-focus"] {
+	background: #48494a;
+}
+
+.ore-nav-item--item.ore-nav-item--selected,
+.ore-nav-item--item[data-state="selected"] {
+	border-bottom: var(--ore-px) solid #5a5b5c;
+}
+
+.ore-nav-item--item.ore-nav-item--selected .ore-nav-item__bg,
+.ore-nav-item--item[data-state="selected"] .ore-nav-item__bg,
+.ore-nav-item--item[data-state="selected-focus"] .ore-nav-item__bg {
+	border-top: var(--ore-px) solid #2b2c2c;
+}
+
+/* Hover on clickable item */
+.ore-nav-item--item:not(.ore-nav-item--selected):not([data-state="selected"]):not([data-state="selected-focus"]):hover {
+	background: rgba(255, 255, 255, 0.06);
+}
+
+/* Focus-visible (Tab) for BOTH items and non-clickable headers */
+.ore-nav-item:focus-visible,
+.ore-nav-item[data-state="focus"],
+.ore-nav-item[data-state="selected-focus"] {
+	z-index: 2;
+	box-shadow: inset 0 0 0 var(--ore-px) var(--ore-focus-ring, #ffffff);
+}
+
+.ore-nav-item__content {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: calc(4 * var(--ore-px));
+	padding: calc(3 * var(--ore-px)) calc(4 * var(--ore-px));
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.ore-nav-item__leading {
+	display: flex;
+	align-items: center;
+	gap: calc(6 * var(--ore-px));
+	min-width: 0;
+	flex: 1 1 auto;
+}
+
+.ore-nav-item__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: calc(11 * var(--ore-px));
+	height: calc(11 * var(--ore-px));
+	color: #ffffff;
+}
+
+.ore-nav-item__icon > svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.ore-nav-item__label {
+	color: #ffffff;
+	font-family: "Minecraft Seven", monospace;
+	font-size: var(--ore-nav-font-size);
+	font-weight: 400;
+	font-synthesis: none;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
+	line-height: 1.2;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ore-nav-item--header:not(.ore-nav-item--selected):not([data-state="selected"]):not([data-state="selected-focus"]) .ore-nav-item__label {
+	color: #d0d1d4;
+}
+
+.ore-nav-item__badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	background: #d2d4d6;
+	color: #1e1e20;
+	font-family: "Minecraft Seven", monospace;
+	font-size: var(--ore-nav-font-size);
+	font-weight: 400;
+	font-synthesis: none;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
+	line-height: 1;
+	padding: calc(3 * var(--ore-px)) calc(4.5 * var(--ore-px));
+}

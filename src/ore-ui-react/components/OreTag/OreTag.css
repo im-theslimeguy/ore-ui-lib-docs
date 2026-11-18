@@ -1,0 +1,67 @@
+.ore-tag {
+	--ore-px: 2px;
+	--ore-tag-font-size: 16px;
+	--tag-bg: #d2d4d6;
+	--tag-text: #1e1e20;
+
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: calc(4 * var(--ore-px));
+	padding: calc(3 * var(--ore-px)) calc(4.5 * var(--ore-px));
+	background: var(--tag-bg);
+	color: var(--tag-text);
+	border: var(--ore-px) solid var(--ore-bg, #1e1e1f);
+	box-sizing: border-box;
+	font-family: "Minecraft Seven", monospace;
+	font-size: var(--ore-tag-font-size);
+	font-weight: 400;
+	font-synthesis: none;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
+	line-height: 1;
+	white-space: nowrap;
+}
+
+.ore-tag--sm {
+	--ore-px: 2px;
+	--ore-tag-font-size: 14px;
+}
+
+.ore-tag--md {
+	--ore-px: 2px;
+	--ore-tag-font-size: 16px;
+}
+
+.ore-tag--lg {
+	--ore-px: 4px;
+	--ore-tag-font-size: 32px;
+}
+
+.ore-tag__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: calc(8 * var(--ore-px));
+	height: calc(8 * var(--ore-px));
+	color: var(--tag-text);
+}
+
+.ore-tag__icon > svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+/* Pastel color palette */
+.ore-tag--gray { --tag-bg: #d2d4d6; --tag-text: #1e1e20; }
+.ore-tag--dark-gray { --tag-bg: #37373a; --tag-text: #ffffff; }
+.ore-tag--red { --tag-bg: #ff8a8a; --tag-text: #1e1e20; }
+.ore-tag--pink { --tag-bg: #ff8ae0; --tag-text: #1e1e20; }
+.ore-tag--purple { --tag-bg: #ad99e7; --tag-text: #1e1e20; }
+.ore-tag--blue { --tag-bg: #89afff; --tag-text: #1e1e20; }
+.ore-tag--turquoise { --tag-bg: #89ffe1; --tag-text: #1e1e20; }
+.ore-tag--green { --tag-bg: #9ddf77; --tag-text: #1e1e20; }
+.ore-tag--yellow { --tag-bg: #ffec72; --tag-text: #1e1e20; }
+.ore-tag--orange { --tag-bg: #ffb98a; --tag-text: #1e1e20; }

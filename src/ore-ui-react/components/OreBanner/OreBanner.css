@@ -1,0 +1,96 @@
+.ore-banner {
+	--ore-px: 2px;
+	--ore-banner-title-size: 18px;
+	--ore-banner-desc-size: 12px;
+
+	display: flex;
+	align-items: stretch;
+	width: 100%;
+	min-height: calc(30 * var(--ore-px));
+	padding: var(--ore-px);
+	background: var(--ore-bg, #1e1e1f);
+	box-sizing: border-box;
+	font-family: "Minecraft Seven", monospace;
+	font-weight: 400;
+	font-synthesis: none;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.ore-banner--sm {
+	--ore-px: 2px;
+	--ore-banner-title-size: 14px;
+	--ore-banner-desc-size: 12px;
+	min-height: 48px;
+}
+
+.ore-banner--md {
+	--ore-px: 2px;
+	--ore-banner-title-size: 16px;
+	--ore-banner-desc-size: 12px;
+	min-height: 60px;
+}
+
+.ore-banner--lg {
+	--ore-px: 4px;
+	--ore-banner-title-size: 32px;
+	--ore-banner-desc-size: 24px;
+	min-height: 126px;
+}
+
+.ore-banner__content {
+	display: flex;
+	flex: 1 0 0;
+	align-items: center;
+	justify-content: space-between;
+	gap: calc(8 * var(--ore-px));
+	width: 100%;
+	box-sizing: border-box;
+	background: #313233;
+	padding: calc(3 * var(--ore-px)) calc(6 * var(--ore-px));
+}
+
+.ore-banner__leading-wrap {
+	display: flex;
+	align-items: center;
+	gap: calc(8 * var(--ore-px));
+	min-width: 0;
+	flex: 1 1 auto;
+}
+
+.ore-banner__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: calc(11 * var(--ore-px));
+	height: calc(11 * var(--ore-px));
+	color: #ffffff;
+}
+
+.ore-banner__icon > svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.ore-banner__texts {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+	gap: calc(3 * var(--ore-px));
+	min-width: 0;
+}
+
+.ore-banner__title {
+	color: #ffffff;
+	font-size: var(--ore-banner-title-size);
+	line-height: 1.25;
+}
+
+.ore-banner__description {
+	color: #b1b2b5;
+	font-size: var(--ore-banner-desc-size);
+	line-height: 1.25;
+}

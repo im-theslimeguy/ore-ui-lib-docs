@@ -1,0 +1,99 @@
+.ore-menu-btn {
+	--ore-px: 2px;
+	--mb-font-size: 16px;
+
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	width: 100%;
+	padding: var(--ore-px);
+	margin: 0;
+	border: 0;
+	background: #636365;
+	box-sizing: border-box;
+	cursor: pointer;
+	outline: none;
+	position: relative;
+	text-align: left;
+	font-family: "Minecraft Seven", monospace;
+	font-weight: 400;
+	font-synthesis: none;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.ore-menu-btn--sm {
+	--ore-px: 2px;
+	--mb-font-size: 14px;
+}
+
+.ore-menu-btn--md {
+	--ore-px: 2px;
+	--mb-font-size: 16px;
+}
+
+.ore-menu-btn--lg {
+	--ore-px: 4px;
+	--mb-font-size: 32px;
+}
+
+.ore-menu-btn__content {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	min-height: calc(24 * var(--ore-px));
+	padding: calc(4 * var(--ore-px)) calc(5 * var(--ore-px));
+	gap: calc(6 * var(--ore-px));
+	border: var(--ore-px) solid #999999;
+	box-sizing: border-box;
+}
+
+.ore-menu-btn__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: calc(8 * var(--ore-px));
+	height: calc(8 * var(--ore-px));
+	color: #ffffff;
+}
+
+.ore-menu-btn__icon > svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.ore-menu-btn__label {
+	color: #ffffff;
+	font-size: var(--mb-font-size);
+	line-height: 1.2;
+}
+
+.ore-menu-btn:not(:disabled):hover,
+.ore-menu-btn[data-state="hover"] {
+	background: #373a39;
+}
+
+.ore-menu-btn:not(:disabled):focus-visible,
+.ore-menu-btn[data-state="focus"] {
+	z-index: 2;
+	outline: var(--ore-px) solid var(--ore-focus-ring, #ffffff);
+	outline-offset: 0;
+}
+
+.ore-menu-btn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.ore-menu-group {
+	--ore-px: 2px;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.ore-menu-group > .ore-menu-btn:not(:last-child) {
+	margin-bottom: calc(-1 * var(--ore-px));
+}

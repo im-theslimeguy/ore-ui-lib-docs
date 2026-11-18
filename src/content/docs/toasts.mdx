@@ -1,0 +1,41 @@
+---
+title: Toasts
+description: Floating #1E1E1E notification pill rendered in Noto Sans with a +4px drop shadow and upward slide animation.
+---
+
+import { ToastShowcase } from "../../components/OverlaysShowcase";
+
+`ui.toast(...)` renders a `20px` tall dark notification pill (`#1E1E1E` inside a `#1E1E1F` `1px` frame with a `+4px` 50% black drop shadow) using **`OreFont.NOTO_SANS`** for clean legibility. By default it slides upward `32px` while fading in over `0.12s`; passing a `key` containing `"static"` skips the entrance animation. Returns the rendered width.
+
+<ToastShowcase client:load />
+
+## Method Signatures (`OreUi`)
+
+```java
+// Measure width of the toast pill (including Noto Sans text + optional icons)
+public int toastWidth(String label, boolean leading, boolean trailing)
+
+// Draw toast pill (returns rendered width)
+public int toast(int x, int y, String label, String key, boolean leading, boolean trailing)
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `x`, `y` | `int` | Top-left GUI pixel coordinates (height is `20px`). |
+| `label` | `String` | Notification text rendered in `OreFont.NOTO_SANS`. |
+| `key` | `String` | Unique slide-in animation key (`"toast:" + key`). Include `"static"` to disable entrance motion. |
+| `leading` | `boolean` | Draws leading info glyph before text. |
+| `trailing` | `boolean` | Draws trailing close glyph after text. |
+
+## Example
+
+```java
+String notice = "Achievement unlocked: Getting Wood";
+int w = ui.toastWidth(notice, true, false);
+int x = (this.width - w) / 2;
+int y = this.height - 40;
+
+ui.toast(x, y, notice, "toastWood", true, false);
+```

@@ -1,0 +1,38 @@
+---
+title: Tooltips
+description: Cursor-following #2E6BE5 tooltip with cut corners, multi-line wrapping, and viewport-aware 3-step pixel tail flipping.
+---
+
+import { TooltipShowcase } from "../../components/OverlaysShowcase";
+
+`ui.tooltip(...)` draws the Bedrock blue (`OreTone.TOOLTIP` `#2E6BE5`) speech-bubble tooltip with `3px` cut corners, a `1px` dark outline (`OreTone.TOOLTIP_STROKE` `#1E1E1E`), automatic text wrapping (`220px` max text width), and a 3-step pixel pointer tail that automatically flips above/below and left/right near screen edges.
+
+<TooltipShowcase client:load />
+
+## Behavior & Geometry
+
+- **Edge flipping**: Renders above the cursor (`above = true`) whenever there is room above (`>= 4px` margin), flipping below when near the top of the screen, and shifting left/right near horizontal screen bounds.
+- **3-step pixel tail**: Three `3px`-tall stepped rows connect the bubble outline to the cursor point cleanly without doubling the border.
+- **Hover regions**: Register hoverable regions with `ui.hit(x0, y0, x1, y1, tip, click)` (or pass `tip` to standard widgets), or draw a tooltip directly with `ui.tooltip(tip, mouseX, mouseY)`.
+
+## Method Signature (`OreUi`)
+
+```java
+public void tooltip(String tip, int mouseX, int mouseY)
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `tip` | `String` | Tooltip text (automatically wrapped at `220px` width). |
+| `mouseX`, `mouseY` | `int` | Anchor pointer coordinates in GUI pixels. |
+
+## Example
+
+```java
+// Draw a tooltip directly when hovering a custom region
+if (ui.over(x, y, x + 120, y + 24)) {
+	ui.tooltip("Applies a random enchantment using 3 Lapis Lazuli.", ui.mouseX(), ui.mouseY());
+}
+```

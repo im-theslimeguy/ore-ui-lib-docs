@@ -1,0 +1,48 @@
+---
+title: Menu Buttons
+description: Full-width stacked list buttons used inside popups, dropdowns, and option sheets.
+---
+
+import { MenuButtonShowcase } from "../../components/PopupShowcase";
+
+`ui.menuButton(...)` draws a `28px` tall `#636365` (`OreTone.MENU_FACE`) row wrapped in a `1px` `#999999` (`OreTone.MENU_STROKE`) border that smoothly darkens toward `#373A39` (`OreTone.POPUP_BODY`) on hover. Inside `ui.dropdown(...)`, items step vertically by `24px` (`itemH = 28`, `step = 24`) or overlap by `1px` when stacked tightly so shared outlines do not double up.
+
+## Interactive Preview
+
+<MenuButtonShowcase client:load />
+
+## Method Signatures (`OreUi`)
+
+```java
+public void menuButton(int x, int y, int w, String label, String[] icon,
+                       String key, String tip, Runnable action)
+
+public void menuButton(int x, int y, int w, String label, String[] icon,
+                       boolean textShadow, int textShadowColor, Boolean iconShadowOverride,
+                       String key, String tip, Runnable action)
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `x`, `y` | `int` | Top-left GUI pixel coordinates (row height is `28px`). |
+| `w` | `int` | Row width in GUI pixels. |
+| `label` | `String` | Row label (`x + 21` with icon, `x + 5` without icon). |
+| `icon` | `String[]` | Optional leading `8×8` icon (`OreIcon.*.small`) placed at `x + 7`. |
+| `key` | `String` | Unique hover animation key (`"menu:" + key`). |
+| `tip` | `String` | Optional hover tooltip. |
+| `action` | `Runnable` | Click / Enter / Space callback. |
+
+## Example
+
+```java
+String[] labels = { "Edit World", "Duplicate", "Export" };
+String[][] icons = { OreIcon.PENCIL.small, OreIcon.BUNDLE.small, OreIcon.EXPORT.small };
+
+for (int i = 0; i < labels.length; i++) {
+	int idx = i;
+	ui.menuButton(x, y + i * 27, 180, labels[i], icons[i],
+		"menuOpt:" + i, null, () -> handleOption(idx));
+}
+```

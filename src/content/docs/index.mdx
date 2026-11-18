@@ -1,0 +1,34 @@
+---
+title: Ore UI Library
+description: Immediate-mode Java component library implementing Minecraft Bedrock's Ore UI system for Fabric and NeoForge mods.
+---
+
+import { ButtonContentMatrix } from "../../components/ButtonShowcase";
+
+**Ore UI Library** (`ore-ui-lib`) is a client-side Java implementation of the **Minecraft Bedrock Ore UI** design system for Minecraft Java Edition (**Fabric** and **NeoForge**). Every component is built to match the Ore UI specification in game pixels, using layered bevels, damped spring physics, and dynamic GPU-rasterized typography.
+
+- **Library Mod Only**: Installing `ore-ui-lib` on its own changes nothing in vanilla Minecraft — it provides UI primitives, widgets, and base screens (`OreScreen`, `OrePanelScreen`, `OreUi`) for mod developers.
+- **Per-Component Docs**: Each component page includes a live interactive preview of the Ore UI design, design rules, full Java method signatures, parameter tables, and copy-pasteable Java examples.
+
+Start with [Installation](/install/) or [Quick Start](/first-screen/).
+
+## Component Overview
+
+<ButtonContentMatrix client:load />
+
+## Exported Components
+
+| Category | Java API (`OreUi` / Classes) | Notes |
+| --- | --- | --- |
+| **Actions** | `ui.button`, `ui.buttonStacked`, `ui.seamlessButton`, `ui.menuButton` | Tactile push buttons, vertical icon+text buttons, borderless bar actions, and stacked menu rows. |
+| **Selection** | `ui.selectionButton`, `ui.selectionRow`, `ui.selectionRowFill`, `ui.selectableIconButton` | Mutually exclusive segmented controls and sunken icon tiles. |
+| **Form Controls** | `ui.checkbox`, `ui.toggle`, `ui.radio`, `ui.slider`, `ui.sliderVertical`, `ui.textBox`, `ui.searchBox`, `ui.dropdown`, `OreTextField` | Tri-state checks, spring-animated switches/sliders, diamond radios, IME text inputs, and modal dropdowns. |
+| **Cards & Surfaces** | `ui.cardFrame`, `ui.cardHeader`, `ui.cardContainer`, `ui.cardButtonContainer`, `ui.listCardSwitch`, `ui.listCardButton`, `ui.cardHorizontal`, `ui.cardVertical` | Border-merging list cards, custom slot containers, and rich media cards. |
+| **Navigation** | `ui.navItem`, `ui.navHeader`, `ui.navButtonHorizontal`, `ui.navRowHorizontal`, `ui.tabBar`, `ui.tabButton`, `ui.tabRow`, `ui.pagination`, `OrePanelScreen` | Vertical/horizontal navigation, pinned top bars, adaptive sidebars, and paged lists. |
+| **Feedback & Layout** | `ui.popup`, `ui.popupHeader`, `ui.popupContent`, `ui.popupActions`, `ui.progressBar`, `ui.loadingBar`, `ui.spinner`, `ui.banner`, `ui.message`, `ui.messageBanner`, `ui.toast`, `ui.tooltip`, `ui.badge`, `ui.tag`, `ui.indicator`, `ui.labeledDivider` | Modals with input blocking, progress indicators, alerts, sliding toasts, stepped-tail tooltips, and section dividers. |
+
+## Supported Platforms
+
+- **Minecraft**: `26.3` (Java `25`)
+- **Mod Loaders**: Fabric (`>=0.19.3`) & NeoForge (`26.3+`)
+- **Environment**: Client-side only (`se.miljo.beef.oreui.*`)

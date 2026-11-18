@@ -1,0 +1,58 @@
+---
+title: Tab Bars
+description: Pinned 27px top screen header bar using Minecraft Ten typography and leading/trailing icon buttons.
+---
+
+import { TabBarShowcase } from "../../components/ExtrasShowcase";
+
+`ui.tabBar(...)` draws the `27px` tall (`OreUi.TAB_HEIGHT`) light stone header strip (`#D0D1D5` face with `#B1B2B6` `2px` bottom shadow), centering a `Minecraft Ten` (`OreFont.TEN`, `1.35F` scale) title with optional `27×27` leading and trailing icon buttons (`ui.tabButton`). `OrePanelScreen` renders this bar across the top of the screen automatically unless disabled via `.titleBar(false)`.
+
+<TabBarShowcase client:load />
+
+## Anatomy & Layout
+
+- **Typography**: Renders `title` in `OreFont.TEN` at `1.35F` scale in dark charcoal (`OreTone.TEXT_DARK`).
+- **Surface**: `#D0D1D5` (`OreTone.TAB_FACE`) paired with a `2px` `#B1B2B6` (`OreTone.TAB_SHADOW`) bottom ledge.
+- **Docked buttons**: Passing `leading` or `trailing` `8×8` icons automatically places icon-only `tabButton` triggers flush at the left and right ends of the bar.
+
+## Method Signatures (`OreUi` & `OrePanelScreen`)
+
+```java
+// Bare 27 px tab bar strip
+public void tabBar(int x, int y, int w)
+
+// Full tab bar with centered Minecraft Ten title and optional left/right icon buttons (returns 27)
+public int tabBar(int x, int y, int w, String title,
+                  String[] leading, Runnable onLeading,
+                  String[] trailing, Runnable onTrailing)
+```
+
+In `OrePanelScreen`:
+
+```java
+titleBar(boolean on)
+barTitle(String text)
+barButtons(String[] leading, Runnable onLeadingAction, String[] trailing, Runnable onTrailingAction)
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `x`, `y`, `w` | `int` | Top-left GUI pixel coordinates and bar width (`height` is `OreUi.TAB_HEIGHT = 27`). |
+| `title` | `String` | Centered screen title rendered in `OreFont.TEN` (`null` omits title). |
+| `leading`, `onLeading` | `String[]`, `Runnable` | Optional left `8×8` icon (`OreIcon.CHEVRON_LEFT.small`) and click callback. |
+| `trailing`, `onTrailing` | `String[]`, `Runnable` | Optional right `8×8` icon (`OreIcon.CLOSE.small`) and click callback. |
+
+## Example
+
+```java
+// Standalone OreScreen usage
+int barH = ui.tabBar(0, 0, this.width, "Settings",
+	OreIcon.CHEVRON_LEFT.small, this::onClose,
+	OreIcon.QUESTION_MARK.small, this::openHelp);
+
+// Or configure in OrePanelScreen constructor
+barTitle("Settings")
+	.barButtons(OreIcon.CHEVRON_LEFT.small, this::onClose, OreIcon.CLOSE.small, this::onClose);
+```

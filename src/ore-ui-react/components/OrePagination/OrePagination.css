@@ -1,0 +1,107 @@
+.ore-pagination {
+	--ore-px: 2px;
+	--pg-font-size: 15px;
+
+	display: inline-flex;
+	align-items: center;
+	gap: calc(6 * var(--ore-px));
+	font-family: "Minecraft Seven", monospace;
+	font-weight: 400;
+	font-synthesis: none;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.ore-pagination--sm {
+	--ore-px: 2px;
+	--pg-font-size: 14px;
+}
+
+.ore-pagination--md {
+	--ore-px: 2px;
+	--pg-font-size: 15px;
+}
+
+.ore-pagination--lg {
+	--ore-px: 4px;
+	--pg-font-size: 30px;
+}
+
+.ore-pagination__bar {
+	display: inline-flex;
+	align-items: center;
+	background: #000000;
+	padding: var(--ore-px);
+	box-sizing: border-box;
+}
+
+.ore-pagination__item {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: calc(17 * var(--ore-px));
+	height: calc(17 * var(--ore-px));
+	padding: 0;
+	margin: 0;
+	border: 0;
+	background: transparent;
+	box-sizing: border-box;
+	cursor: pointer;
+	outline: none;
+	font-family: "Minecraft Seven", monospace;
+	font-weight: 400;
+	font-synthesis: none;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.ore-pagination__item--ellipsis {
+	cursor: default;
+}
+
+.ore-pagination__item-face {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	background: #48494a;
+	border-style: solid;
+	border-width: var(--ore-px);
+	border-color: #6d6d6e #2c2d2e #2c2d2e #6d6d6e;
+	color: #ffffff;
+	font-size: var(--pg-font-size);
+	line-height: 1;
+	box-sizing: border-box;
+}
+
+.ore-pagination__item:not(.ore-pagination__item--ellipsis):not(.ore-pagination__item--selected):hover .ore-pagination__item-face {
+	background: #58595a;
+}
+
+.ore-pagination__item--selected .ore-pagination__item-face,
+.ore-pagination__item:not(.ore-pagination__item--ellipsis):active .ore-pagination__item-face {
+	border-width: 0;
+	background: #48494a;
+}
+
+.ore-pagination__item-line {
+	position: absolute;
+	bottom: var(--ore-px);
+	left: 50%;
+	transform: translateX(-50%);
+	width: calc(8 * var(--ore-px));
+	height: var(--ore-px);
+	background: #ffffff;
+}
+
+.ore-pagination__item:not(.ore-pagination__item--ellipsis):focus-visible {
+	z-index: 2;
+	outline: var(--ore-px) solid var(--ore-focus-ring, #ffffff);
+	outline-offset: 0;
+}
+
+.ore-pagination__nav-btn {
+	min-height: calc(21 * var(--ore-px)) !important;
+}

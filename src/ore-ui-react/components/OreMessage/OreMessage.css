@@ -1,0 +1,98 @@
+.ore-message {
+	--ore-px: 2px;
+	--msg-bg: #2e6be5;
+	--msg-text: #ffffff;
+	--msg-font-size: 14px;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: calc(6 * var(--ore-px));
+	width: 100%;
+	padding: calc(2 * var(--ore-px)) calc(3 * var(--ore-px));
+	background: var(--msg-bg);
+	color: var(--msg-text);
+	box-sizing: border-box;
+	font-family: "Minecraft Seven", monospace;
+	font-weight: 400;
+	font-synthesis: none;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.ore-message--sm {
+	--ore-px: 2px;
+	--msg-font-size: 12px;
+}
+
+.ore-message--md {
+	--ore-px: 2px;
+	--msg-font-size: 14px;
+}
+
+.ore-message--lg {
+	--ore-px: 4px;
+	--msg-font-size: 24px;
+}
+
+.ore-message__leading {
+	display: flex;
+	align-items: center;
+	gap: calc(4 * var(--ore-px));
+	min-width: 0;
+	flex: 1 1 auto;
+}
+
+.ore-message__text {
+	color: var(--msg-text);
+	font-size: var(--msg-font-size);
+	line-height: 1.25;
+}
+
+.ore-message__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	color: var(--msg-text);
+}
+
+.ore-message__icon--leading {
+	width: calc(6 * var(--ore-px));
+	height: calc(6 * var(--ore-px));
+}
+
+.ore-message__icon--trailing {
+	width: calc(4 * var(--ore-px));
+	height: calc(4 * var(--ore-px));
+}
+
+.ore-message__icon > svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+/* Vibrant colors with exact contrast text */
+.ore-message--vibrant.ore-message--blue { --msg-bg: #2e6be5; --msg-text: #ffffff; }
+.ore-message--vibrant.ore-message--turquoise { --msg-bg: #2ccea6; --msg-text: #1e1e20; }
+.ore-message--vibrant.ore-message--green { --msg-bg: #387e24; --msg-text: #ffffff; }
+.ore-message--vibrant.ore-message--red { --msg-bg: #ce2727; --msg-text: #ffffff; }
+.ore-message--vibrant.ore-message--pink { --msg-bg: #c42b9b; --msg-text: #ffffff; }
+.ore-message--vibrant.ore-message--yellow { --msg-bg: #ccb312; --msg-text: #1e1e20; }
+.ore-message--vibrant.ore-message--orange { --msg-bg: #bd6429; --msg-text: #ffffff; }
+.ore-message--vibrant.ore-message--purple { --msg-bg: #4d26bd; --msg-text: #ffffff; }
+.ore-message--vibrant.ore-message--gray { --msg-bg: #d2d4d6; --msg-text: #1e1e20; }
+.ore-message--vibrant.ore-message--dark-gray { --msg-bg: #37373a; --msg-text: #ffffff; }
+
+/* Pastel colors with exact contrast text */
+.ore-message--pastel.ore-message--blue { --msg-bg: #89afff; --msg-text: #1e1e20; }
+.ore-message--pastel.ore-message--turquoise { --msg-bg: #89ffe1; --msg-text: #1e1e20; }
+.ore-message--pastel.ore-message--green { --msg-bg: #9ddf77; --msg-text: #1e1e20; }
+.ore-message--pastel.ore-message--red { --msg-bg: #ff8a8a; --msg-text: #1e1e20; }
+.ore-message--pastel.ore-message--pink { --msg-bg: #ff8ae0; --msg-text: #1e1e20; }
+.ore-message--pastel.ore-message--yellow { --msg-bg: #ffec72; --msg-text: #1e1e20; }
+.ore-message--pastel.ore-message--orange { --msg-bg: #ffb98a; --msg-text: #1e1e20; }
+.ore-message--pastel.ore-message--purple { --msg-bg: #ad99e7; --msg-text: #1e1e20; }
+.ore-message--pastel.ore-message--gray { --msg-bg: #d2d4d6; --msg-text: #1e1e20; }
+.ore-message--pastel.ore-message--dark-gray { --msg-bg: #37373a; --msg-text: #ffffff; }

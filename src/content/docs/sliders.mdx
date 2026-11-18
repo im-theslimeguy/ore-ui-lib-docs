@@ -1,0 +1,74 @@
+---
+title: Sliders
+description: Continuous and segmented range sliders with spring snap physics, vertical sliders, and scrollbars.
+---
+
+import { SliderShowcase } from "../../components/SelectionShowcase";
+
+`ui.slider(...)` renders a `6px` track with a `14×14` (`OreUi.HANDLE`) beveled handle supporting both continuous values (`0.0F..1.0F`) and discrete segmented ranges (`segments > 1`). `ui.sliderVertical(...)` and `ui.scrollbar(...)` share the same drag architecture vertically.
+
+> **Coordinate Note:** Horizontal `ui.slider(...)` takes `(x0, y, x1)` where `x1` is the **right edge X coordinate** (`x + width`), not the width!
+
+## Interaction Model
+
+- **Dragging**: Holding and dragging the handle tracks the pointer smoothly once past the drag threshold (`3px` in segmented mode). The handle drops its `2px` shadow rows while grabbed.
+- **Click & Spring Snap (Segmented)**: Clicking a segmented track picks the nearest boundary (`OreUi.snap(value, segments)`) immediately and pulls the handle there on a damped spring (`stiffness = 1200`, `damping = 38`, `mass = 1.0`). Releasing after a drag snaps and springs cleanly to the nearest boundary.
+- **Keyboard (`Tab` focus)**: Arrow keys step by `5%` (`0.05F`) in continuous mode, or `1.0F / segments` in segmented mode.
+
+## Interactive Preview
+
+<SliderShowcase client:load />
+
+## Method Signatures (`OreUi`)
+
+```java
+// Default green continuous slider (returns 0..1 to DoubleConsumer)
+public void slider(int x0, int y, int x1, float t, String tip, DoubleConsumer set)
+
+// Variant & segment count (segments <= 1 for continuous, >= 2 for segmented)
+public void slider(int x0, int y, int x1, float t, OreVariant variant, int segments,
+                   boolean focused, String tip, DoubleConsumer set)
+
+// Full control with explicit animation key and disabled options
+public void slider(int x0, int y, int x1, float t, OreVariant variant, int segments,
+                   boolean enabled, boolean subtlyDisabled, boolean focused,
+                   String key, String tip, DoubleConsumer set)
+
+// Snap helper for segmented sliders
+public static float snap(float value, int segments)
+
+// Vertical slider and scrollbar
+public void sliderVertical(int x, int y0, int y1, float from, float to,
+                           OreVariant variant, String key, String tip, DoubleConsumer set)
+
+public void scrollbar(int x, int y0, int y1, int viewHeight, int contentHeight,
+                      int scroll, DoubleConsumer set)
+```
+
+## Parameters (`slider`)
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `x0`, `y`, `x1` | `int` | Left X, top Y, and **right edge X** (`x0 + width`). |
+| `t` | `float` | Normalized slider value in `0.0F..1.0F`. |
+| `variant` | `OreVariant` | Filled track palette (`COLORED`, `GENERAL`, `WARNING`, `DESTRUCTIVE`, `REALMS`). |
+| `segments` | `int` | `0` for continuous mode, or `N >= 2` for discrete snap segments. |
+| `enabled`, `subtlyDisabled` | `boolean` | Controls interaction and grey vs tinted disabled styling. |
+| `key` | `String` | Unique animation key for spring smoothing (`"slide:" + key`). |
+| `tip` | `String` | Optional hover tooltip. |
+| `set` | `DoubleConsumer` | Receives updated normalized `0.0..1.0` value. |
+
+## Example
+
+```java
+private float volume = 0.75F;
+private float renderSteps = 0.5F; // 4 segments -> 0.0, 0.25, 0.5, 0.75, 1.0
+
+// Continuous slider
+ui.slider(x, y, x + 200, volume, OreVariant.COLORED, 0, false,
+	"volSlider", "Adjust volume", v -> volume = (float) v);
+
+// 4-segment snapped slider
+ui.slider(x, y + 28, x + 200, renderSteps, OreVariant.GENERAL, 4, false,
+	"distSlider", "Render distance", v -> renderSteps = (float) v);
+```

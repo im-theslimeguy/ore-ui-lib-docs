@@ -1,0 +1,225 @@
+.ore-radio-wrap {
+	--ore-px: 2px;
+	display: inline-flex;
+	align-items: center;
+	gap: calc(4 * var(--ore-px));
+	font-family: "Minecraft Seven", monospace;
+	font-weight: 400;
+	font-synthesis: none;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.ore-radio-wrap--sm {
+	--ore-px: 2px;
+}
+
+.ore-radio-wrap--md {
+	--ore-px: 2px;
+}
+
+.ore-radio-wrap--lg {
+	--ore-px: 4px;
+}
+
+.ore-radio {
+	--rd-bg: var(--ore-colored-bg);
+	--rd-bg-hover: var(--ore-colored-bg-hover);
+	--rd-bg-pressed: var(--ore-colored-bg-pressed);
+	--rd-stroke: var(--ore-colored-stroke);
+	--rd-dot-top: #ffffff;
+	--rd-dot-side: #e6e8eb;
+	--rd-dot-bottom: #d0d1d4;
+
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: calc(16 * var(--ore-px));
+	height: calc(16 * var(--ore-px));
+	padding: calc(3 * var(--ore-px));
+	margin: 0;
+	border: 0;
+	background: transparent;
+	box-sizing: border-box;
+	cursor: pointer;
+	outline: none;
+	position: relative;
+	flex-shrink: 0;
+}
+
+.ore-radio--colored {
+	--rd-bg: var(--ore-colored-bg);
+	--rd-bg-hover: var(--ore-colored-bg-hover);
+	--rd-bg-pressed: var(--ore-colored-bg-pressed);
+	--rd-stroke: var(--ore-colored-stroke);
+	--rd-dot-top: #ffffff;
+	--rd-dot-side: #e6e8eb;
+	--rd-dot-bottom: #d0d1d4;
+}
+
+.ore-radio--general {
+	--rd-bg: var(--ore-general-bg);
+	--rd-bg-hover: var(--ore-general-bg-hover);
+	--rd-bg-pressed: var(--ore-general-bg-pressed);
+	--rd-stroke: var(--ore-general-stroke);
+	--rd-dot-top: #464646;
+	--rd-dot-side: #2f2f2f;
+	--rd-dot-bottom: #1e1e1f;
+}
+
+.ore-radio--destructive {
+	--rd-bg: var(--ore-destructive-bg);
+	--rd-bg-hover: var(--ore-destructive-bg-hover);
+	--rd-bg-pressed: var(--ore-destructive-bg-pressed);
+	--rd-stroke: var(--ore-destructive-stroke);
+	--rd-dot-top: #ffffff;
+	--rd-dot-side: #d0d1d5;
+	--rd-dot-bottom: #b1b2b6;
+}
+
+.ore-radio--warning {
+	--rd-bg: var(--ore-warning-bg);
+	--rd-bg-hover: var(--ore-warning-bg-hover);
+	--rd-bg-pressed: var(--ore-warning-bg-pressed);
+	--rd-stroke: var(--ore-warning-stroke);
+	--rd-dot-top: #464646;
+	--rd-dot-side: #2f2f2f;
+	--rd-dot-bottom: #1e1e1f;
+}
+
+.ore-radio--realms {
+	--rd-bg: var(--ore-realms-bg);
+	--rd-bg-hover: var(--ore-realms-bg-hover);
+	--rd-bg-pressed: var(--ore-realms-bg-pressed);
+	--rd-stroke: var(--ore-realms-stroke);
+	--rd-dot-top: #ffffff;
+	--rd-dot-side: #d0d1d5;
+	--rd-dot-bottom: #b1b2b6;
+}
+
+.ore-radio__diamond {
+	width: 100%;
+	height: 100%;
+	transform: rotate(-45deg);
+	background: var(--ore-bg, #1e1e1f);
+	padding: var(--ore-px);
+	box-sizing: border-box;
+	display: flex;
+}
+
+.ore-radio__face {
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: calc(1.5 * var(--ore-px));
+	background: var(--ore-general-bg, #d0d1d5);
+	border: var(--ore-px) solid var(--ore-general-stroke, #e3e3e5);
+}
+
+.ore-radio--checked .ore-radio__face {
+	background: var(--rd-bg);
+	border-color: var(--rd-stroke);
+}
+
+.ore-radio__dot {
+	width: 100%;
+	height: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+}
+
+.ore-radio__q-tl {
+	background: var(--rd-dot-side);
+}
+
+.ore-radio__q-tr {
+	background: var(--rd-dot-top);
+}
+
+.ore-radio__q-bl {
+	background: var(--rd-dot-bottom);
+}
+
+.ore-radio__q-br {
+	background: var(--rd-dot-side);
+}
+
+/* Hover */
+.ore-radio--unchecked:not(:disabled):not([data-state="disabled"]):hover .ore-radio__face,
+.ore-radio--unchecked[data-state="hover"] .ore-radio__face,
+.ore-radio--unchecked[data-state="focus-hover"] .ore-radio__face {
+	background: var(--ore-general-bg-hover, #b1b2b6);
+}
+
+.ore-radio--checked:not(:disabled):not([data-state="disabled"]):hover .ore-radio__face,
+.ore-radio--checked[data-state="hover"] .ore-radio__face,
+.ore-radio--checked[data-state="focus-hover"] .ore-radio__face {
+	background: var(--rd-bg-hover);
+}
+
+/* Pressed */
+.ore-radio--checked:not(:disabled):not([data-state="disabled"]):active .ore-radio__face,
+.ore-radio--checked[data-state="pressed"] .ore-radio__face,
+.ore-radio--checked[data-state="pressed-hover"] .ore-radio__face {
+	background: var(--rd-bg-pressed);
+}
+
+/* Focus-visible */
+.ore-radio:not(:disabled):not([data-state="disabled"]):focus-visible,
+.ore-radio[data-state="focus"],
+.ore-radio[data-state="focus-hover"] {
+	z-index: 2;
+}
+
+.ore-radio:not(:disabled):not([data-state="disabled"]):focus-visible .ore-radio__diamond,
+.ore-radio[data-state="focus"] .ore-radio__diamond,
+.ore-radio[data-state="focus-hover"] .ore-radio__diamond {
+	outline: var(--ore-px) solid var(--ore-focus-ring, #ffffff);
+	outline-offset: 0;
+}
+
+/* Disabled */
+.ore-radio:disabled,
+.ore-radio[data-state="disabled"] {
+	cursor: not-allowed;
+}
+
+.ore-radio:disabled .ore-radio__diamond,
+.ore-radio[data-state="disabled"] .ore-radio__diamond {
+	background: var(--ore-bg-disabled, #58585a);
+	outline: none;
+}
+
+.ore-radio:disabled .ore-radio__face,
+.ore-radio[data-state="disabled"] .ore-radio__face {
+	background: var(--ore-disabled-bg, #b1b2b6);
+	border-width: 0;
+}
+
+.ore-radio:disabled .ore-radio__q-tl,
+.ore-radio:disabled .ore-radio__q-tr,
+.ore-radio:disabled .ore-radio__q-bl,
+.ore-radio:disabled .ore-radio__q-br,
+.ore-radio[data-state="disabled"] .ore-radio__q-tl,
+.ore-radio[data-state="disabled"] .ore-radio__q-tr,
+.ore-radio[data-state="disabled"] .ore-radio__q-bl,
+.ore-radio[data-state="disabled"] .ore-radio__q-br {
+	background: var(--ore-disabled-text, #595a5c);
+}
+
+.ore-radio__label {
+	color: #ffffff;
+	font-size: calc(8 * var(--ore-px));
+	line-height: 1.2;
+	cursor: pointer;
+	user-select: none;
+}
+
+.ore-radio-wrap--disabled .ore-radio__label {
+	color: #888888;
+	cursor: not-allowed;
+}

@@ -1,0 +1,193 @@
+.ore-hnav-group {
+	--ore-px: 2px;
+	display: flex;
+	align-items: stretch;
+	width: 100%;
+}
+
+.ore-hnav-group--sm {
+	--ore-px: 2px;
+}
+
+.ore-hnav-group--md {
+	--ore-px: 2px;
+}
+
+.ore-hnav-group--lg {
+	--ore-px: 4px;
+}
+
+.ore-hnav-item {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	flex: 1 0 0;
+	min-width: 0;
+	min-height: calc(27 * var(--ore-px));
+	padding: 0;
+	margin: 0;
+	border: 0;
+	background: transparent;
+	box-sizing: border-box;
+	cursor: pointer;
+	outline: none;
+	position: relative;
+	font-family: "Minecraft Seven", monospace;
+	font-weight: 400;
+	font-synthesis: none;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.ore-hnav-group > .ore-hnav-item:not(:last-child) {
+	margin-right: calc(-1 * var(--ore-px));
+}
+
+.ore-hnav-item__container {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	width: 100%;
+	flex: 1 0 auto;
+	padding: var(--ore-px);
+	background: var(--ore-bg, #1e1e1f);
+	box-sizing: border-box;
+}
+
+.ore-hnav-item__face {
+	display: flex;
+	align-items: stretch;
+	width: 100%;
+	flex: 1 0 auto;
+	box-sizing: border-box;
+	background: #585959;
+	border-style: solid;
+	border-width: 0 var(--ore-px) var(--ore-px) 0;
+	border-color: #636562;
+}
+
+.ore-hnav-item__content {
+	display: flex;
+	flex: 1 0 0;
+	align-items: center;
+	justify-content: center;
+	gap: calc(4 * var(--ore-px));
+	padding: calc(2 * var(--ore-px)) calc(4 * var(--ore-px));
+	border-style: solid;
+	border-width: var(--ore-px) 0 0 var(--ore-px);
+	border-color: rgba(255, 255, 255, 0.2);
+	box-sizing: border-box;
+}
+
+.ore-hnav-item__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: calc(8 * var(--ore-px));
+	height: calc(8 * var(--ore-px));
+	color: #ffffff;
+}
+
+.ore-hnav-item__icon > svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.ore-hnav-item__label {
+	color: #ffffff;
+	font-size: calc(8 * var(--ore-px));
+	line-height: 1.2;
+	white-space: nowrap;
+}
+
+.ore-hnav-item__badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: #d2d4d6;
+	color: #1e1e20;
+	font-size: calc(8 * var(--ore-px));
+	line-height: 1;
+	padding: calc(2 * var(--ore-px)) calc(3.5 * var(--ore-px));
+}
+
+.ore-hnav-item__shadow {
+	display: block;
+	width: 100%;
+	height: calc(2 * var(--ore-px));
+	flex-shrink: 0;
+	background: var(--ore-general-shadow, #59595b);
+}
+
+.ore-hnav-item__line {
+	display: none;
+	width: calc(26 * var(--ore-px));
+	height: var(--ore-px);
+	background: #ffffff;
+	margin-top: calc(-1 * var(--ore-px));
+	z-index: 2;
+}
+
+/* Hover */
+.ore-hnav-item:not(.ore-hnav-item--selected):not(:disabled):hover .ore-hnav-item__face {
+	background: #444545;
+}
+
+/* Selected */
+.ore-hnav-item--selected {
+	padding-top: calc(2 * var(--ore-px));
+	z-index: 1;
+}
+
+.ore-hnav-item--selected .ore-hnav-item__face {
+	background: #373a39;
+	border-color: #4b4e4c;
+}
+
+.ore-hnav-item--selected .ore-hnav-item__shadow {
+	height: 0;
+}
+
+.ore-hnav-item--selected .ore-hnav-item__line {
+	display: block;
+}
+
+.ore-hnav-item--selected:not(:disabled):hover .ore-hnav-item__face {
+	background: #444545;
+}
+
+/* Pressing */
+.ore-hnav-item:not(:disabled):active .ore-hnav-item__shadow {
+	height: 0;
+}
+
+.ore-hnav-item:not(.ore-hnav-item--selected):not(:disabled):active {
+	padding-top: calc(2 * var(--ore-px));
+}
+
+/* Focus-visible */
+.ore-hnav-item:not(:disabled):focus-visible {
+	z-index: 3;
+}
+
+.ore-hnav-item:not(:disabled):focus-visible .ore-hnav-item__container {
+	outline: var(--ore-px) solid var(--ore-focus-ring, #ffffff);
+	outline-offset: 0;
+}
+
+/* Disabled */
+.ore-hnav-item:disabled {
+	cursor: not-allowed;
+}
+
+.ore-hnav-item:disabled .ore-hnav-item__shadow {
+	height: 0;
+}
+
+.ore-hnav-item:disabled .ore-hnav-item__label,
+.ore-hnav-item:disabled .ore-hnav-item__icon {
+	opacity: 0.5;
+}

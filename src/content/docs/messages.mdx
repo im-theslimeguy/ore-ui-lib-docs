@@ -1,0 +1,61 @@
+---
+title: Messages
+description: Sliding inline status pills and full-width wrapped message banners with automatic contrast-safe ink.
+---
+
+import { MessageShowcase } from "../../components/OverlaysShowcase";
+
+`ui.message(...)` renders a `12px` tall status strip that slides in `24px` from the right over `0.12s`, while `ui.messageBanner(...)` renders a static full-width banner that wraps long text cleanly across multiple lines without clipping. Both support all 10 `OreAccent` colors in `OreColorType.VIBRANT` and `OreColorType.PASTEL` with automatic contrast-safe foreground ink.
+
+<MessageShowcase client:load />
+
+## Color & Contrast Rules
+
+Text and optional leading/trailing icons automatically resolve to `accent.text(colorType)`:
+
+- **Dark ink (`#1E1E20` / `OreTone.TEXT_DARK`)**: Used on `TURQUOISE`, `YELLOW`, `GRAY`, and all `PASTEL` accents except `DARK_GRAY`.
+- **Light ink (`#FFFFFF` / `OreTone.TEXT`)**: Used on `GREEN`, `BLUE`, `RED`, `PURPLE`, `ORANGE` (`VIBRANT`), and `DARK_GRAY`.
+
+## Method Signatures (`OreUi`)
+
+```java
+// Measure width of a sliding message strip
+public int messageWidth(String label, boolean leading, boolean trailing)
+
+// Sliding message strip (defaults to OreAccent.BLUE + OreColorType.VIBRANT; returns width)
+public int message(int x, int y, String label, String key, boolean leading, boolean trailing)
+
+// Sliding message strip with explicit OreAccent and OreColorType (returns width)
+public int message(int x, int y, String label, OreAccent accent, OreColorType colorType,
+                   String key, boolean leading, boolean trailing)
+
+// Static full-width multi-line wrapped message banner (returns rendered height)
+public int messageBanner(int x, int y, int maxWidth, String label,
+                         OreAccent accent, OreColorType colorType,
+                         String key, boolean leading, boolean trailing)
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `x`, `y` | `int` | Top-left GUI pixel coordinates. |
+| `maxWidth` | `int` | Full container width (`messageBanner` wraps text inside `maxWidth`). |
+| `label` | `String` | Message text. |
+| `accent` | `OreAccent` | Color token (`GRAY`..`ORANGE`). |
+| `colorType` | `OreColorType` | `OreColorType.VIBRANT` or `OreColorType.PASTEL`. |
+| `key` | `String` | Unique entrance animation key (`"message:" + key`). |
+| `leading`, `trailing` | `boolean` | Draws built-in leading badge glyph and/or trailing close glyph. |
+
+## Example
+
+```java
+// Sliding pastel green notice
+int msgW = ui.message(x, y, "World settings saved.", OreAccent.GREEN, OreColorType.PASTEL,
+	"saveMsg", true, false);
+
+// Full-width wrapped banner inside a card or view (returns height)
+y += ui.messageBanner(x, y + 20, contentWidth,
+	"Experimental gameplay features are enabled for this world.",
+	OreAccent.YELLOW, OreColorType.VIBRANT, "expWarn", true, false);
+```

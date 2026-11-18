@@ -1,0 +1,81 @@
+.ore-progress {
+	--ore-px: 2px;
+	--pb-fill: #2e6be5;
+
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: calc(4 * var(--ore-px));
+	box-sizing: border-box;
+	border-style: solid;
+	border-width: 0 calc(1 * var(--ore-px)) calc(1 * var(--ore-px)) 0;
+	border-color: rgba(0, 0, 0, 0.5);
+	overflow: hidden;
+}
+
+.ore-progress--sm {
+	--ore-px: 1px;
+	height: 6px;
+}
+
+.ore-progress--md {
+	--ore-px: 2px;
+	height: 8px;
+}
+
+.ore-progress--lg {
+	--ore-px: 2px;
+	height: 12px;
+}
+
+.ore-progress__inner {
+	position: relative;
+	flex: 1 0 0;
+	width: 100%;
+	height: 100%;
+}
+
+.ore-progress__track {
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	background: #48494a;
+	border: var(--ore-px) solid #6d6d6e;
+}
+
+.ore-progress__fill {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	box-sizing: border-box;
+	background: var(--pb-fill);
+	border-style: solid;
+	border-width: var(--ore-px) 0 0 var(--ore-px);
+	border-color: rgba(255, 255, 255, 0.2);
+	transition: width 180ms ease;
+}
+
+/* Vibrant colors */
+.ore-progress--vibrant.ore-progress--blue { --pb-fill: #2e6be5; }
+.ore-progress--vibrant.ore-progress--turquoise { --pb-fill: #2ccea6; }
+.ore-progress--vibrant.ore-progress--green { --pb-fill: #387e24; }
+.ore-progress--vibrant.ore-progress--red { --pb-fill: #ce2727; }
+.ore-progress--vibrant.ore-progress--pink { --pb-fill: #c42b9b; }
+.ore-progress--vibrant.ore-progress--yellow { --pb-fill: #ccb312; }
+.ore-progress--vibrant.ore-progress--orange { --pb-fill: #bd6429; }
+.ore-progress--vibrant.ore-progress--purple { --pb-fill: #4d26bd; }
+.ore-progress--vibrant.ore-progress--gray { --pb-fill: #d2d4d6; }
+.ore-progress--vibrant.ore-progress--dark-gray { --pb-fill: #37373a; }
+
+/* Pastel colors */
+.ore-progress--pastel.ore-progress--blue { --pb-fill: #89afff; }
+.ore-progress--pastel.ore-progress--turquoise { --pb-fill: #89ffe1; }
+.ore-progress--pastel.ore-progress--green { --pb-fill: #9ddf77; }
+.ore-progress--pastel.ore-progress--red { --pb-fill: #ff8a8a; }
+.ore-progress--pastel.ore-progress--pink { --pb-fill: #ff8ae0; }
+.ore-progress--pastel.ore-progress--yellow { --pb-fill: #ffec72; }
+.ore-progress--pastel.ore-progress--orange { --pb-fill: #ffb98a; }
+.ore-progress--pastel.ore-progress--purple { --pb-fill: #ad99e7; }
+.ore-progress--pastel.ore-progress--gray { --pb-fill: #d2d4d6; }
+.ore-progress--pastel.ore-progress--dark-gray { --pb-fill: #37373a; }

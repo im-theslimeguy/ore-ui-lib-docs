@@ -1,0 +1,49 @@
+---
+title: Tags
+description: Flat OreAccent pills, badges, and indicator dots with automatic contrast-safe ink and optional icons.
+---
+
+import { TagShowcase } from "../../components/FeedbackShowcase";
+
+`ui.tag(...)`, `ui.badge(...)`, and `ui.indicator(...)` render flat, borderless `OreAccent` status elements across all 10 accent colors (`GRAY`, `DARK_GRAY`, `RED`, `PINK`, `PURPLE`, `BLUE`, `TURQUOISE`, `GREEN`, `YELLOW`, `ORANGE`). Text automatically uses `#1E1E20` (`OreTone.TEXT_DARK`) on light pastels and `#FFFFFF` (`OreTone.TEXT`) on `DARK_GRAY` or dark vibrant fills.
+
+## Interactive Preview
+
+<TagShowcase client:load />
+
+## Method Signatures (`OreUi`)
+
+```java
+// Tag (14 px tall text-only, or 15 px tall when leading/trailing icon is present; returns width)
+public int tagWidth(String label, String[] leading, String[] trailing)
+public int tag(int x, int y, String label, OreAccent accent)
+public int tag(int x, int y, String label, OreAccent accent, String[] leading, String[] trailing)
+
+// Badge (14 px tall / OreUi.BADGE_HEIGHT; returns width)
+public int badgeWidth(String label)
+public int badge(int x, int y, String label, OreAccent accent)
+public int badge(int x, int y, String label, OreAccent accent, OreColorType colorType)
+
+// 4x4 flat indicator square
+public void indicator(int x, int y, OreAccent accent)
+public void indicator(int x, int y, OreAccent accent, OreColorType colorType)
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `x`, `y` | `int` | Top-left GUI pixel coordinates. |
+| `label` | `String` | Tag or badge label text. |
+| `accent` | `OreAccent` | Color token (`GRAY`, `DARK_GRAY`, `RED`, `PINK`, `PURPLE`, `BLUE`, `TURQUOISE`, `GREEN`, `YELLOW`, `ORANGE`). |
+| `colorType` | `OreColorType` | `PASTEL` (default for badges/indicators) or `VIBRANT`. |
+| `leading`, `trailing` | `String[]` | Optional `8×8` icons (`OreIcon.*.small`) before or after `label` in `tag`. |
+
+## Example
+
+```java
+// Tag with leading icon (returns width so the next tag can sit beside it)
+int tagW = ui.tag(x, y, "New", OreAccent.GREEN, OreIcon.SPARKLES3.small, null);
+ui.badge(x + tagW + 6, y, "BETA", OreAccent.YELLOW);
+ui.indicator(x, y + 20, OreAccent.RED);
+```

@@ -1,0 +1,215 @@
+.ore-sel-group {
+	--ore-px: 2px;
+	display: flex;
+	align-items: stretch;
+	width: 100%;
+}
+
+.ore-sel-group--sm {
+	--ore-px: 2px;
+}
+
+.ore-sel-group--md {
+	--ore-px: 2px;
+}
+
+.ore-sel-group--lg {
+	--ore-px: 4px;
+}
+
+.ore-sel-btn {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	flex: 1 0 0;
+	min-width: 0;
+	min-height: calc(27 * var(--ore-px));
+	padding: 0;
+	margin: 0;
+	border: 0;
+	background: transparent;
+	box-sizing: border-box;
+	cursor: pointer;
+	outline: none;
+	position: relative;
+	font-family: "Minecraft Seven", monospace;
+	font-weight: 400;
+	font-synthesis: none;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.ore-sel-group > .ore-sel-btn:not(:last-child) {
+	margin-right: calc(-1 * var(--ore-px));
+}
+
+.ore-sel-btn__container {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	width: 100%;
+	flex: 1 0 auto;
+	padding: var(--ore-px);
+	background: var(--ore-bg, #1e1e1f);
+	box-sizing: border-box;
+}
+
+.ore-sel-btn__face {
+	display: flex;
+	align-items: stretch;
+	width: 100%;
+	flex: 1 0 auto;
+	box-sizing: border-box;
+	background: var(--ore-general-bg, #d0d1d5);
+	border-style: solid;
+	border-width: 0 var(--ore-px) var(--ore-px) 0;
+	border-color: var(--ore-general-stroke, #e3e3e5);
+}
+
+.ore-sel-btn__content {
+	display: flex;
+	flex: 1 0 0;
+	align-items: center;
+	justify-content: center;
+	gap: calc(4 * var(--ore-px));
+	padding: calc(2 * var(--ore-px)) calc(4 * var(--ore-px));
+	border-style: solid;
+	border-width: var(--ore-px) 0 0 var(--ore-px);
+	border-color: var(--ore-general-stroke-secondary, rgba(255, 255, 255, 0.2));
+	box-sizing: border-box;
+	position: relative;
+}
+
+.ore-sel-btn__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: calc(8 * var(--ore-px));
+	height: calc(8 * var(--ore-px));
+	color: var(--ore-general-text, #1e1e20);
+}
+
+.ore-sel-btn__icon > svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.ore-sel-btn__label {
+	color: var(--ore-general-text, #1e1e20);
+	font-size: calc(8 * var(--ore-px));
+	line-height: 1.2;
+	white-space: nowrap;
+}
+
+.ore-sel-btn__badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: #37373a;
+	color: #ffffff;
+	font-size: calc(8 * var(--ore-px));
+	line-height: 1;
+	padding: calc(2 * var(--ore-px)) calc(3.5 * var(--ore-px));
+}
+
+.ore-sel-btn__shadow {
+	display: block;
+	width: 100%;
+	height: calc(2 * var(--ore-px));
+	flex-shrink: 0;
+	background: var(--ore-general-shadow, #59595b);
+}
+
+.ore-sel-btn__line {
+	display: none;
+	width: calc(26 * var(--ore-px));
+	height: var(--ore-px);
+	background: #ffffff;
+	margin-top: calc(-1 * var(--ore-px));
+	z-index: 2;
+}
+
+/* Hover (unselected) */
+.ore-sel-btn:not(.ore-sel-btn--selected):not(:disabled):hover .ore-sel-btn__face,
+.ore-sel-btn:not(.ore-sel-btn--selected)[data-state="hover"] .ore-sel-btn__face {
+	background: var(--ore-general-bg-hover, #b1b2b6);
+}
+
+/* Selected */
+.ore-sel-btn--selected {
+	padding-top: calc(2 * var(--ore-px));
+	z-index: 1;
+}
+
+.ore-sel-btn--selected .ore-sel-btn__face {
+	background: var(--ore-colored-bg, #387e24);
+	border-color: var(--ore-colored-stroke, #50913d);
+}
+
+.ore-sel-btn--selected .ore-sel-btn__content {
+	border-color: var(--ore-colored-stroke-secondary, rgba(255, 255, 255, 0.2));
+}
+
+.ore-sel-btn--selected .ore-sel-btn__label,
+.ore-sel-btn--selected .ore-sel-btn__icon {
+	color: #ffffff;
+}
+
+.ore-sel-btn--selected .ore-sel-btn__badge {
+	background: #d2d4d6;
+	color: #1e1e20;
+}
+
+.ore-sel-btn--selected .ore-sel-btn__shadow {
+	height: 0;
+}
+
+.ore-sel-btn--selected .ore-sel-btn__line {
+	display: block;
+}
+
+.ore-sel-btn--selected:not(:disabled):hover .ore-sel-btn__face {
+	background: var(--ore-colored-bg-hover, #275b1a);
+}
+
+/* Pressing (:active) */
+.ore-sel-btn:not(:disabled):active .ore-sel-btn__shadow {
+	height: 0;
+}
+
+.ore-sel-btn:not(.ore-sel-btn--selected):not(:disabled):active {
+	padding-top: calc(2 * var(--ore-px));
+}
+
+/* Focus-visible */
+.ore-sel-btn:not(:disabled):focus-visible,
+.ore-sel-btn[data-state="focus"] {
+	z-index: 3;
+}
+
+.ore-sel-btn:not(:disabled):focus-visible .ore-sel-btn__container,
+.ore-sel-btn[data-state="focus"] .ore-sel-btn__container {
+	outline: var(--ore-px) solid var(--ore-focus-ring, #ffffff);
+	outline-offset: 0;
+}
+
+/* Disabled */
+.ore-sel-btn:disabled {
+	cursor: not-allowed;
+}
+
+.ore-sel-btn:disabled .ore-sel-btn__shadow {
+	height: 0;
+}
+
+.ore-sel-btn:disabled .ore-sel-btn__face {
+	background: var(--ore-general-bg-hover, #b1b2b6);
+}
+
+.ore-sel-btn:disabled .ore-sel-btn__label,
+.ore-sel-btn:disabled .ore-sel-btn__icon {
+	opacity: 0.5;
+}

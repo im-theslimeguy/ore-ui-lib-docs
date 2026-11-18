@@ -1,0 +1,345 @@
+.ore-btn {
+	--ore-px: 2px;
+	--ore-font-size: 16px;
+	--ore-min-height: calc(26 * var(--ore-px));
+
+	--btn-bg: var(--ore-colored-bg);
+	--btn-bg-hover: var(--ore-colored-bg-hover);
+	--btn-bg-pressed: var(--ore-colored-bg-pressed);
+	--btn-stroke: var(--ore-colored-stroke);
+	--btn-stroke-hover: var(--ore-colored-stroke-hover);
+	--btn-stroke-secondary: var(--ore-colored-stroke-secondary);
+	--btn-stroke-hover-secondary: var(--ore-colored-stroke-hover-secondary);
+	--btn-shadow: var(--ore-colored-shadow);
+	--btn-text: var(--ore-colored-text);
+
+	display: inline-flex;
+	flex-direction: column;
+	align-items: stretch;
+	position: relative;
+	box-sizing: border-box;
+	min-height: var(--ore-min-height);
+	padding: 0;
+	margin: 0;
+	border: 0;
+	background: transparent;
+	cursor: pointer;
+	user-select: none;
+	outline: none;
+	text-decoration: none;
+	font-family: "Minecraft Seven", monospace;
+	font-weight: 400;
+	font-synthesis: none;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.ore-btn--sm {
+	--ore-px: 2px;
+	--ore-font-size: 14px;
+	--ore-min-height: 44px;
+}
+
+.ore-btn--md {
+	--ore-px: 2px;
+	--ore-font-size: 16px;
+	--ore-min-height: 52px;
+}
+
+.ore-btn--lg {
+	--ore-px: 4px;
+	--ore-font-size: 32px;
+	--ore-min-height: 104px;
+}
+
+.ore-btn--vertical.ore-btn--sm {
+	--ore-min-height: 60px;
+}
+
+.ore-btn--vertical.ore-btn--md {
+	--ore-min-height: 68px;
+}
+
+.ore-btn--vertical.ore-btn--lg {
+	--ore-min-height: 128px;
+}
+
+.ore-btn--full-width {
+	width: 100%;
+	display: flex;
+}
+
+/* Color variants */
+.ore-btn--colored {
+	--btn-bg: var(--ore-colored-bg);
+	--btn-bg-hover: var(--ore-colored-bg-hover);
+	--btn-bg-pressed: var(--ore-colored-bg-pressed);
+	--btn-stroke: var(--ore-colored-stroke);
+	--btn-stroke-hover: var(--ore-colored-stroke-hover);
+	--btn-stroke-secondary: var(--ore-colored-stroke-secondary);
+	--btn-stroke-hover-secondary: var(--ore-colored-stroke-hover-secondary);
+	--btn-shadow: var(--ore-colored-shadow);
+	--btn-text: var(--ore-colored-text);
+}
+
+.ore-btn--general {
+	--btn-bg: var(--ore-general-bg);
+	--btn-bg-hover: var(--ore-general-bg-hover);
+	--btn-bg-pressed: var(--ore-general-bg-pressed);
+	--btn-stroke: var(--ore-general-stroke);
+	--btn-stroke-hover: var(--ore-general-stroke-hover);
+	--btn-stroke-secondary: var(--ore-general-stroke-secondary);
+	--btn-stroke-hover-secondary: var(--ore-general-stroke-hover-secondary);
+	--btn-shadow: var(--ore-general-shadow);
+	--btn-text: var(--ore-general-text);
+}
+
+.ore-btn--destructive {
+	--btn-bg: var(--ore-destructive-bg);
+	--btn-bg-hover: var(--ore-destructive-bg-hover);
+	--btn-bg-pressed: var(--ore-destructive-bg-pressed);
+	--btn-stroke: var(--ore-destructive-stroke);
+	--btn-stroke-hover: var(--ore-destructive-stroke-hover);
+	--btn-stroke-secondary: var(--ore-destructive-stroke-secondary);
+	--btn-stroke-hover-secondary: var(--ore-destructive-stroke-hover-secondary);
+	--btn-shadow: var(--ore-destructive-shadow);
+	--btn-text: var(--ore-destructive-text);
+}
+
+.ore-btn--warning {
+	--btn-bg: var(--ore-warning-bg);
+	--btn-bg-hover: var(--ore-warning-bg-hover);
+	--btn-bg-pressed: var(--ore-warning-bg-pressed);
+	--btn-stroke: var(--ore-warning-stroke);
+	--btn-stroke-hover: var(--ore-warning-stroke-hover);
+	--btn-stroke-secondary: var(--ore-warning-stroke-secondary);
+	--btn-stroke-hover-secondary: var(--ore-warning-stroke-hover-secondary);
+	--btn-shadow: var(--ore-warning-shadow);
+	--btn-text: var(--ore-warning-text);
+}
+
+.ore-btn--realms {
+	--btn-bg: var(--ore-realms-bg);
+	--btn-bg-hover: var(--ore-realms-bg-hover);
+	--btn-bg-pressed: var(--ore-realms-bg-pressed);
+	--btn-stroke: var(--ore-realms-stroke);
+	--btn-stroke-hover: var(--ore-realms-stroke-hover);
+	--btn-stroke-secondary: var(--ore-realms-stroke-secondary);
+	--btn-stroke-hover-secondary: var(--ore-realms-stroke-hover-secondary);
+	--btn-shadow: var(--ore-realms-shadow);
+	--btn-text: var(--ore-realms-text);
+}
+
+/* Container: 1 Ore-px dark #1e1e1f outline around face + shadow */
+.ore-btn__container {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	width: 100%;
+	flex: 1 0 auto;
+	box-sizing: border-box;
+	background: var(--ore-bg);
+	padding: var(--ore-px);
+}
+
+/* Background: main face with right + bottom bevel stroke, flush inside container */
+.ore-btn__background {
+	display: flex;
+	align-items: stretch;
+	justify-content: center;
+	width: 100%;
+	flex: 1 0 auto;
+	box-sizing: border-box;
+	padding: 0;
+	background: var(--btn-bg);
+	border-style: solid;
+	border-width: 0 var(--ore-px) var(--ore-px) 0;
+	border-color: var(--btn-stroke);
+	overflow: hidden;
+}
+
+/* Content: top + left inner light highlight, flush against container outline */
+.ore-btn__content {
+	display: flex;
+	flex: 1 0 0;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	min-width: 1px;
+	box-sizing: border-box;
+	gap: calc(4 * var(--ore-px));
+	padding: calc(2 * var(--ore-px)) calc(5 * var(--ore-px));
+	border-style: solid;
+	border-width: var(--ore-px) 0 0 var(--ore-px);
+	border-color: var(--btn-stroke-secondary);
+}
+
+.ore-btn--vertical .ore-btn__content {
+	flex-direction: column;
+	gap: calc(2 * var(--ore-px));
+	padding: calc(2 * var(--ore-px)) calc(5 * var(--ore-px));
+}
+
+.ore-btn--icon-only .ore-btn__content {
+	padding: calc(2 * var(--ore-px)) calc(4 * var(--ore-px));
+}
+
+/* Bottom extrusion shadow: 2 Ore-px tall inside the dark outline */
+.ore-btn__shadow {
+	display: block;
+	width: 100%;
+	height: calc(2 * var(--ore-px));
+	flex-shrink: 0;
+	background: var(--btn-shadow);
+}
+
+.ore-btn__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: calc(8 * var(--ore-px));
+	height: calc(8 * var(--ore-px));
+	color: var(--btn-text);
+}
+
+.ore-btn__icon > svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.ore-btn__label {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--btn-text);
+	font-family: "Minecraft Seven", monospace;
+	font-size: var(--ore-font-size);
+	font-weight: 400;
+	font-synthesis: none;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
+	line-height: 1.2;
+	text-align: center;
+	white-space: nowrap;
+}
+
+/* Interactive: Hover (and forced hover / focus-hover) */
+.ore-btn:not(:disabled):not([data-subtly-disabled="true"]):not([data-state="disabled"]):not([data-state="subtly-disabled"]):hover .ore-btn__background,
+.ore-btn[data-state="hover"] .ore-btn__background,
+.ore-btn[data-state="focus-hover"] .ore-btn__background {
+	background: var(--btn-bg-hover);
+	border-color: var(--btn-stroke-hover);
+}
+
+.ore-btn:not(:disabled):not([data-subtly-disabled="true"]):not([data-state="disabled"]):not([data-state="subtly-disabled"]):hover .ore-btn__content,
+.ore-btn[data-state="hover"] .ore-btn__content,
+.ore-btn[data-state="focus-hover"] .ore-btn__content {
+	border-color: var(--btn-stroke-hover-secondary);
+}
+
+/* Interactive: Focus-visible (Tab keyboard navigation) - 1 Ore-px white ring OUTSIDE dark outline */
+.ore-btn:not(:disabled):not([data-subtly-disabled="true"]):not([data-state="disabled"]):not([data-state="subtly-disabled"]):focus-visible,
+.ore-btn[data-state="focus"],
+.ore-btn[data-state="focus-hover"] {
+	z-index: 2;
+}
+
+.ore-btn:not(:disabled):not([data-subtly-disabled="true"]):not([data-state="disabled"]):not([data-state="subtly-disabled"]):focus-visible .ore-btn__container,
+.ore-btn[data-state="focus"] .ore-btn__container,
+.ore-btn[data-state="focus-hover"] .ore-btn__container {
+	outline: var(--ore-px) solid var(--ore-focus-ring);
+	outline-offset: 0;
+}
+
+/* Interactive: Pressed (:active) and Pressed+Hovered (:active:hover) */
+.ore-btn:not(:disabled):not([data-subtly-disabled="true"]):not([data-state="disabled"]):not([data-state="subtly-disabled"]):active,
+.ore-btn[data-state="pressed"],
+.ore-btn[data-state="pressed-hover"] {
+	padding-top: calc(2 * var(--ore-px));
+}
+
+.ore-btn:not(:disabled):not([data-subtly-disabled="true"]):not([data-state="disabled"]):not([data-state="subtly-disabled"]):active .ore-btn__background,
+.ore-btn[data-state="pressed"] .ore-btn__background,
+.ore-btn[data-state="pressed-hover"] .ore-btn__background {
+	background: var(--btn-bg-pressed);
+	border-color: var(--btn-stroke-hover);
+}
+
+.ore-btn:not(:disabled):not([data-subtly-disabled="true"]):not([data-state="disabled"]):not([data-state="subtly-disabled"]):active .ore-btn__content,
+.ore-btn[data-state="pressed"] .ore-btn__content,
+.ore-btn[data-state="pressed-hover"] .ore-btn__content {
+	border-color: var(--btn-stroke-hover-secondary);
+}
+
+.ore-btn:not(:disabled):not([data-subtly-disabled="true"]):not([data-state="disabled"]):not([data-state="subtly-disabled"]):active .ore-btn__shadow,
+.ore-btn[data-state="pressed"] .ore-btn__shadow,
+.ore-btn[data-state="pressed-hover"] .ore-btn__shadow {
+	height: 0;
+}
+
+/* Subtly Disabled */
+.ore-btn[data-subtly-disabled="true"],
+.ore-btn[data-state="subtly-disabled"] {
+	cursor: not-allowed;
+}
+
+.ore-btn[data-subtly-disabled="true"] .ore-btn__background,
+.ore-btn[data-state="subtly-disabled"] .ore-btn__background {
+	background: var(--btn-bg-hover);
+	border-color: var(--btn-stroke);
+}
+
+.ore-btn[data-subtly-disabled="true"] .ore-btn__content,
+.ore-btn[data-state="subtly-disabled"] .ore-btn__content {
+	border-color: var(--btn-stroke-secondary);
+}
+
+.ore-btn[data-subtly-disabled="true"] .ore-btn__shadow,
+.ore-btn[data-state="subtly-disabled"] .ore-btn__shadow {
+	height: 0;
+}
+
+.ore-btn[data-subtly-disabled="true"] .ore-btn__label,
+.ore-btn[data-subtly-disabled="true"] .ore-btn__icon,
+.ore-btn[data-state="subtly-disabled"] .ore-btn__label,
+.ore-btn[data-state="subtly-disabled"] .ore-btn__icon {
+	opacity: 0.5;
+}
+
+/* Disabled */
+.ore-btn:disabled,
+.ore-btn[data-state="disabled"] {
+	cursor: not-allowed;
+}
+
+.ore-btn:disabled .ore-btn__container,
+.ore-btn[data-state="disabled"] .ore-btn__container {
+	background: var(--ore-bg-disabled);
+	outline: none;
+}
+
+.ore-btn:disabled .ore-btn__background,
+.ore-btn[data-state="disabled"] .ore-btn__background {
+	background: var(--ore-disabled-bg);
+	border-width: 0;
+}
+
+.ore-btn:disabled .ore-btn__content,
+.ore-btn[data-state="disabled"] .ore-btn__content {
+	border-width: 0;
+}
+
+.ore-btn:disabled .ore-btn__shadow,
+.ore-btn[data-state="disabled"] .ore-btn__shadow {
+	background: var(--ore-disabled-shadow);
+}
+
+.ore-btn:disabled .ore-btn__label,
+.ore-btn:disabled .ore-btn__icon,
+.ore-btn[data-state="disabled"] .ore-btn__label,
+.ore-btn[data-state="disabled"] .ore-btn__icon {
+	color: var(--ore-disabled-text);
+	opacity: 1;
+}

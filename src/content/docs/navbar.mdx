@@ -1,0 +1,76 @@
+---
+title: Navbar
+description: Vertical sidebar navigation with grouped items, count badges, Tab-focusable headers, and OrePanelScreen integration.
+---
+
+import { NavbarShowcase } from "../../components/NavbarShowcase";
+
+`ui.navItem(...)` and `ui.navHeader(...)` render the `#313233` (`OreTone.PANEL`) Bedrock vertical navigation rail (`OreUi.NAV_HEIGHT = 25` per row). Inside `OrePanelScreen`, override `extractNav(OreUi ui, int x, int top, int w)` to populate the scrollable sidebar and return the total height of all rows.
+
+## Item vs. Header Behavior
+
+- **`ui.navItem(...)`**: Clickable `25px` row. When `selected` is `true`, it transitions to `#48494A` (`OreTone.CARD`) with a darker `#2B2C2C` top edge and lighter `#5A5B5C` bottom edge, and supports an optional trailing `OreAccent` badge pinned `7px` from the right edge.
+- **`ui.navHeader(...)`**: Non-clickable section divider with a `#1D1E1F` / `#454647` bottom line and `#D0D1D4` (`OreTone.HEADER_TEXT`) text. It registers a Tab stop so keyboard users can step through sections cleanly, while ignoring clicks.
+
+## Interactive Preview
+
+<NavbarShowcase client:load />
+
+## Method Signatures (`OreUi` & `OrePanelScreen`)
+
+```java
+// Category header (25 px high)
+public void navHeader(int x, int y, int w, String[] icon, String label, String tip)
+
+// Clickable navigation item (25 px high)
+public void navItem(int x, int y, int w, boolean selected, String key,
+                    String[] icon, String label, String tip, Runnable action)
+
+// Clickable navigation item with trailing OreAccent badge
+public void navItem(int x, int y, int w, boolean selected, String key,
+                    String[] icon, String label, String badge, OreAccent accent,
+                    String tip, Runnable action)
+```
+
+In `OrePanelScreen`:
+
+```java
+navbar(int width)                  // Sidebar width in GUI px (0 hides sidebar)
+navChrome(boolean drawBackground)  // Draw #313233 panel fill and #1E1E1F border lines
+navMode(NavMode mode)              // NavMode.STICKY or NavMode.SELF
+```
+
+## Parameters (`navItem`)
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `x`, `y`, `w` | `int` | Top-left GUI pixel coordinates and row width (`height` is `OreUi.NAV_HEIGHT = 25`). |
+| `selected` | `boolean` | Smoothly highlights the row as the active section. |
+| `key` | `String` | Unique animation key (`"nav:" + key`). |
+| `icon` | `String[]` | Optional `8×8` or `12×12` icon centered in the `12px` leading slot (`null` shifts text left). |
+| `label` | `String` | Item label text. |
+| `badge`, `accent` | `String`, `OreAccent` | Optional trailing count/status badge and accent color. |
+| `tip` | `String` | Optional hover tooltip. |
+| `action` | `Runnable` | Invoked on click or keyboard activation. |
+
+## Example
+
+```java
+@Override
+protected int extractNav(OreUi ui, int x, int top, int w) {
+	int y = top;
+
+	ui.navItem(x, y, w, tab == 0, "navHome", OreIcon.HOUSE.small,
+		"Home", "Overview", () -> { tab = 0; resetScroll(); });
+	y += OreUi.NAV_HEIGHT;
+
+	ui.navHeader(x, y, w, OreIcon.ADJUST_HORIZONTAL3.small, "SETTINGS", null);
+	y += OreUi.NAV_HEIGHT;
+
+	ui.navItem(x, y, w, tab == 1, "navVideo", OreIcon.LANDSCAPE.small,
+		"Video", "2", OreAccent.GRAY, "Graphics options", () -> { tab = 1; resetScroll(); });
+	y += OreUi.NAV_HEIGHT;
+
+	return y - top;
+}
+```

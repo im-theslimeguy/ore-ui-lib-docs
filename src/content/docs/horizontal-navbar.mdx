@@ -1,0 +1,64 @@
+---
+title: Horizontal Navbar
+description: Segmented horizontal navigation bar built with navButtonHorizontal and navRowHorizontal.
+---
+
+import { HorizontalNavbarShowcase } from "../../components/SelectionShowcase";
+
+`ui.navButtonHorizontal(...)` renders a `27px` tall (`OreUi.TAB_HEIGHT`) steel-faced navigation tab (`OreTone.STEEL` `#515453`) that sinks `2px` into `#373A39` (`OreTone.SUNK`) with a centered bottom selection indicator line when active. Use `ui.navRowHorizontal(...)` to render an equal-width row of tabs whose outlines fuse via `OreUi.BAR_OVERLAP` (`1px`).
+
+<HorizontalNavbarShowcase client:load />
+
+## Anatomy & Rules
+
+- **Border collapse**: `navRowHorizontal` advances each tab by `w - OreUi.BAR_OVERLAP` (`w - 1`), merging neighboring `#1E1E1F` outlines into a single `1px` seam.
+- **Pressed vs. Selected**: Holding a tab folds its `2px` shadow rows away (`down` sinks `1px`); when `selected` is `true`, it stays sunk `2px` with no shadow rows and displays a bottom white indicator line.
+- **Optional badge**: Badges stay pinned `6px` from the right edge (`y + 5`) and remain stationary while the button face presses down.
+
+## Method Signatures (`OreUi`)
+
+```java
+// Connected equal-width horizontal nav row (returns total width covered)
+public int navRowHorizontal(int x, int y, int w, String[] labels, String[][] icons,
+                            int selected, String key, IntConsumer action)
+
+// Individual horizontal nav button (height is OreUi.TAB_HEIGHT = 27)
+public void navButtonHorizontal(int x, int y, int w, String label, String[] icon,
+                                boolean selected, boolean enabled, boolean focused,
+                                String key, String tip, Runnable action)
+
+// With trailing OreAccent badge
+public void navButtonHorizontal(int x, int y, int w, String label, String[] icon,
+                                String badge, OreAccent accent,
+                                boolean selected, boolean enabled, boolean focused,
+                                String key, String tip, Runnable action)
+```
+
+## Parameters (`navButtonHorizontal`)
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `x`, `y`, `w` | `int` | Coordinates and per-tab width (height is `OreUi.TAB_HEIGHT = 27`). |
+| `label` | `String` | Tab label text. |
+| `icon` | `String[]` | Optional `8×8` leading icon (`OreIcon.*.small`), or `null`. |
+| `badge`, `accent` | `String`, `OreAccent` | Optional right-aligned badge and `OreAccent` fill. |
+| `selected` | `boolean` | Renders the sunk active state with bottom indicator line. |
+| `enabled` | `boolean` | When `false`, dims text and indicator line to 50% opacity. |
+| `focused` | `boolean` | Forces the `1px` white outer focus ring. |
+| `key` | `String` | Unique hover animation key (`"hnav:" + key`). |
+| `action` | `Runnable` / `IntConsumer` | Invoked when clicked or activated via keyboard. |
+
+## Example
+
+```java
+private int activeTab = 0;
+private final String[] tabs = { "Worlds", "Friends", "Servers" };
+
+// Connected row of 90 px wide horizontal nav tabs
+ui.navRowHorizontal(x, y, 90, tabs, null, activeTab, "worldsNav", idx -> activeTab = idx);
+
+// Individual tab with a badge
+ui.navButtonHorizontal(x, y + 36, 100, "Friends", OreIcon.PERSON.small,
+	"3", OreAccent.GREEN, activeTab == 1, true, false,
+	"hnavFriends", "View friends", () -> activeTab = 1);
+```

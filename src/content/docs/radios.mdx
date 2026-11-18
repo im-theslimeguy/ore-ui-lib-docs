@@ -1,0 +1,44 @@
+---
+title: Radio Buttons
+description: Rotated 45-degree diamond radio control with a 3-tone beveled center dot.
+---
+
+import { RadioShowcase } from "../../components/InputsShowcase";
+
+`ui.radio(...)` renders a `22×22` (`OreUi.RADIO_SIZE`) rotated `-45deg` diamond with a 4-quadrant beveled inner dot (`variant.dotTop`, `variant.dotSide`, `variant.dotBottom`) when selected. Unselected radios share the neutral grey `#8C8D90` face; selected radios adopt the active `OreVariant` palette.
+
+## Interactive Preview & Matrix
+
+<RadioShowcase client:load />
+
+## Method Signature (`OreUi`)
+
+```java
+public void radio(int x, int y, boolean selected, OreVariant variant,
+                  boolean enabled, boolean focused, String tip, Runnable action)
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `x`, `y` | `int` | Top-left GUI pixel coordinates (`22×22` box). |
+| `selected` | `boolean` | Whether this option is selected (shows variant face and beveled center diamond). |
+| `variant` | `OreVariant` | Active palette when selected (`null` defaults to `OreVariant.COLORED`). |
+| `enabled` | `boolean` | Enables interaction (`false` halves opacity of content/dot). |
+| `focused` | `boolean` | Forces the rotated white diamond focus ring around the control. |
+| `tip` | `String` | Optional hover tooltip. |
+| `action` | `Runnable` | Invoked when clicked or activated via `Enter`/`Space`. |
+
+## Example
+
+```java
+String[] difficulties = { "Normal", "Hard" };
+for (int i = 0; i < difficulties.length; i++) {
+	int idx = i;
+	int ry = y + i * 26;
+	ui.radio(x, ry, selectedDiff == i, OreVariant.COLORED, true, false,
+		"Choose " + difficulties[i], () -> selectedDiff = idx);
+	ui.text(difficulties[i], x + 28, ry + 7, OreTone.TEXT);
+}
+```

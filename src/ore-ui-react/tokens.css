@@ -1,0 +1,86 @@
+@font-face {
+	font-family: "Minecraft Seven";
+	src: url("https://www.minecraft.net/etc.clientlibs/minecraftnet/clientlibs/clientlib-site/resources/fonts/Minecraft-Seven_v2.woff2")
+		format("woff2");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Minecraft Ten";
+	src: url("https://www.minecraft.net/etc.clientlibs/minecraftnet/clientlibs/clientlib-site/resources/fonts/Minecraft-Tenv2.woff2")
+		format("woff2");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+:root {
+	/* Integer Ore pixel unit: 2px = 1:2 of Figma (default), 4px = 1:1 Figma */
+	--ore-px: 2px;
+
+	/* Shared surface & disabled tokens from Figma Ore UI Style */
+	--ore-bg: #1e1e1f;
+	--ore-bg-disabled: #58585a;
+	--ore-focus-ring: #ffffff;
+
+	--ore-disabled-bg: #b1b2b6;
+	--ore-disabled-shadow: #8c8d91;
+	--ore-disabled-text: #595a5c;
+
+	/* Colored (Green CTA) */
+	--ore-colored-bg: #387e24;
+	--ore-colored-bg-hover: #275b1a;
+	--ore-colored-bg-pressed: #1c4a12;
+	--ore-colored-stroke: #50913d;
+	--ore-colored-stroke-hover: #6b935f;
+	--ore-colored-stroke-secondary: rgba(255, 255, 255, 0.2);
+	--ore-colored-stroke-hover-secondary: rgba(255, 255, 255, 0.4);
+	--ore-colored-shadow: #1d4d13;
+	--ore-colored-text: #ffffff;
+
+	/* General (Neutral) */
+	--ore-general-bg: #d0d1d5;
+	--ore-general-bg-hover: #b1b2b6;
+	--ore-general-bg-pressed: #b1b2b6;
+	--ore-general-stroke: #e3e3e5;
+	--ore-general-stroke-hover: #e3e3e5;
+	--ore-general-stroke-secondary: rgba(255, 255, 255, 0.2);
+	--ore-general-stroke-hover-secondary: rgba(255, 255, 255, 0.2);
+	--ore-general-shadow: #59595b;
+	--ore-general-text: #1e1e20;
+
+	/* Destructive (Red) */
+	--ore-destructive-bg: #c93636;
+	--ore-destructive-bg-hover: #c02d2d;
+	--ore-destructive-bg-pressed: #ad1d1d;
+	--ore-destructive-stroke: #d04a4b;
+	--ore-destructive-stroke-hover: #d98180;
+	--ore-destructive-stroke-secondary: rgba(255, 255, 255, 0.2);
+	--ore-destructive-stroke-hover-secondary: rgba(255, 255, 255, 0.4);
+	--ore-destructive-shadow: #ad1d1d;
+	--ore-destructive-text: #ffffff;
+
+	/* Warning (Amber / Gold) */
+	--ore-warning-bg: #e1b922;
+	--ore-warning-bg-hover: #c09a0d;
+	--ore-warning-bg-pressed: #c09a0d;
+	--ore-warning-stroke: #e7c85b;
+	--ore-warning-stroke-hover: #e7c85b;
+	--ore-warning-stroke-secondary: rgba(255, 255, 255, 0.2);
+	--ore-warning-stroke-hover-secondary: rgba(255, 255, 255, 0.2);
+	--ore-warning-shadow: #b87919;
+	--ore-warning-text: #1e1e20;
+
+	/* Realms (Purple) */
+	--ore-realms-bg: #7345e5;
+	--ore-realms-bg-hover: #5d2cc6;
+	--ore-realms-bg-pressed: #4a1cac;
+	--ore-realms-stroke: #8e4aeb;
+	--ore-realms-stroke-hover: #9242e2;
+	--ore-realms-stroke-secondary: rgba(250, 176, 255, 0.2);
+	--ore-realms-stroke-hover-secondary: rgba(250, 176, 255, 0.4);
+	--ore-realms-shadow: #4a1cac;
+	--ore-realms-text: #ffffff;
+}

@@ -1,0 +1,61 @@
+---
+title: Textboxes
+description: Sunken 31px single-line text input backed by OreTextField with selection, clipboard, IME preedit, and invalid error state.
+---
+
+import { TextInputsShowcase } from "../../components/InputsShowcase";
+
+`ui.textBox(...)` renders a `31px` tall (`OreUi.FIELD_HEIGHT`) sunken input frame (`OreTone.PANEL` `#313233` with a `2px` `#242425` top stroke) driven by a stateful `OreTextField`. It supports a blinking green caret (`OreTone.CARET`), horizontal scrolling, mouse drag and double-click word selection, IME preedit, and `Ctrl+A` / `Ctrl+C` / `Ctrl+V` / `Ctrl+X`.
+
+## Interactive Preview
+
+<TextInputsShowcase client:load />
+
+## Method Signatures (`OreUi`)
+
+```java
+// Default 31 px height (OreUi.FIELD_HEIGHT)
+public void textBox(int x, int y, int w, OreTextField field,
+                    String placeholder, String[] trailing, boolean enabled)
+
+// Custom height
+public void textBox(int x, int y, int w, int h, OreTextField field,
+                    String placeholder, String[] trailing, boolean enabled)
+
+// With invalid error tint (red top stroke & face)
+public void textBox(int x, int y, int w, int h, OreTextField field,
+                    String placeholder, String[] trailing, boolean enabled, boolean invalid)
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `x`, `y`, `w`, `h` | `int` | Box coordinates and dimensions (`h` defaults to `OreUi.FIELD_HEIGHT = 31`). |
+| `field` | `OreTextField` | Persistent field state storing value, caret, selection anchor, scroll offset, and `maxLength`. |
+| `placeholder` | `String` | Muted hint shown when `field.value()` is empty. |
+| `trailing` | `String[]` | Optional `8×8` or `12×12` trailing glyph (e.g. `OreIcon.PENCIL.rows`), or `null`. |
+| `enabled` | `boolean` | When `false`, switches to neutral `#C2C4C6` disabled fill and `#3F4143` text. |
+| `invalid` | `boolean` | Applies `OreTone.FIELD_INVALID_FACE` (`#4A2E2E`) and `#7B1515` top stroke. |
+
+## `OreTextField` API
+
+| Method | Description |
+| --- | --- |
+| `new OreTextField()` / `new OreTextField(String value)` | Creates a field state (default `maxLength = 256`). |
+| `value()` / `setValue(String text)` | Gets or replaces the text and clamps caret/anchor bounds. |
+| `maxLength(int length)` | Fluent setter capping maximum character count. |
+| `hasSelection()` / `selected()` | Checks or returns the selected substring. |
+| `selectionStart()` / `selectionEnd()` | Normalized start and end indices of the active selection. |
+| `selectAll()` | Selects the entire text value. |
+
+## Example
+
+```java
+private final OreTextField worldName = new OreTextField("New World").maxLength(32);
+
+// Inside extractView / extractContent:
+boolean empty = worldName.value().isBlank();
+ui.textBox(x, y, 220, OreUi.FIELD_HEIGHT, worldName, "World Name",
+	OreIcon.PENCIL.rows, true, empty);
+```

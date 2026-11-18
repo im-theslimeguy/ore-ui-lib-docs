@@ -1,0 +1,246 @@
+.ore-switch {
+	--ore-px: 2px;
+
+	--sw-bg: var(--ore-colored-bg);
+	--sw-stroke: var(--ore-colored-stroke);
+	--sw-text: var(--ore-colored-text);
+
+	display: inline-flex;
+	align-items: flex-end;
+	position: relative;
+	width: calc(25 * var(--ore-px));
+	height: calc(14 * var(--ore-px));
+	padding: calc(2 * var(--ore-px)) 0 0 0;
+	margin: 0;
+	border: 0;
+	background: transparent;
+	box-sizing: border-box;
+	cursor: pointer;
+	outline: none;
+	user-select: none;
+}
+
+.ore-switch--sm {
+	--ore-px: 2px;
+}
+
+.ore-switch--md {
+	--ore-px: 2px;
+}
+
+.ore-switch--lg {
+	--ore-px: 4px;
+}
+
+.ore-switch--colored {
+	--sw-bg: var(--ore-colored-bg);
+	--sw-stroke: var(--ore-colored-stroke);
+	--sw-text: var(--ore-colored-text);
+}
+
+.ore-switch--general {
+	--sw-bg: var(--ore-general-bg);
+	--sw-stroke: var(--ore-general-stroke);
+	--sw-text: var(--ore-general-text);
+}
+
+.ore-switch--destructive {
+	--sw-bg: var(--ore-destructive-bg);
+	--sw-stroke: var(--ore-destructive-stroke);
+	--sw-text: var(--ore-destructive-text);
+}
+
+.ore-switch--warning {
+	--sw-bg: var(--ore-warning-bg);
+	--sw-stroke: var(--ore-warning-stroke);
+	--sw-text: var(--ore-warning-text);
+}
+
+.ore-switch--realms {
+	--sw-bg: var(--ore-realms-bg);
+	--sw-stroke: var(--ore-realms-stroke);
+	--sw-text: var(--ore-realms-text);
+}
+
+/* Track */
+.ore-switch__track {
+	display: flex;
+	align-items: stretch;
+	width: 100%;
+	height: calc(12 * var(--ore-px));
+	box-sizing: border-box;
+	background: var(--ore-bg, #1e1e1f);
+	padding: var(--ore-px);
+}
+
+.ore-switch__track-fill {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	padding: 0 calc(3 * var(--ore-px));
+	background: #8c8d90;
+	border: var(--ore-px) solid #a3a4a6;
+	transition: background-color 140ms ease, border-color 140ms ease;
+}
+
+.ore-switch--on .ore-switch__track-fill {
+	background: var(--sw-bg);
+	border-color: var(--sw-stroke);
+}
+
+/* Optional I / O symbols inside track */
+.ore-switch__sym-on {
+	display: block;
+	width: var(--ore-px);
+	height: calc(5.5 * var(--ore-px));
+	background: var(--sw-text);
+	opacity: 0;
+	transition: opacity 140ms ease;
+}
+
+.ore-switch--on .ore-switch__sym-on {
+	opacity: 1;
+}
+
+.ore-switch__sym-off {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: calc(5 * var(--ore-px));
+	height: calc(5 * var(--ore-px));
+	color: #1e1e20;
+	opacity: 1;
+	transition: opacity 140ms ease;
+}
+
+.ore-switch--on .ore-switch__sym-off {
+	opacity: 0;
+}
+
+.ore-switch__sym-off > svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+/* Sliding Handle (14 x 14 Ore-px) with spring bounce */
+.ore-switch__handle {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: calc(14 * var(--ore-px));
+	height: calc(14 * var(--ore-px));
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	background: var(--ore-bg, #1e1e1f);
+	padding: var(--ore-px);
+	transform: translateX(0);
+	transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ore-switch--on .ore-switch__handle {
+	transform: translateX(calc(11 * var(--ore-px)));
+}
+
+.ore-switch__handle-face {
+	display: flex;
+	flex: 1 0 auto;
+	width: 100%;
+	box-sizing: border-box;
+	background: var(--ore-general-bg, #d0d1d5);
+	border-style: solid;
+	border-width: 0 var(--ore-px) var(--ore-px) 0;
+	border-color: var(--ore-general-stroke, #e3e3e5);
+	transition: background-color 120ms ease;
+}
+
+.ore-switch__handle-light {
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	border-style: solid;
+	border-width: var(--ore-px) 0 0 var(--ore-px);
+	border-color: var(--ore-general-stroke-secondary, rgba(255, 255, 255, 0.2));
+}
+
+.ore-switch__handle-shadow {
+	display: block;
+	width: 100%;
+	height: calc(2 * var(--ore-px));
+	flex-shrink: 0;
+	background: var(--ore-general-shadow, #59595b);
+}
+
+/* Hover */
+.ore-switch:not(:disabled):not([data-state="disabled"]):hover .ore-switch__handle-face,
+.ore-switch[data-state="hover"] .ore-switch__handle-face,
+.ore-switch[data-state="focus-hover"] .ore-switch__handle-face {
+	background: var(--ore-general-bg-hover, #b1b2b6);
+}
+
+/* Focus-visible (Tab) -> white outline on Handle */
+.ore-switch:not(:disabled):not([data-state="disabled"]):focus-visible,
+.ore-switch[data-state="focus"],
+.ore-switch[data-state="focus-hover"] {
+	z-index: 2;
+}
+
+.ore-switch:not(:disabled):not([data-state="disabled"]):focus-visible .ore-switch__handle,
+.ore-switch[data-state="focus"] .ore-switch__handle,
+.ore-switch[data-state="focus-hover"] .ore-switch__handle {
+	outline: var(--ore-px) solid var(--ore-focus-ring, #ffffff);
+	outline-offset: 0;
+}
+
+/* Disabled */
+.ore-switch:disabled,
+.ore-switch[data-state="disabled"] {
+	cursor: not-allowed;
+}
+
+.ore-switch:disabled .ore-switch__track,
+.ore-switch[data-state="disabled"] .ore-switch__track {
+	background: #8c8d90;
+}
+
+.ore-switch:disabled .ore-switch__track-fill,
+.ore-switch[data-state="disabled"] .ore-switch__track-fill {
+	background: #b1b2b5;
+	border-width: 0;
+}
+
+.ore-switch:disabled .ore-switch__sym-on,
+.ore-switch[data-state="disabled"] .ore-switch__sym-on {
+	background: #595a5c;
+}
+
+.ore-switch:disabled .ore-switch__sym-off,
+.ore-switch[data-state="disabled"] .ore-switch__sym-off {
+	color: #595a5c;
+}
+
+.ore-switch:disabled .ore-switch__handle,
+.ore-switch[data-state="disabled"] .ore-switch__handle {
+	background: var(--ore-bg-disabled, #58585a);
+	outline: none;
+}
+
+.ore-switch:disabled .ore-switch__handle-face,
+.ore-switch[data-state="disabled"] .ore-switch__handle-face {
+	background: #b1b2b5;
+	border-width: 0;
+}
+
+.ore-switch:disabled .ore-switch__handle-light,
+.ore-switch[data-state="disabled"] .ore-switch__handle-light {
+	border-width: 0;
+}
+
+.ore-switch:disabled .ore-switch__handle-shadow,
+.ore-switch[data-state="disabled"] .ore-switch__handle-shadow {
+	background: #8c8d90;
+}

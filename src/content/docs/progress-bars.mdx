@@ -1,0 +1,44 @@
+---
+title: Progress Bars
+description: Determinate progress track across all 10 OreAccent colors in vibrant and pastel palettes.
+---
+
+import { ProgressBarShowcase } from "../../components/FeedbackShowcase";
+
+`ui.progressBar(...)` renders a `#48494A` (`OreTone.CARD`) track with a `0.5px` `#6D6D6E` (`OreTone.CARD_STROKE`) border, a bottom-right drop shadow (`OreTone.CARD_SHADOW`), and a colored progress fill with a top-left `20%` white highlight (`OreTone.INNER_LIGHT`). Use `ui.progressBar(...)` for known completion fractions (`0.0F..1.0F`) and `ui.loadingBar(...)` for the framed loading bar.
+
+## Interactive Preview
+
+<ProgressBarShowcase client:load />
+
+## Method Signatures (`OreUi`)
+
+```java
+// Default vibrant blue progress bar (progress clamped to 0.0F..1.0F)
+public void progressBar(int x, int y, int w, float progress)
+
+// Custom OreAccent and OreColorType (VIBRANT or PASTEL)
+public void progressBar(int x, int y, int w, float progress, OreAccent accent, OreColorType colorType)
+```
+
+## Parameters
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `x`, `y` | `int` | — | Top-left GUI pixel coordinates. |
+| `w` | `int` | — | Total bar width in GUI pixels. |
+| `progress` | `float` | — | Completion fraction in `0.0F..1.0F`. |
+| `accent` | `OreAccent` | `OreAccent.BLUE` | Any of the 10 `OreAccent` colors (`GRAY`, `DARK_GRAY`, `RED`, `PINK`, `PURPLE`, `BLUE`, `TURQUOISE`, `GREEN`, `YELLOW`, `ORANGE`). |
+| `colorType` | `OreColorType` | `OreColorType.VIBRANT` | Palette intensity (`VIBRANT` or `PASTEL`). |
+
+## Example
+
+```java
+float progress = 0.72F;
+
+// Vibrant green bar
+ui.progressBar(x, y, 200, progress, OreAccent.GREEN, OreColorType.VIBRANT);
+
+// Pastel turquoise bar
+ui.progressBar(x, y + 10, 200, progress, OreAccent.TURQUOISE, OreColorType.PASTEL);
+```

@@ -1,0 +1,41 @@
+.ore-spinner {
+	--ore-px: 2px;
+	--sp-color: #ffffff;
+
+	display: inline-grid;
+	grid-template-columns: repeat(7, 1fr);
+	grid-template-rows: repeat(7, 1fr);
+	width: calc(14 * var(--ore-px));
+	height: calc(14 * var(--ore-px));
+	flex-shrink: 0;
+}
+
+.ore-spinner--sm {
+	--ore-px: 2px;
+	width: 21px;
+	height: 21px;
+}
+
+.ore-spinner--md {
+	--ore-px: 2px;
+	width: 28px;
+	height: 28px;
+}
+
+.ore-spinner--lg {
+	--ore-px: 4px;
+	width: 56px;
+	height: 56px;
+}
+
+.ore-spinner--light {
+	--sp-color: #ffffff;
+}
+
+.ore-spinner--dark {
+	--sp-color: #1e1e1f;
+}
+
+.ore-spinner__cell {
+	background: var(--sp-color);
+}

@@ -1,0 +1,49 @@
+---
+title: Pagination
+description: Page navigation bar built with pagination, paginationArrow, and paginationItem.
+---
+
+import { PaginationShowcase } from "../../components/OverlaysShowcase";
+
+`ui.pagination(...)` combines `21×21` previous/next `paginationArrow` buttons (`6px` spacing) with a black bar of `paginationItem` squares (`17×17` / `17.25px` pitch). When `pages > 7`, the bar displays a 5-page window, an ellipsis (`...`), and the final page number.
+
+<PaginationShowcase client:load />
+
+## Composition
+
+- **`ui.pagination(...)`**: Complete `0`-based pagination bar managing prev/next arrows, ellipsis truncation, and page callbacks. Returns total width.
+- **`ui.paginationArrow(...)`**: Individual `21×21` previous/next chevron button (subtly greyed with no shadow when `!enabled`).
+- **`ui.paginationItem(...)`**: Individual `17×17` page cell that drops its border and adds a white bottom underline when `selected`.
+
+## Method Signatures (`OreUi`)
+
+```java
+// Complete pagination bar (page is 0-based: 0 .. pages - 1; returns total width)
+public int pagination(int x, int y, int page, int pages, String tip, IntConsumer set)
+
+// Individual 21x21 chevron arrow
+public void paginationArrow(int x, int y, boolean left, boolean enabled, String tip, Runnable action)
+
+// Individual 17x17 page square
+public void paginationItem(int x, int y, String label, boolean selected,
+                           boolean focused, String tip, Runnable action)
+```
+
+## Parameters (`pagination`)
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `x`, `y` | `int` | Top-left GUI pixel coordinates. |
+| `page` | `int` | Current `0`-based page index (`0` to `pages - 1`). |
+| `pages` | `int` | Total number of pages. |
+| `tip` | `String` | Optional tooltip shown on non-interactive ellipsis items. |
+| `set` | `IntConsumer` | Callback receiving the newly selected `0`-based page index. |
+
+## Example
+
+```java
+private int currentPage = 0;
+private final int totalPages = 12;
+
+int rowW = ui.pagination(x, y, currentPage, totalPages, null, next -> currentPage = next);
+```

@@ -1,0 +1,44 @@
+---
+title: Colors & States
+description: Semantic OreVariant surface palettes, eight interaction states, and the ten OreAccent colors.
+---
+
+import { ButtonStateMatrix } from "../../components/ButtonShowcase";
+
+## Color Variants (`OreVariant`)
+
+Interactive controls (`button`, `toggle`, `checkbox`, `radio`, `slider`, `sliderVertical`) accept an `OreVariant` enum defining rest, hover, pressed, shadow, highlight, and legible text colors:
+
+| Variant | Usage | Rest Fill | Hover Fill | Pressed Fill | Shadow | Text |
+| --- | --- | --- | --- | --- | --- | --- |
+| `OreVariant.COLORED` | Primary CTA | `#387E24` | `#275B1A` | `#1C4A12` | `#1D4D13` | `#FFFFFF` |
+| `OreVariant.GENERAL` | Secondary / neutral | `#D0D1D5` | `#B1B2B6` | `#B1B2B6` | `#59595B` | `#1E1E20` |
+| `OreVariant.DESTRUCTIVE` | Delete / irreversible | `#C93636` | `#C02D2D` | `#AD1D1D` | `#AD1D1D` | `#FFFFFF` |
+| `OreVariant.WARNING` | Caution / confirm | `#E1B922` | `#C09A0D` | `#C09A0D` | `#B87919` | `#1E1E20` |
+| `OreVariant.REALMS` | Minecraft Realms | `#7345E5` | `#5D2CC6` | `#4A1CAC` | `#4A1CAC` | `#FFFFFF` |
+
+> Reserve `OreVariant.COLORED` (emerald green `#387E24`) for the single primary action on a screen. Use `OreVariant.WARNING` for yellow caution actions.
+
+## Interaction States
+
+<ButtonStateMatrix client:load />
+
+- **Subtly Disabled (`enabled = false, subtlyDisabled = true`)**: Keeps the variant's `disabledFace()` hue while collapsing the extrusion shadow (`rows = 0`) and lowering label/icon opacity to `50%`. Ideal for pagination arrows at boundaries or context-sensitive actions.
+- **Disabled (`enabled = false, subtlyDisabled = false`)**: Switches the entire control to neutral `#B1B2B6` (`OreTone.DISABLED_FILL`), `#8C8D91` (`OreTone.DISABLED_FILL_SHADOW`), `#58585A` (`OreTone.DISABLED_CONTAINER`), and `#595A5C` (`OreTone.DISABLED_TEXT`), removing all bevel strokes and setting the cursor to `NOT_ALLOWED`.
+
+## Accent Palette (`OreAccent` & `OreColorType`)
+
+Flat accent colors used by `badge`, `indicator`, `tag`, `labeledDivider`, `progressBar`, `message`, `messageBanner`, and `banner` icons. Each `OreAccent` ships both `OreColorType.PASTEL` and `OreColorType.VIBRANT` palettes with contrast-matched text colors:
+
+| Accent | Pastel Fill | Pastel Ink | Vibrant Fill | Vibrant Ink |
+| --- | --- | --- | --- | --- |
+| `OreAccent.GRAY` | `#D2D4D6` | `#1E1E20` | `#D2D4D6` | `#1E1E20` |
+| `OreAccent.DARK_GRAY` | `#37373A` | `#FFFFFF` | `#37373A` | `#FFFFFF` |
+| `OreAccent.RED` | `#FF8A8A` | `#1E1E20` | `#CE2727` | `#FFFFFF` |
+| `OreAccent.PINK` | `#FF8AE0` | `#1E1E20` | `#C42B9B` | `#FFFFFF` |
+| `OreAccent.PURPLE` | `#AD99E7` | `#1E1E20` | `#4D26BD` | `#FFFFFF` |
+| `OreAccent.BLUE` | `#89AFFF` | `#1E1E20` | `#2E6BE5` | `#FFFFFF` |
+| `OreAccent.TURQUOISE` | `#89FFE1` | `#1E1E20` | `#2CCEA6` | `#1E1E20` |
+| `OreAccent.GREEN` | `#9DDF77` | `#1E1E20` | `#387E24` | `#FFFFFF` |
+| `OreAccent.YELLOW` | `#FFEC72` | `#1E1E20` | `#CCB312` | `#1E1E20` |
+| `OreAccent.ORANGE` | `#FFB98A` | `#1E1E20` | `#BD6429` | `#FFFFFF` |

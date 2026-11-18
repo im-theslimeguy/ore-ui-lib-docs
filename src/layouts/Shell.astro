@@ -1,5 +1,6 @@
 ---
 import "../styles/site.css";
+import "../ore-ui-react/styles.css";
 import logo from "../assets/oreuilib_logo.png";
 import { groupFor, groups, pageHref, pages, type DocLink } from "../nav";
 
@@ -35,7 +36,7 @@ const base = import.meta.env.BASE_URL;
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
 			rel="stylesheet"
-			href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
 		/>
 		<style>
 			html:not(.font-ready) .pixel-canvas { visibility: hidden; }
@@ -55,29 +56,33 @@ const base = import.meta.env.BASE_URL;
 		</style>
 		<script is:inline>
 			const minecraftSevenUrl = "https://www.minecraft.net/etc.clientlibs/minecraftnet/clientlibs/clientlib-site/resources/fonts/Minecraft-Seven_v2.woff2";
+			const minecraftTenUrl = "https://www.minecraft.net/etc.clientlibs/minecraftnet/clientlibs/clientlib-site/resources/fonts/Minecraft-Tenv2.woff2";
 			const loading = () => document.querySelector(".font-loading");
 			(async () => {
 				try {
-					const response = await fetch(minecraftSevenUrl);
-					if (!response.ok) throw new Error(String(response.status));
-					const bytes = await response.arrayBuffer();
-					globalThis.minecraftSevenBytes = bytes;
-					const source = URL.createObjectURL(new Blob([bytes], { type: "font/woff2" }));
-					const face = new FontFace("Minecraft Seven", `url(${source})`, {
-						weight: "100 900",
-						style: "normal",
-						display: "block",
-					});
-					await face.load();
-					document.fonts.add(face);
-					if (!document.fonts.check('700 32px "Minecraft Seven"')) {
-						throw new Error("Minecraft Seven did not register");
-					}
+					const loadFont = async (family, url) => {
+						const response = await fetch(url);
+						if (!response.ok) throw new Error(family + ": " + response.status);
+						const bytes = await response.arrayBuffer();
+						const source = URL.createObjectURL(new Blob([bytes], { type: "font/woff2" }));
+						const face = new FontFace(family, `url(${source})`, {
+							weight: "400",
+							style: "normal",
+							display: "block",
+						});
+						await face.load();
+						document.fonts.add(face);
+					};
+					await Promise.all([
+						loadFont("Minecraft Seven", minecraftSevenUrl),
+						loadFont("Minecraft Ten", minecraftTenUrl),
+					]);
 					document.documentElement.classList.add("font-ready");
 				} catch (error) {
 					const node = loading();
-					if (node) node.textContent = "Could not load Minecraft Seven";
+					if (node) node.textContent = "Could not load Minecraft fonts (check network)";
 					console.error(error);
+					document.documentElement.classList.add("font-ready");
 				}
 			})();
 		</script>
@@ -88,56 +93,90 @@ const base = import.meta.env.BASE_URL;
 			<div class="min-h-screen w-full bg-[#1A1A1A] text-[#e5e5e5] relative flex flex-col">
 				<canvas class="pixel-blast" data-pixel-blast></canvas>
 
-				<header class="sticky top-0 z-50 w-full pixel-border-dashed-b bg-[#1a1a1a]/95 backdrop-blur-md px-6 lg:px-10 py-5 pb-6">
-					<div class="flex flex-row items-center justify-between">
-						<a href={pageHref("index")} class="inline-flex items-center shrink-0" style="gap: 10px;">
-							<img src={logo.src} alt="" width="48" height="48" class="object-contain" style="height: 48px; width: 48px;" />
-							<span class="pixel-text font-block font-semibold text-base text-white">Ore UI Library</span>
-						</a>
-						<nav class="flex items-center gap-6 lg:gap-7">
-							<a href={pageHref("index")} class="pixel-text font-block font-semibold text-sm text-white">Docs</a>
-							<a href={pageHref("install")} class="pixel-text font-block text-sm text-[#888888] hover:text-white transition-colors">Install</a>
-							<a href={pageHref("buttons")} class="pixel-text font-block text-sm text-[#888888] hover:text-white transition-colors">Components</a>
-							<a href={pageHref("design-system")} class="pixel-text font-block text-sm text-[#888888] hover:text-white transition-colors">Design</a>
+				<header class="sticky top-0 z-50 w-full">
+					<div class="ore-tabbar ore-tabbar--md">
+						<div class="ore-tabbar__center">
+							<div class="ore-tabbar__face" style="justify-content: flex-start; padding-inline: 16px;">
+								<a href={pageHref("index")} class="inline-flex items-center shrink-0 no-underline" style="gap: 10px;">
+									<img src={logo.src} alt="Ore UI Library" width="36" height="36" class="object-contain" style="height: 36px; width: 36px; image-rendering: pixelated;" />
+									<span class="ore-tabbar__title" style="font-size: 24px;">Ore UI Library</span>
+								</a>
+							</div>
+							<span class="ore-tabbar__shadow" aria-hidden="true"></span>
+						</div>
+						<nav class="ore-tabbar__side" aria-label="Top navigation">
+							<a href={pageHref("index")} class="ore-tabbar-btn ore-tabbar-btn--md ore-tabbar-btn--has-text no-underline">
+								<span class="ore-tabbar-btn__face">
+									<span class="ore-tabbar-btn__content"><span class="ore-tabbar-btn__label">Docs</span></span>
+								</span>
+								<span class="ore-tabbar-btn__shadow" aria-hidden="true"></span>
+							</a>
+							<a href={pageHref("install")} class="ore-tabbar-btn ore-tabbar-btn--md ore-tabbar-btn--has-text no-underline">
+								<span class="ore-tabbar-btn__face">
+									<span class="ore-tabbar-btn__content"><span class="ore-tabbar-btn__label">Install</span></span>
+								</span>
+								<span class="ore-tabbar-btn__shadow" aria-hidden="true"></span>
+							</a>
+							<a href={pageHref("buttons")} class="ore-tabbar-btn ore-tabbar-btn--md ore-tabbar-btn--has-text no-underline">
+								<span class="ore-tabbar-btn__face">
+									<span class="ore-tabbar-btn__content"><span class="ore-tabbar-btn__label">Buttons</span></span>
+								</span>
+								<span class="ore-tabbar-btn__shadow" aria-hidden="true"></span>
+							</a>
+							<a href={pageHref("design-system")} class="ore-tabbar-btn ore-tabbar-btn--md ore-tabbar-btn--has-text no-underline">
+								<span class="ore-tabbar-btn__face">
+									<span class="ore-tabbar-btn__content"><span class="ore-tabbar-btn__label">Design</span></span>
+								</span>
+								<span class="ore-tabbar-btn__shadow" aria-hidden="true"></span>
+							</a>
+							<a href="https://www.figma.com/community/file/1675191037788105821" target="_blank" rel="noopener noreferrer" class="ore-tabbar-btn ore-tabbar-btn--md ore-tabbar-btn--has-text no-underline">
+								<span class="ore-tabbar-btn__face">
+									<span class="ore-tabbar-btn__content"><span class="ore-tabbar-btn__label">Figma</span></span>
+								</span>
+								<span class="ore-tabbar-btn__shadow" aria-hidden="true"></span>
+							</a>
 						</nav>
 					</div>
 				</header>
 
 				<div class="pixel-page-layout gap-8 lg:gap-12 xl:gap-16 p-4 lg:p-8 pb-16 flex-1 w-full max-w-[calc(1033*var(--pixel))] mx-auto relative z-10 items-start">
 					<aside class="w-full sticky top-[calc(51*var(--pixel))] self-start">
-						<div class="pixel-block-card border-1 border-black font-block min-w-0 flex flex-row w-full">
-							<div class="pixel-block-card__extrusion shrink-0 w-2 bg-[#222222]"></div>
-							<div class="pixel-block-card__face font-block border-1 min-w-0 flex-1 p-5 lg:p-6 bg-[#292929] border-[#404040] text-white">
-								<div class="flex flex-col gap-8">
-									{
-										groups.map((section) => (
-											<div>
-												<div class="font-block font-bold text-sm leading-16 text-white pixel-border-dashed-b [--pixel-dash-color:#444444] pb-2 mb-4 tracking-pixel">
-													{section.label}
-												</div>
-												<ul class="flex flex-col gap-2 list-none p-0 m-0">
-													{section.items.map((item) => (
-														<li>
-															<a
-																href={pageHref(item.id)}
-																class:list={[
-																	"pixel-text font-block block text-sm px-3 py-2",
-																	item.id === id
-																		? "font-semibold text-white bg-[#1e1e1e] border-l-2 border-white"
-																		: "text-[#a3a3a3] hover:text-white hover:bg-[#222222] transition-all",
-																]}
-															>
-																{item.label}
-															</a>
-														</li>
-													))}
-												</ul>
+						<nav class="ore-navbar ore-navbar--md border-2 border-black" aria-label="Documentation navigation">
+							<div class="ore-navbar__groups">
+								{
+									groups.map((section) => (
+										<div class="ore-navbar__group" role="group">
+											<div class="ore-nav-item ore-nav-item--header">
+												<span class="ore-nav-item__bg">
+													<span class="ore-nav-item__content">
+														<span class="ore-nav-item__leading">
+															<span class="ore-nav-item__label">{section.label}</span>
+														</span>
+													</span>
+												</span>
 											</div>
-										))
-									}
-								</div>
+											{section.items.map((item) => (
+												<a
+													href={pageHref(item.id)}
+													class:list={[
+														"ore-nav-item ore-nav-item--item no-underline",
+														item.id === id ? "ore-nav-item--selected" : "",
+													]}
+												>
+													<span class="ore-nav-item__bg">
+														<span class="ore-nav-item__content">
+															<span class="ore-nav-item__leading">
+																<span class="ore-nav-item__label">{item.label}</span>
+															</span>
+														</span>
+													</span>
+												</a>
+											))}
+										</div>
+									))
+								}
 							</div>
-						</div>
+						</nav>
 					</aside>
 
 					<main class="min-w-0 max-w-[calc(507*var(--pixel))] mx-auto flex flex-col gap-2 relative z-10 w-full px-1 lg:px-4 pt-5 lg:pt-6">
@@ -150,8 +189,8 @@ const base = import.meta.env.BASE_URL;
 								<span class="font-sans text-xs text-[#a3a3a3]">{title}</span>
 							</div>
 							<div class="flex flex-row flex-wrap items-center gap-3 mb-4">
-								<span class="font-block font-bold text-sm inline-block leading-10 bg-[#242424] text-[#a3a3a3] pixel-border-dashed px-3 py-1">v0.1.0</span>
-								<span class="pixel-badge font-block font-bold inline-flex items-center pixel-border select-none" style="background:#387E24;color:#ffffff;border-color:#50913D;">CLIENT LIBRARY</span>
+								<span class="font-block font-bold text-sm inline-block leading-10 bg-[#242424] text-[#a3a3a3] pixel-border-dashed px-3 py-1">v1.0.0</span>
+								<span class="pixel-badge font-block font-bold inline-flex items-center pixel-border select-none" style="background:#387E24;color:#ffffff;border-color:#50913D;">JAVA MOD LIBRARY</span>
 							</div>
 							<h1 class="pixel-text font-block font-bold tracking-pixel text-white text-3xl leading-30 mt-2 mb-5">{title}</h1>
 							<p class="font-sans text-base text-[#a3a3a3] mb-0">{description}</p>
@@ -187,31 +226,40 @@ const base = import.meta.env.BASE_URL;
 					</main>
 
 					<aside class="w-full sticky top-[calc(51*var(--pixel))] self-start">
-						<div class="pixel-block-card border-1 border-black font-block min-w-0 flex flex-row w-full">
-							<div class="pixel-block-card__face font-block border-1 min-w-0 flex-1 p-5 lg:p-6 bg-[#292929] border-[#404040] text-white">
-								<div class="font-block font-bold text-sm leading-16 text-white pixel-border-dashed-b [--pixel-dash-color:#444444] pb-2 mb-4 tracking-pixel">
-									On this page
-								</div>
-								<ul class="flex flex-col gap-3 list-none p-0 m-0">
+						<nav class="ore-navbar ore-navbar--md border-2 border-black" aria-label="On this page">
+							<div class="ore-navbar__groups">
+								<div class="ore-navbar__group" role="group">
+									<div class="ore-nav-item ore-nav-item--header">
+										<span class="ore-nav-item__bg">
+											<span class="ore-nav-item__content">
+												<span class="ore-nav-item__leading">
+													<span class="ore-nav-item__label">On this page</span>
+												</span>
+											</span>
+										</span>
+									</div>
 									{
 										toc.map((heading) => (
-											<li>
-												<a href={`#${heading.slug}`} class="pixel-text font-block block text-sm text-[#888888] hover:text-white transition-colors py-1">
-													{heading.text}
-												</a>
-											</li>
+											<a href={`#${heading.slug}`} class="ore-nav-item ore-nav-item--item no-underline">
+												<span class="ore-nav-item__bg">
+													<span class="ore-nav-item__content">
+														<span class="ore-nav-item__leading">
+															<span class="ore-nav-item__label">{heading.text}</span>
+														</span>
+													</span>
+												</span>
+											</a>
 										))
 									}
-								</ul>
+								</div>
 							</div>
-							<div class="pixel-block-card__extrusion shrink-0 w-2 bg-[#222222]"></div>
-						</div>
+						</nav>
 					</aside>
 				</div>
 
-				<footer class="w-full pixel-border-dashed-t px-6 lg:px-10 py-5 flex items-center justify-between text-xs text-[#666666] bg-[#181818]/90 backdrop-blur-sm relative z-10">
-					<span class="font-sans text-xs text-[#666666]">Ore UI Library 0.1.0</span>
-					<span class="font-sans text-xs text-[#888888]">MIT License</span>
+				<footer class="w-full pixel-border-dashed-t px-6 lg:px-10 py-5 flex flex-wrap items-center justify-between gap-4 text-xs text-[#666666] bg-[#181818]/90 backdrop-blur-sm relative z-10">
+					<span class="font-sans text-xs text-[#666666]">Ore UI Library 1.0.0 · PolyForm Noncommercial 1.0.0</span>
+					<span class="font-sans text-xs text-[#888888]">Not an official Minecraft product. Not affiliated with or endorsed by Mojang Studios or Microsoft.</span>
 				</footer>
 			</div>
 		</div>

@@ -1,0 +1,46 @@
+---
+title: Switches
+description: Two-state toggle switch with harmonic spring handle physics and optional I/O track symbols.
+---
+
+import { SwitchShowcase } from "../../components/InputsShowcase";
+
+`ui.toggle(...)` renders a `25×14` toggle track with a `14×14` `GENERAL`-styled handle that springs between off and on using damped harmonic physics (`stiffness = 2729`, `damping = 60`, `mass = 1.5`, permitting natural overshoot). Keyboard Tab focus draws the `1px` white focus ring directly around the moving handle rather than the track.
+
+## Interactive Preview & Matrix
+
+<SwitchShowcase client:load />
+
+## Method Signatures (`OreUi`)
+
+```java
+// Default green switch (25x14) without track symbols
+public void toggle(int x, int y, boolean on, String key, String tip, Runnable action)
+
+// Full switch control
+public void toggle(int x, int y, boolean on, OreVariant variant, boolean icon,
+                   boolean enabled, boolean focused, String key, String tip, Runnable action)
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `x`, `y` | `int` | Top-left GUI pixel coordinates (`25×14` footprint). |
+| `on` | `boolean` | Current toggle state (`true` slides handle right and tints the track). |
+| `variant` | `OreVariant` | Track color when `on` (`COLORED`, `GENERAL`, `WARNING`, `DESTRUCTIVE`, `REALMS`). |
+| `icon` | `boolean` | When `true`, draws `I` (on) and `O` (off) glyphs inside the track. |
+| `enabled` | `boolean` | Enables interaction (`false` renders flat disabled track and handle). |
+| `focused` | `boolean` | Forces the focus ring onto the `14×14` handle. |
+| `key` | `String` | Unique animation key (`"switch:" + key`) preserving spring velocity across frames. |
+| `tip` | `String` | Optional hover tooltip. |
+| `action` | `Runnable` | Invoked when toggled. |
+
+## Example
+
+```java
+private boolean vsync = true;
+
+ui.toggle(x, y, vsync, OreVariant.COLORED, true, true, false,
+	"vsyncSwitch", "Toggle VSync", () -> vsync = !vsync);
+```

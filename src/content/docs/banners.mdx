@@ -1,0 +1,63 @@
+---
+title: Banners
+description: Dark 31px information strip with optional leading and trailing icons, title, and descriptive subtext.
+---
+
+import { BannerShowcase } from "../../components/FeedbackShowcase";
+
+`ui.banner(...)` displays persistent inline notices inside a `31px` tall (`OreUi.FIELD_HEIGHT`) `#1E1E1F` frame with a `#313233` (`OreTone.PANEL`) fill. Every banner shares the same neutral surface; semantic color is carried by the icons via `OreBanner` presets or a custom ARGB tint. Returns the rendered height (`31`).
+
+## Interactive Preview
+
+<BannerShowcase client:load />
+
+## Preset Kinds (`OreBanner`)
+
+```java
+public enum OreBanner {
+	GENERAL(OreIcon.INFO_CIRCLE, OreTone.TEXT),
+	SUCCESS(OreIcon.CHECK, OreAccent.GREEN.fill),
+	WARNING(OreIcon.EXCLAMATION_MARK_TRIANGLE, OreAccent.YELLOW.fill),
+	DESTRUCTIVE(OreIcon.CLOSE, OreAccent.RED.fill),
+	QUESTION(OreIcon.QUESTION_MARK, OreAccent.BLUE.fill);
+}
+```
+
+## Method Signatures (`OreUi`)
+
+```java
+// Preset OreBanner kind (sets leading 12x12 icon and tint automatically)
+public int banner(int x, int y, int w, String title, String description, OreBanner kind)
+
+// Custom leading/trailing 12x12 icons (defaults to white OreTone.TEXT tint)
+public int banner(int x, int y, int w, String title, String description,
+                  String[] leading, String[] trailing)
+
+// Custom leading icon and ARGB tint (e.g. OreAccent.PURPLE.fill)
+public int banner(int x, int y, int w, String title, String description,
+                  String[] leading, int tint)
+
+// Custom leading & trailing icons with ARGB tint
+public int banner(int x, int y, int w, String title, String description,
+                  String[] leading, String[] trailing, int tint)
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `x`, `y`, `w` | `int` | Top-left GUI pixel coordinates and width (`height` is `OreUi.FIELD_HEIGHT = 31`). |
+| `title` | `String` | Primary white headline text (centered vertically if `description == null`). |
+| `description` | `String` | Optional secondary `OreTone.MUTED` line rendered at `0.82F` scale, or `null`. |
+| `kind` | `OreBanner` | Built-in icon + tint preset (`GENERAL`, `SUCCESS`, `WARNING`, `DESTRUCTIVE`, `QUESTION`). |
+| `leading`, `trailing` | `String[]` | Optional `12×12` icons (`OreIcon.*.rows`), or `null`. |
+| `tint` | `int` | ARGB icon tint color. |
+
+## Example
+
+```java
+y += ui.banner(x, y, width,
+	"Update Available",
+	"Version 26.3 is ready to install.",
+	OreBanner.WARNING);
+```

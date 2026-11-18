@@ -1,0 +1,34 @@
+---
+title: Labeled Dividers
+description: Full-width section separator combining an OreAccent label block with a matching 2px bottom rule.
+---
+
+import { LabeledDividerShowcase } from "../../components/FeedbackShowcase";
+
+`ui.labeledDivider(...)` separates groups of cards or settings using a `14px` tall pastel `badge` block aligned to the bottom of a `2px` horizontal rule (`y + 12` to `y + 14`) spanning to `x + w`.
+
+## Interactive Preview
+
+<LabeledDividerShowcase client:load />
+
+## Method Signature (`OreUi`)
+
+```java
+public void labeledDivider(int x, int y, int w, String label, OreAccent accent)
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `x`, `y` | `int` | Top-left GUI pixel coordinates (`14px` total height). |
+| `w` | `int` | Total width of the divider line in GUI pixels. |
+| `label` | `String` | Text rendered inside the left `OreAccent` badge block. |
+| `accent` | `OreAccent` | Pastel accent color applied to both the label block and the `2px` rule. |
+
+## Example
+
+```java
+ui.labeledDivider(x, y, contentWidth, "REALMS", OreAccent.PURPLE);
+y += 20;
+```

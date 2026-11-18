@@ -1,0 +1,56 @@
+---
+title: Tab Bar Buttons
+description: Flush-docking header action buttons and rows built for Ore UI tab bars.
+---
+
+import { TabBarButtonShowcase } from "../../components/ExtrasShowcase";
+
+`ui.tabButton(...)` and `ui.tabRow(...)` draw action buttons (`27px` tall / `OreUi.TAB_HEIGHT`) designed to dock seamlessly into `ui.tabBar(...)`. Labelled buttons have a `#E3E3E5` (`OreTone.TAB_STROKE`) border that merges across adjacent buttons in `tabRow` via `OreUi.BAR_OVERLAP` (`1px`); icon-only buttons (`label == null`) omit the stroke and apply a translucent dark hover wash (`OreTone.SEAMLESS_LIGHT`) instead.
+
+<TabBarButtonShowcase client:load />
+
+## Method Signatures (`OreUi`)
+
+```java
+// Measure width of a tab button (27 px when label == null)
+public int tabWidth(String label, String[] icon)
+
+// Single tab bar button (returns rendered width)
+public int tabButton(int x, int y, String label, String[] icon,
+                     String key, String tip, Runnable action)
+
+// Measure total width of a connected row (for right-aligning against screenWidth)
+public int tabRowWidth(String[] labels, String[][] icons)
+
+// Connected row of tab bar buttons (returns width covered; IntConsumer receives clicked index)
+public int tabRow(int x, int y, String[] labels, String[][] icons,
+                  String key, IntConsumer action)
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `x`, `y` | `int` | Top-left GUI pixel coordinates (height is `OreUi.TAB_HEIGHT = 27`). |
+| `label` / `labels` | `String` / `String[]` | Button text, or `null` for a `27×27` icon-only button. |
+| `icon` / `icons` | `String[]` / `String[][]` | Optional `8×8` glyph (`OreIcon.*.small`), or `null`. |
+| `key` | `String` | Unique hover transition key (`"tab:" + key`). |
+| `tip` | `String` | Optional hover tooltip. |
+| `action` | `Runnable` / `IntConsumer` | Click / keyboard activation callback. |
+
+## Example
+
+```java
+// Bare bar background + right-aligned action buttons
+ui.tabBar(0, 0, this.width);
+
+String[] labels = { null, "Help", "Profile" };
+String[][] icons = { OreIcon.SEARCH.small, OreIcon.QUESTION_MARK.small, OreIcon.PERSON.small };
+int rowW = ui.tabRowWidth(labels, icons);
+
+ui.tabRow(this.width - rowW, 0, labels, icons, "hdrActions", idx -> {
+	if (idx == 0) openSearch();
+	else if (idx == 1) openHelp();
+	else openProfile();
+});
+```

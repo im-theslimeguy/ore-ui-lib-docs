@@ -1,0 +1,84 @@
+---
+title: Buttons
+description: Tactile push buttons and stacked icon buttons with five semantic variants, eight interaction states, and Tab focus support.
+---
+
+import { ButtonPlayground, ButtonStateMatrix, ButtonContentMatrix } from "../../components/ButtonShowcase";
+
+`ui.button(...)` and `ui.buttonStacked(...)` render the primary layered Ore UI push buttons. At rest each button shows `2px` shadow rows under the face; while pressed, the face sinks `3px` and the shadow rows collapse to `0`. All button methods return `void` and invoke a `Runnable` callback on click or `Enter`/`Space` when focused.
+
+## Interactive Playground
+
+<ButtonPlayground client:load />
+
+## Design Guidelines
+
+- **Hierarchy**: Use `OreVariant.COLORED` once per screen or modal for the primary CTA; pair it with `OreVariant.GENERAL` for secondary or cancel actions.
+- **Content Modes**: Supports text-only, leading `8×8` icon (`OreIcon.*.small`) + text (`ui.button`), stacked icon above text (`ui.buttonStacked`), and icon-only (`label = null`).
+- **Subtle vs. Full Disabled**: Pass `enabled = false, subtlyDisabled = true` when the variant hue still provides context (e.g., pagination boundary arrows). Pass `enabled = false` (or `subtlyDisabled = false`) for neutral grey disabled buttons.
+
+## Content & Orientation
+
+<ButtonContentMatrix client:load />
+
+## All 8 States
+
+<ButtonStateMatrix client:load />
+
+## Method Signatures (`OreUi`)
+
+```java
+// Default height (OreUi.BUTTON_HEIGHT = 26), text-only, enabled
+public void button(int x, int y, int w, String label, OreVariant variant, String tip, Runnable action)
+
+// Custom height, text-only, enabled
+public void button(int x, int y, int w, int h, String label, OreVariant variant, String tip, Runnable action)
+
+// Custom height, optional 8x8 icon, enabled and focused state
+public void button(int x, int y, int w, int h, String label, String[] icon,
+                   OreVariant variant, String tip, Runnable action,
+                   boolean enabled, boolean focused)
+
+// Supports subtlyDisabled (variant hue at 50% content alpha, flat shadow)
+public void button(int x, int y, int w, int h, String label, String[] icon,
+                   OreVariant variant, String tip, Runnable action,
+                   boolean enabled, boolean subtlyDisabled, boolean focused)
+
+// Stacked button: 8x8 icon centered above the label (recommended h >= 34)
+public void buttonStacked(int x, int y, int w, int h, String label, String[] icon,
+                          OreVariant variant, String tip, Runnable action,
+                          boolean enabled, boolean focused)
+```
+
+Overloads accepting `(boolean textShadow, int textShadowColor, Boolean iconShadowOverride)` are also available for both `button` and `buttonStacked`.
+
+## Parameters
+
+| Parameter | Type | Default / Constant | Description |
+| --- | --- | --- | --- |
+| `x`, `y` | `int` | — | Top-left GUI pixel coordinates. |
+| `w`, `h` | `int` | `h = OreUi.BUTTON_HEIGHT` (`26`) | Width and height in GUI pixels. |
+| `label` | `String` | `null` allowed | Button text; pass `null` for an icon-only square button. |
+| `icon` | `String[]` | `null` | `8×8` glyph rows (e.g. `OreIcon.PLAY.small`), or `null` for text-only. |
+| `variant` | `OreVariant` | — | Semantic surface palette (`COLORED`, `GENERAL`, `WARNING`, `DESTRUCTIVE`, `REALMS`). |
+| `tip` | `String` | `null` allowed | Optional hover tooltip string. |
+| `action` | `Runnable` | — | Invoked on click release or keyboard activation. |
+| `enabled` | `boolean` | `true` | Enables hit-testing, Tab focus, and hover/press states. |
+| `subtlyDisabled` | `boolean` | `false` | When `!enabled`, keeps variant hue at 50% content opacity instead of grey fill. |
+| `focused` | `boolean` | `false` | Forces the `1px` white outer focus ring (automatic on `Tab` navigation). |
+
+## Example
+
+```java
+// Primary CTA with leading 8x8 icon
+ui.button(x, y, 120, OreUi.BUTTON_HEIGHT, "Play World", OreIcon.PLAY.small,
+	OreVariant.COLORED, "Launch selected world", this::startGame, true, false);
+
+// Stacked icon + label toolbar button
+ui.buttonStacked(x + 128, y, 64, 36, "Export", OreIcon.EXPORT.small,
+	OreVariant.GENERAL, "Export settings", this::exportSettings, true, false);
+
+// Subtly disabled button
+ui.button(x, y + 42, 100, OreUi.BUTTON_HEIGHT, "Continue", null,
+	OreVariant.COLORED, null, () -> {}, false, true, false);
+```

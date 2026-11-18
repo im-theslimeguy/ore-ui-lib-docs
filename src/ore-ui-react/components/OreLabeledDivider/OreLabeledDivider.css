@@ -1,0 +1,62 @@
+.ore-divider {
+	--ore-px: 2px;
+	--ore-divider-font-size: 16px;
+	--div-bg: #d2d4d6;
+	--div-text: #1e1e20;
+
+	display: flex;
+	align-items: flex-end;
+	width: 100%;
+	overflow: hidden;
+	font-family: "Minecraft Seven", monospace;
+	font-weight: 400;
+	font-synthesis: none;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.ore-divider--sm {
+	--ore-px: 2px;
+	--ore-divider-font-size: 14px;
+}
+
+.ore-divider--md {
+	--ore-px: 2px;
+	--ore-divider-font-size: 16px;
+}
+
+.ore-divider--lg {
+	--ore-px: 4px;
+	--ore-divider-font-size: 32px;
+}
+
+.ore-divider__label {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	padding: calc(3 * var(--ore-px)) calc(4.5 * var(--ore-px));
+	background: var(--div-bg);
+	color: var(--div-text);
+	font-size: var(--ore-divider-font-size);
+	line-height: 1;
+	white-space: nowrap;
+}
+
+.ore-divider__tail {
+	flex: 1 0 0;
+	min-width: 1px;
+	height: calc(2 * var(--ore-px));
+	background: var(--div-bg);
+}
+
+.ore-divider--gray { --div-bg: #d2d4d6; --div-text: #1e1e20; }
+.ore-divider--dark-gray { --div-bg: #37373a; --div-text: #ffffff; }
+.ore-divider--red { --div-bg: #ff8a8a; --div-text: #1e1e20; }
+.ore-divider--pink { --div-bg: #ff8ae0; --div-text: #1e1e20; }
+.ore-divider--purple { --div-bg: #ad99e7; --div-text: #1e1e20; }
+.ore-divider--blue { --div-bg: #89afff; --div-text: #1e1e20; }
+.ore-divider--turquoise { --div-bg: #89ffe1; --div-text: #1e1e20; }
+.ore-divider--green { --div-bg: #9ddf77; --div-text: #1e1e20; }
+.ore-divider--yellow { --div-bg: #ffec72; --div-text: #1e1e20; }
+.ore-divider--orange { --div-bg: #ffb98a; --div-text: #1e1e20; }

@@ -1,0 +1,124 @@
+---
+title: Quick Start
+description: Compose an Ore UI action bar, extend OreScreen, or build a full responsive settings screen with OrePanelScreen.
+---
+
+import { ActionBarPreview } from "../../components/ButtonShowcase";
+
+Once `ore-ui-lib` is added to your project, you can draw components immediately inside an `OreScreen`, build responsive multi-section views with `OrePanelScreen`, or embed an `OreUi` context directly into any vanilla `Screen`.
+
+## Action Bar Example
+
+<ActionBarPreview client:load />
+
+```java
+import net.minecraft.network.chat.Component;
+import se.miljo.beef.oreui.OreIcon;
+import se.miljo.beef.oreui.OreScreen;
+import se.miljo.beef.oreui.OreUi;
+import se.miljo.beef.oreui.OreVariant;
+
+public class ActionBarScreen extends OreScreen {
+	public ActionBarScreen() {
+		super(Component.literal("Action Bar"));
+	}
+
+	@Override
+	protected void extractContent(OreUi ui, int mouseX, int mouseY, float partialTick) {
+		int y = 40;
+		int x = 24;
+
+		ui.button(x, y, 76, OreUi.BUTTON_HEIGHT, "Play", OreIcon.PLAY.small,
+			OreVariant.COLORED, "Start game", () -> {}, true, false);
+		x += 84;
+
+		ui.button(x, y, 76, "Settings", OreVariant.GENERAL, null, () -> {});
+		x += 84;
+
+		ui.button(x, y, 76, "Realms", OreVariant.REALMS, null, () -> {});
+		x += 84;
+
+		ui.button(x, y, 76, "Warning", OreVariant.WARNING, null, () -> {});
+		x += 84;
+
+		ui.button(x, y, 76, "Delete", OreVariant.DESTRUCTIVE, null, () -> {});
+	}
+}
+```
+
+## Full Screen with `OrePanelScreen`
+
+For settings or multi-tab screens, extend `OrePanelScreen`. It handles the pinned `tabBar`, responsive sidebar margins and docking, scrollbars, and Tab-focus scrolling automatically:
+
+```java
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import se.miljo.beef.oreui.*;
+
+public class MySettingsScreen extends OrePanelScreen {
+	private boolean soundEnabled = true;
+	private float masterVolume = 0.8F;
+	private int selectedTab = 0;
+
+	public MySettingsScreen(Screen parent) {
+		super(Component.literal("My Settings"), parent);
+		navbar(140)
+			.barTitle("My Settings")
+			.barButtons(OreIcon.CHEVRON_LEFT.small, this::onClose, null, null);
+	}
+
+	@Override
+	protected int extractNav(OreUi ui, int x, int top, int w) {
+		int y = top;
+		ui.navHeader(x, y, w, null, "SETTINGS", null);
+		y += OreUi.NAV_HEIGHT;
+
+		ui.navItem(x, y, w, selectedTab == 0, "navAudio", OreIcon.ADJUST_HORIZONTAL3.small,
+			"Audio", "Audio options", () -> {
+				selectedTab = 0;
+				resetScroll();
+			});
+		y += OreUi.NAV_HEIGHT;
+		return y - top;
+	}
+
+	@Override
+	protected int extractView(OreUi ui, int x, int top, int w) {
+		int y = top;
+		y += ui.cardHeader(x, y, w, "Audio", OreCardPosition.HEADER_ATTACHED) - 1;
+		y += ui.cardContainer(x, y, w, 78, OreCardPosition.BOTTOM, false, (cui, cx, cy, cw, ch) -> {
+			cui.text("Sound Effects", cx, cy + 3, OreTone.TEXT);
+			cui.toggle(cx + cw - 25, cy, soundEnabled, "soundToggle",
+				"Toggle sound", () -> soundEnabled = !soundEnabled);
+
+			cui.text("Master Volume: " + Math.round(masterVolume * 100) + "%", cx, cy + 28, OreTone.MUTED);
+			cui.slider(cx, cy + 44, cx + cw, masterVolume, OreVariant.COLORED, 0, false,
+				"volSlider", "Adjust volume", v -> masterVolume = (float) v);
+		});
+		return y - top;
+	}
+}
+```
+
+## Embedding `OreUi` in Any Vanilla `Screen`
+
+You can use `OreUi` inside an existing vanilla or modded `Screen` without extending `OreScreen`:
+
+```java
+private final OreUi ui = new OreUi();
+
+// Inside extractRenderState(...):
+ui.setScreen(this);
+ui.begin(graphics, this.font, mouseX, mouseY, this.width, this.height);
+ui.button(20, 20, 120, "Open Settings", OreVariant.COLORED, "Opens Ore UI settings", () -> {
+	this.minecraft.setScreen(new MySettingsScreen(this));
+});
+ui.end();
+```
+
+Forward `mouseClicked`, `mouseDragged`, `mouseReleased`, `keyPressed`, `charTyped`, and `preeditUpdated` to `ui` so clicks, drags, text fields, and Tab navigation work properly.
+
+## Design & Accessibility Notes
+
+- Reserve `OreVariant.COLORED` (green) for the single primary action in a view. Use `OreVariant.GENERAL` for secondary actions and `OreVariant.DESTRUCTIVE` only for irreversible actions.
+- All focusable controls register Tab stops in drawing order; `ui.end()` draws the `1px` white `focusRing` above widgets and activates the pointing-hand or not-allowed cursor.

@@ -1,0 +1,216 @@
+.ore-tabbar {
+	--ore-px: 2px;
+	--tb-title-size: 20px;
+	--tb-btn-size: 16px;
+
+	display: flex;
+	align-items: stretch;
+	width: 100%;
+	height: calc(27 * var(--ore-px));
+	background: var(--ore-bg, #1e1e1f);
+	box-sizing: border-box;
+	font-weight: 400;
+	font-synthesis: none;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.ore-tabbar--sm {
+	--ore-px: 2px;
+	--tb-title-size: 18px;
+	--tb-btn-size: 14px;
+	height: 48px;
+}
+
+.ore-tabbar--md {
+	--ore-px: 2px;
+	--tb-title-size: 20px;
+	--tb-btn-size: 16px;
+	height: 54px;
+}
+
+.ore-tabbar--lg {
+	--ore-px: 4px;
+	--tb-title-size: 42px;
+	--tb-btn-size: 32px;
+	height: 109px;
+}
+
+.ore-tabbar__side {
+	display: flex;
+	align-items: stretch;
+	height: 100%;
+	flex-shrink: 0;
+}
+
+.ore-tabbar__side > .ore-tabbar-btn + .ore-tabbar-btn {
+	margin-left: calc(-1 * var(--ore-px));
+}
+
+.ore-tabbar__center {
+	display: flex;
+	flex-direction: column;
+	flex: 1 0 0;
+	min-width: 1px;
+	height: 100%;
+}
+
+.ore-tabbar__face {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 1 0 0;
+	width: 100%;
+	background: var(--ore-general-bg, #d0d1d5);
+	padding: 0 calc(4 * var(--ore-px));
+	box-sizing: border-box;
+}
+
+.ore-tabbar__title {
+	font-family: "Minecraft Ten", monospace;
+	font-size: var(--tb-title-size);
+	font-weight: 400;
+	color: var(--ore-general-text, #1e1e20);
+	text-align: center;
+	line-height: 1;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ore-tabbar__shadow {
+	display: block;
+	width: 100%;
+	height: calc(2 * var(--ore-px));
+	flex-shrink: 0;
+	background: var(--ore-general-bg-hover, #b1b2b6);
+}
+
+/* TabBar Button (seamless flush fit inside TabBar) */
+.ore-tabbar-btn {
+	--ore-px: 2px;
+	--tb-btn-size: 16px;
+
+	display: inline-flex;
+	flex-direction: column;
+	align-items: stretch;
+	min-width: calc(27 * var(--ore-px));
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	background: transparent;
+	box-sizing: border-box;
+	cursor: pointer;
+	outline: none;
+	position: relative;
+	font-family: "Minecraft Seven", monospace;
+	font-weight: 400;
+	font-synthesis: none;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.ore-tabbar-btn--sm {
+	--ore-px: 2px;
+	--tb-btn-size: 14px;
+}
+
+.ore-tabbar-btn--md {
+	--ore-px: 2px;
+	--tb-btn-size: 16px;
+}
+
+.ore-tabbar-btn--lg {
+	--ore-px: 4px;
+	--tb-btn-size: 32px;
+}
+
+.ore-tabbar-btn__face {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 1 0 0;
+	width: 100%;
+	padding: var(--ore-px);
+	background: var(--ore-general-bg, #d0d1d5);
+	box-sizing: border-box;
+	position: relative;
+}
+
+.ore-tabbar-btn--has-text .ore-tabbar-btn__face {
+	border-style: solid;
+	border-width: 0 var(--ore-px) var(--ore-px) var(--ore-px);
+	border-color: var(--ore-general-stroke, #e3e3e5);
+}
+
+.ore-tabbar-btn__content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: calc(4 * var(--ore-px));
+	width: 100%;
+	height: 100%;
+	padding: 0 calc(6 * var(--ore-px));
+	box-sizing: border-box;
+	transition: background-color 100ms ease;
+}
+
+.ore-tabbar-btn--icon-only .ore-tabbar-btn__content {
+	padding: 0;
+}
+
+.ore-tabbar-btn__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: calc(8 * var(--ore-px));
+	height: calc(8 * var(--ore-px));
+	color: var(--ore-general-text, #1e1e20);
+}
+
+.ore-tabbar-btn__icon > svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.ore-tabbar-btn__label {
+	color: var(--ore-general-text, #1e1e20);
+	font-size: var(--tb-btn-size);
+	line-height: 1;
+	white-space: nowrap;
+}
+
+.ore-tabbar-btn__shadow {
+	display: block;
+	width: 100%;
+	height: calc(2 * var(--ore-px));
+	flex-shrink: 0;
+	background: var(--ore-general-bg-hover, #b1b2b6);
+}
+
+/* Hover */
+.ore-tabbar-btn--has-text:not(:disabled):hover,
+.ore-tabbar-btn--has-text[data-state="hover"] {
+	z-index: 1;
+}
+
+.ore-tabbar-btn--has-text:not(:disabled):hover .ore-tabbar-btn__face,
+.ore-tabbar-btn--has-text[data-state="hover"] .ore-tabbar-btn__face {
+	background: var(--ore-general-bg-hover, #b1b2b6);
+}
+
+.ore-tabbar-btn--icon-only:not(:disabled):hover .ore-tabbar-btn__content,
+.ore-tabbar-btn--icon-only[data-state="hover"] .ore-tabbar-btn__content {
+	background: rgba(0, 0, 0, 0.3);
+}
+
+/* Focus-visible */
+.ore-tabbar-btn:not(:disabled):focus-visible,
+.ore-tabbar-btn[data-state="focus"] {
+	z-index: 2;
+	outline: var(--ore-px) solid var(--ore-focus-ring, #ffffff);
+	outline-offset: calc(-1 * var(--ore-px));
+}

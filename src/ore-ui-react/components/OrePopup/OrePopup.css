@@ -1,0 +1,167 @@
+.ore-popup-backdrop {
+	position: fixed;
+	inset: 0;
+	z-index: 9999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 16px;
+	background: rgba(0, 0, 0, 0.65);
+}
+
+.ore-popup {
+	--ore-px: 2px;
+	--pp-font-size: 16px;
+
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	max-width: calc(177 * var(--ore-px));
+	padding: var(--ore-px);
+	background: var(--ore-bg, #1e1e1f);
+	box-sizing: border-box;
+	font-family: "Minecraft Seven", monospace;
+	font-weight: 400;
+	font-synthesis: none;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.ore-popup--sm {
+	--ore-px: 2px;
+	--pp-font-size: 14px;
+}
+
+.ore-popup--md {
+	--ore-px: 2px;
+	--pp-font-size: 16px;
+}
+
+.ore-popup--lg {
+	--ore-px: 4px;
+	--pp-font-size: 32px;
+}
+
+.ore-popup__inner {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+/* Popup Header */
+.ore-popup-header {
+	display: flex;
+	width: 100%;
+	background: #585959;
+	border-style: solid;
+	border-width: 0 var(--ore-px) var(--ore-px) 0;
+	border-color: #636562;
+	box-sizing: border-box;
+}
+
+.ore-popup-header__content {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: calc(4 * var(--ore-px));
+	width: 100%;
+	min-height: calc(22.5 * var(--ore-px));
+	padding: calc(3 * var(--ore-px)) calc(6 * var(--ore-px));
+	border-style: solid;
+	border-width: var(--ore-px) 0 0 var(--ore-px);
+	border-color: rgba(255, 255, 255, 0.2);
+	box-sizing: border-box;
+}
+
+.ore-popup-header__title {
+	flex: 1 0 0;
+	color: #ffffff;
+	font-size: var(--pp-font-size, 16px);
+	text-align: center;
+	line-height: 1.2;
+}
+
+.ore-popup-header__trailing {
+	display: inline-flex;
+	align-items: center;
+	gap: calc(4 * var(--ore-px));
+	flex-shrink: 0;
+}
+
+.ore-popup-header__badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: #d2d4d6;
+	color: #1e1e20;
+	font-size: var(--pp-font-size, 16px);
+	line-height: 1;
+	padding: calc(2.5 * var(--ore-px)) calc(4 * var(--ore-px));
+}
+
+/* Popup Content */
+.ore-popup-content {
+	display: flex;
+	flex-direction: column;
+	gap: calc(4 * var(--ore-px));
+	width: 100%;
+	min-height: calc(26 * var(--ore-px));
+	padding: calc(10 * var(--ore-px));
+	background: #373a39;
+	color: #ffffff;
+	font-size: var(--pp-font-size, 16px);
+	line-height: 1.35;
+	box-sizing: border-box;
+}
+
+.ore-popup-content__secondary {
+	color: rgba(255, 255, 255, 0.75);
+}
+
+.ore-popup-content__tertiary {
+	color: rgba(255, 255, 255, 0.45);
+}
+
+/* Menu list inside Popup */
+.ore-popup-menu {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.ore-popup-menu > .ore-menu-btn:not(:last-child) {
+	margin-bottom: calc(-1 * var(--ore-px));
+}
+
+/* Popup Actions Container */
+.ore-popup-actions {
+	display: flex;
+	width: 100%;
+	background: #585959;
+	border-bottom: var(--ore-px) solid #636562;
+	box-sizing: border-box;
+}
+
+.ore-popup-actions__content {
+	display: flex;
+	flex: 1 0 0;
+	gap: calc(4 * var(--ore-px));
+	width: 100%;
+	padding: calc(6 * var(--ore-px)) calc(4 * var(--ore-px));
+	border-top: var(--ore-px) solid rgba(255, 255, 255, 0.2);
+	box-sizing: border-box;
+}
+
+.ore-popup-actions--vertical .ore-popup-actions__content {
+	flex-direction: column;
+	align-items: stretch;
+}
+
+.ore-popup-actions--horizontal .ore-popup-actions__content {
+	flex-direction: row;
+	align-items: center;
+}
+
+.ore-popup-actions--horizontal .ore-popup-actions__content > * {
+	flex: 1 1 0;
+}

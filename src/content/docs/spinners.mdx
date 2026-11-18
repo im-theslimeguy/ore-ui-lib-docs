@@ -1,0 +1,38 @@
+---
+title: Spinners
+description: 16-step 7x7 pixel ring indicator with light and dark theme support.
+---
+
+import { SpinnerShowcase } from "../../components/ExtrasShowcase";
+
+`ui.spinner(...)` renders the `7×7` pixel grid Ore UI loading ring, stepping a 4-cell highlight clockwise through 16 discrete ring positions every `65ms`.
+
+<SpinnerShowcase client:load />
+
+## Method Signatures (`OreUi`)
+
+```java
+// Default 14x14 light spinner (for dark surfaces)
+public void spinner(int x, int y)
+
+// Custom size and theme (dark = true draws #1E1E1F cells for light surfaces)
+public void spinner(int x, int y, int size, boolean dark)
+```
+
+## Parameters
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `x`, `y` | `int` | — | Top-left GUI pixel coordinates. |
+| `size` | `int` | `14` | Rendered width and height in GUI pixels (multiples of `7`, e.g. `14` or `21`, stay razor-sharp). |
+| `dark` | `boolean` | `false` | `false` draws white (`OreTone.TEXT`) for dark backgrounds; `true` draws dark (`OreTone.DARK`) for light backgrounds. |
+
+## Example
+
+```java
+ui.spinner(x, y); // 14x14 white spinner on dark panel
+ui.text("Loading resource packs...", x + 20, y + 3, OreTone.TEXT);
+
+// Larger dark spinner for light surfaces
+ui.spinner(x, y + 24, 21, true);
+```

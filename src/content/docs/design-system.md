@@ -1,66 +1,42 @@
 ---
-title: Design System & Foundations
-description: The core design rules, coordinate systems, bevel mechanics, and interaction physics of Ore UI.
+title: Design System
+description: Game pixel grid units, layered bevel anatomy, immediate-mode lifecycle, and keyboard focus rules.
 ---
 
-Ore UI is built around a rigorous, tangible design philosophy derived from official Bedrock Edition UI specifications. Rather than rendering flat rectangles with CSS borders, Ore UI treats every surface as a physical, extruded voxel slab with real light, shadow, and kinetic response.
+Ore UI avoids rounded corners and soft drop shadows. Depth is built from stacked rectangles, directional 1-pixel bevels, and hard-edged extrusion shadows.
 
----
+## Game Pixel Grid
 
-## The 4px Grid Unit
+In the Figma Ore UI specification, 1 Ore UI design unit equals `4px` on the Figma canvas and **1 GUI pixel** in Minecraft Java Edition (with fractional values rounded down):
 
-In the official Ore UI design files, **1 design unit equals 4 screen pixels**:
-- Standard button height: `26px` (6.5 units).
-- Tab bar height: `20px` (5 units) or `24px` (6 units).
-- Card container horizontal padding: `12px` (3 units).
-- Card container vertical padding: `6px` (1.5 units).
-- Standard icon size: `8×8` or `12×12` pixels.
+| Constant (`OreUi.*`) | Value (GUI px) | Component |
+| --- | --- | --- |
+| `BUTTON_HEIGHT` | `26` | Standard `ui.button(...)` height (26.25 px rounded down) |
+| `NAV_HEIGHT` | `25` | `ui.navItem(...)` and `ui.navHeader(...)` row height |
+| `CHECK_SIZE` | `14` | `ui.checkbox(...)` square size (14.5 px rounded down) |
+| `RADIO_SIZE` | `22` | `ui.radio(...)` bounding box for the 45° diamond |
+| `FIELD_HEIGHT` | `31` | `ui.textBox(...)`, `ui.searchBox(...)`, and `ui.banner(...)` height |
+| `TAB_HEIGHT` | `27` | `ui.tabBar(...)`, `ui.tabButton(...)`, `ui.navButtonHorizontal(...)`, and `ui.selectionButton(...)` height |
+| `BADGE_HEIGHT` | `14` | `ui.badge(...)` and `ui.seamlessButton(...)` height |
+| `HANDLE` | `14` | `ui.slider(...)` handle width and height |
+| `BAR_OVERLAP` | `1` | Horizontal pixel overlap used by `tabRow`, `navRowHorizontal`, and `selectionRow` |
+| `SEAMLESS_FRAME` | `12` | Icon-only seamless square reference frame |
 
-All dimensions, gaps, and insets in `OreUi` strictly conform to this grid.
+## Bevel & Shadow Anatomy
 
----
+Every raised control (`ui.face(...)`) follows the exact same layer order:
 
-## Anatomy of an Ore UI Face
+1. **Outer Outline (`OreTone.DARK` / `0xFF1E1E1F`)**: `1px` solid frame wrapping the entire control.
+2. **Face & Bevels**: Main surface fill with a `1px` lighter `stroke` on the **bottom and right**, and a `1px` translucent `light` highlight (`0x33FFFFFF` at rest) on the **top and left**.
+3. **Shadow Rows**: `2px` solid block (`shadowRows = 2`) below the face inside the `#1E1E1F` outline. When pressed, `sink` increases (up to `3px`) and `shadowRows` collapses to `0` so the control physically sinks.
+4. **Focus Ring (`OreTone.FOCUS` / `0xFFFFFFFF`)**: `1px` solid `#FFFFFF` outline drawn **outside** the `#1E1E1F` border via `ui.focusRing(...)`. Focus rings are deferred to `ui.end()` so they render cleanly above adjacent widgets while respecting active scissor clips.
 
-Every interactable element in Ore UI uses a multi-layered face shader drawn using integer raster rectangles:
+## Immediate-Mode Lifecycle & Primitives
 
-```
-+---------------------------------------------------------+ -> 1px Dark Outer Outline (#1E1E1F)
-| +-----------------------------------------------------+ |
-| | \ Inner Light Highlight (20% white)                 | |
-| |   \                                                 | |
-| |     \                   Face Fill                   | |
-| |       \                                             | |
-| |         +-----------------------------------------+ | |
-| |         | Bottom/Right Stroke Highlight           | | |
-| +---------+-----------------------------------------+ | |
-| | Shadow Rows (2px at rest, 0px when pressed)        | | |
-| +---------------------------------------------------+ | |
-+---------------------------------------------------------+
-```
+`OreUi` is immediate-mode: components render and register their hit/focus regions in the same call, with later calls sitting on top of earlier ones:
 
-1. **Outer Outline (`OreTone.DARK = 0xFF1E1E1F`)**: A crisp 1px border wrapping the widget.
-2. **Face Fill (`variant.face`)**: The primary colored surface of the widget.
-3. **Bottom/Right Stroke (`variant.stroke`)**: A 1px lighter stroke along the bottom and right edges of the face, simulating a top-left light source.
-4. **Inner Highlight (`variant.light`)**: A 1px translucent highlight (20% to 40% white) along the top and left interior edges.
-5. **Shadow Rows (`variant.shadow`)**: Two rows of darker pixels directly underneath the face. At rest, both rows are visible (`shadowRows = 2`). When pressed, the shadow rows collapse (`shadowRows = 0`), creating the illusion that the button is physically sinking into the panel.
-
----
-
-## The Sink Interaction (Kinetic Depth)
-
-When a button, checkbox, tab, or selection row is clicked:
-- **Rest State**: `sink = 0`, `shadowRows = 2`.
-- **Hover State**: Face lightens smoothly via `approach(...)` transition (`0.05s` ease-in).
-- **Pressed State**: `sink = 2px` (or `3px`), `shadowRows = 0px`. The face, label, and icon all displace downwards by the exact sink depth.
-- **Sound**: Plays vanilla `random.click` upon press.
-
----
-
-## Focus Rings and Keyboard Accessibility
-
-Ore UI is fully accessible via keyboard:
-- **Tab / Shift+Tab**: Cycles through all active focusable components in DOM extraction order.
-- **Enter / Space**: Activates the focused button, checkbox, radio, or toggle.
-- **Arrow Keys**: Adjusts focused sliders by 1 segment (or 5% for continuous sliders).
-- **Focus Ring (`OreTone.FOCUS = 0xFFFFFFFF`)**: A pure 1px white rectangular ring is drawn around the focused element. The focus ring sinks synchronously with the face when pressed. Focus rings are automatically clipped to panels and never bleed outside scissor bounds.
+- **`ui.begin(graphics, font, mouseX, mouseY, screenWidth, screenHeight)`**: Resets the frame's hit list, focusables, and clip state, and computes frame delta time (`clamped <= 0.05s`) for springs and hover transitions.
+- **`ui.end()`**: Renders deferred focus rings, renders open `dropdown(...)` modal popups on top, and updates the hardware cursor (`POINTING_HAND` over clickables, `NOT_ALLOWED` over areas marked with `markDisabledArea(...)`).
+- **`ui.block()`**: Swallows all earlier hit targets and clears earlier Tab stops so a modal popup never leaks clicks, hovers, or focus to content behind it.
+- **`ui.pushClip(x0, y0, x1, y1)` / `ui.popClip()`**: Intersecting scissor stack used by scrollable panels and text fields so both drawing and hit-testing clip cleanly.
+- **Primitive helpers**: `ui.face(...)`, `ui.faceRing(...)`, `ui.surface(...)`, `ui.focusRing(...)`, `ui.approach(...)`, `ui.spring(...)`, `ui.springTo(...)`.

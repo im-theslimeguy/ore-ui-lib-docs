@@ -1,0 +1,71 @@
+---
+title: Selectable Buttons
+description: Mutually exclusive segmented controls built with selectionButton, selectionRow, and selectionRowFill.
+---
+
+import { SelectableButtonShowcase } from "../../components/SelectionShowcase";
+
+`ui.selectionButton(...)` represents a single-choice option inside a horizontal segmented bar (such as game mode or difficulty). Unselected buttons use `OreVariant.GENERAL` (`#D0D1D5`); selecting one sinks the face `3px` into `OreVariant.COLORED` (`#387E24`) with a centered bottom selection indicator line.
+
+## Group Helpers & Border Overlap
+
+Use `ui.selectionRow(...)` for equal-width segments or `ui.selectionRowFill(...)` to stretch options evenly across a container's exact width. Adjacent buttons automatically overlap by `OreUi.BAR_OVERLAP` (`1px`) so neighboring `#1E1E1F` outlines fuse into a single `1px` divider.
+
+## Interactive Preview
+
+<SelectableButtonShowcase client:load />
+
+## Method Signatures (`OreUi`)
+
+```java
+// Single selection button (height is OreUi.TAB_HEIGHT = 27)
+public void selectionButton(int x, int y, int w, String label, String[] icon,
+                            boolean selected, boolean enabled, boolean focused,
+                            String key, String tip, Runnable action)
+
+// Single selection button with optional OreAccent badge
+public void selectionButton(int x, int y, int w, String label, String[] icon,
+                            String badge, OreAccent accent,
+                            boolean selected, boolean enabled, boolean focused,
+                            String key, String tip, Runnable action)
+
+// Connected row with fixed per-item width w (returns total width covered)
+public int selectionRow(int x, int y, int w, String[] labels, String[][] icons,
+                        int selected, String key, IntConsumer action)
+
+// Full-width row stretched evenly across totalW (returns height: OreUi.TAB_HEIGHT)
+public int selectionRowFill(int x, int y, int totalW, String[] labels, String[][] icons,
+                            int selected, String key, IntConsumer action)
+
+// Full-width row with explicit enabled toggle
+public int selectionRowFill(int x, int y, int totalW, String[] labels, String[][] icons,
+                            int selected, boolean enabled, String key, IntConsumer action)
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `x`, `y` | `int` | Top-left GUI pixel coordinates (height is `OreUi.TAB_HEIGHT = 27`). |
+| `w` / `totalW` | `int` | Button width (or full bar width in `selectionRowFill`). |
+| `label` / `labels` | `String` / `String[]` | Segment label(s), drawn at `SELECTION_TEXT_SCALE` (`0.75F`). |
+| `icon` / `icons` | `String[]` / `String[][]` | Optional `8×8` leading icons (`OreIcon.*.small`), or `null`. |
+| `badge`, `accent` | `String`, `OreAccent` | Optional inline badge that participates in centering layout. |
+| `selected` | `boolean` / `int` | Selected state (boolean on single button, `0`-based index on row helpers). |
+| `enabled` | `boolean` | When `false`, dims selected green or grey face to 50% opacity. |
+| `key` | `String` | Unique animation key (`"sel:" + key`). |
+| `action` | `Runnable` / `IntConsumer` | Invoked on click or keyboard activation (`IntConsumer` receives clicked index). |
+
+## Example
+
+```java
+// Stretched across a card's content width
+String[] difficulties = { "Peaceful", "Easy", "Normal", "Hard" };
+y += ui.selectionRowFill(cx, cy, cw, difficulties, null, selectedDifficulty,
+	"diffSelect", idx -> selectedDifficulty = idx);
+
+// Standalone segmented button with a badge
+ui.selectionButton(x, y + 36, 110, "Experimental", OreIcon.SPARKLES3.small,
+	"NEW", OreAccent.GREEN, experimental, true, false,
+	"selExp", "Enable experimental features", () -> experimental = !experimental);
+```

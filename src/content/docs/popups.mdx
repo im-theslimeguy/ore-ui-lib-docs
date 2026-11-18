@@ -1,0 +1,92 @@
+---
+title: Popups
+description: Composable modal dialog system built from overlay, block, popup, popupHeader, popupContent, and popupActions.
+---
+
+import { PopupShowcase } from "../../components/PopupShowcase";
+
+`OreUi` provides a composable modal popup system constructed from `overlay(...)`, `block()`, `popup(...)`, `popupHeader(...)`, `popupContent(...)`, and `popupActions(...)` (plus `menuButton(...)` rows inside list/menu dialogs).
+
+<PopupShowcase client:load />
+
+## Anatomy & Composition
+
+A complete modal popup draws a translucent scrim, blocks input behind it, sizes itself from `popupContentHeight(...)` + `popupActionsHeight(...)`, and renders its sections top-to-bottom:
+
+1. **`ui.overlay(OreTone.OVERLAY_POPUP)` + `ui.block()`**: Dims the background and swallows all earlier hit targets and Tab stops so clicks, hovers, and focus do not leak underneath.
+2. **`ui.popup(x, y, w, h)`**: Draws the `1px` dark outer frame (`OreTone.DARK`).
+3. **`ui.popupHeader(...)`**: `24px` tall `#585959` (`OreTone.BAR`) bar with centered title, optional `OreAccent` badge, and seamless close button.
+4. **`ui.popupContent(...)`**: `#373A39` (`OreTone.POPUP_BODY`) body with `10px` padding and wrapped paragraphs ranked in opacity (`100%`, `75%`, `45%` white).
+5. **`ui.popupActions(...)`**: `#585959` footer bar supporting `"horizontal"` (2 side-by-side buttons) or `"vertical"` (stacked buttons) layouts.
+
+## Method Signatures (`OreUi`)
+
+```java
+// Translucent backdrop (OVERLAY_PANEL, OVERLAY_MENU, OVERLAY_POPUP)
+public void overlay(int colour)
+public void overlay(int x0, int y0, int x1, int y1, int colour)
+
+// Swallows clicks, hovers, and Tab focus for everything drawn prior
+public void block()
+
+// Outer 1 px dark frame
+public void popup(int x, int y, int w, int h)
+
+// Header bar (24 px high; pass null for unused badge/accent/close)
+public int popupHeader(int x, int y, int w, String title, String badge, OreAccent accent,
+                       String[] close, String tip, Runnable onClose)
+
+// Auto-wrapped body paragraphs and height pre-calculator
+public int popupContent(int x, int y, int w, String... paragraphs)
+public int popupContentHeight(int w, String... paragraphs)
+
+// Action button bar and height pre-calculator
+public int popupActions(int x, int y, int w, boolean vertical, String[] labels,
+                        OreVariant[] variants, Runnable[] actions)
+public int popupActionsHeight(boolean vertical, int count)
+```
+
+## Example
+
+```java
+private boolean showDeleteDialog = false;
+
+public void renderDeleteDialog(OreUi ui) {
+	if (!showDeleteDialog) return;
+
+	ui.overlay(OreTone.OVERLAY_POPUP);
+	ui.block();
+
+	int pw = 280;
+	String[] paragraphs = {
+		"Delete this world?",
+		"This world will be permanently removed from this device."
+	};
+	int headerH = 24;
+	int bodyH = ui.popupContentHeight(pw - 2, paragraphs);
+	int actionsH = ui.popupActionsHeight(false, 2);
+	int ph = headerH + bodyH + actionsH + 2;
+
+	int px = (this.width - pw) / 2;
+	int py = (this.height - ph) / 2;
+
+	ui.popup(px, py, pw, ph);
+
+	int cy = py + 1;
+	cy += ui.popupHeader(px + 1, cy, pw - 2, "Confirm", null, null,
+		OreIcon.CLOSE.small, "Close", () -> showDeleteDialog = false);
+
+	cy += ui.popupContent(px + 1, cy, pw - 2, paragraphs);
+
+	ui.popupActions(px + 1, cy, pw - 2, false,
+		new String[] { "Cancel", "Delete" },
+		new OreVariant[] { OreVariant.GENERAL, OreVariant.DESTRUCTIVE },
+		new Runnable[] {
+			() -> showDeleteDialog = false,
+			() -> {
+				deleteWorld();
+				showDeleteDialog = false;
+			}
+		});
+}
+```

@@ -1,0 +1,56 @@
+---
+title: Seamless Buttons
+description: Borderless action buttons for dark popup headers and light toolbars.
+---
+
+import { SeamlessButtonShowcase } from "../../components/PopupShowcase";
+
+`ui.seamlessButton(...)` renders a flat, borderless button (`14px` / `OreUi.BADGE_HEIGHT` high) with no stroke or shadow gutter so it sits flush inside bars. On hover it fades in a translucent wash (`OreTone.SEAMLESS_DARK` / `0x1AFFFFFF` on dark surfaces, `OreTone.SEAMLESS_LIGHT` / `0x4D000000` on light surfaces).
+
+## Interactive Preview
+
+<SeamlessButtonShowcase client:load />
+
+## Design Guidelines
+
+- Pass `dark = true` when placing a seamless button on dark surfaces like `#585959` popup headers (`popupHeader` uses this automatically for its close button) or `#1E1E1F` bars, and `dark = false` on `#D0D1D5` light surfaces.
+- Avoid using `seamlessButton` for primary actions; prefer `ui.button(...)` when an action needs tactile elevation.
+
+## Method Signatures (`OreUi`)
+
+```java
+// Measure rendered width in GUI pixels (14 px when label == null)
+public int seamlessWidth(String label, String[] icon)
+
+// Standard seamless button (returns rendered width)
+public int seamlessButton(int x, int y, String label, String[] icon,
+                          boolean dark, String key, String tip, Runnable action)
+
+// With custom text/icon shadow overrides
+public int seamlessButton(int x, int y, String label, String[] icon, boolean dark,
+                          boolean textShadow, int textShadowColor, Boolean iconShadowOverride,
+                          String key, String tip, Runnable action)
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `x`, `y` | `int` | Top-left GUI pixel coordinates (height is `OreUi.BADGE_HEIGHT = 14`). |
+| `label` | `String` | Button label, or `null` for a `14×14` icon-only button. |
+| `icon` | `String[]` | Optional `8×8` icon (`OreIcon.*.small`). |
+| `dark` | `boolean` | `true` draws white ink with light hover wash (`dark` theme); `false` draws dark ink with dark wash (`light` theme). |
+| `key` | `String` | Unique hover animation key (`"seamless:" + key`). |
+| `tip` | `String` | Optional tooltip shown on hover. |
+| `action` | `Runnable` | Click / keyboard activation callback. |
+
+## Example
+
+```java
+// Icon-only close button on a dark popup header
+ui.seamlessButton(x, y, null, OreIcon.CLOSE.small, true, "hdrClose", "Close", this::onClose);
+
+// Text + icon action inside a light toolbar
+int w = ui.seamlessButton(x, y + 20, "Help", OreIcon.QUESTION_MARK.small, false,
+	"barHelp", "Open documentation", this::openHelp);
+```

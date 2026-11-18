@@ -1,13 +1,17 @@
 function copyButton() {
-	const wrap = document.createElement("div");
-	wrap.className = "pixel-block-button group inline-flex flex-col";
-	wrap.innerHTML = `
-		<span aria-hidden="true" class="h-0 group-active:h-[calc(2*var(--pixel))] transition-all duration-75 block"></span>
-		<button type="button" class="flex flex-col p-0 border-1 border-black cursor-pointer select-none outline-1 outline-transparent group-hover:outline-white">
-			<span class="pixel-block-button__face relative z-10 font-block border-1 block py-1 px-3 bg-[#D1D2D4] border-white/60 text-black">Copy</span>
-			<span aria-hidden="true" class="pixel-block-button__extrusion block h-[calc(2*var(--pixel))] group-active:h-0 transition-all duration-75 bg-[#565859]"></span>
-		</button>`;
-	return wrap;
+	const btn = document.createElement("button");
+	btn.type = "button";
+	btn.className = "ore-btn ore-btn--general ore-btn--sm ore-btn--horizontal";
+	btn.innerHTML = `
+		<span class="ore-btn__container">
+			<span class="ore-btn__background">
+				<span class="ore-btn__content">
+					<span class="ore-btn__label">Copy</span>
+				</span>
+			</span>
+			<span class="ore-btn__shadow" aria-hidden="true"></span>
+		</span>`;
+	return btn;
 }
 
 document.querySelectorAll(".doc pre").forEach((pre) => {
@@ -22,8 +26,8 @@ document.querySelectorAll(".doc pre").forEach((pre) => {
 	title.className = "font-block font-bold text-sm text-white";
 	title.textContent = language;
 	const button = copyButton();
-	button.querySelector("button")?.addEventListener("click", async () => {
-		const label = button.querySelector(".pixel-block-button__face");
+	button.addEventListener("click", async () => {
+		const label = button.querySelector(".ore-btn__label");
 		const text = pre.innerText;
 		let wrote = false;
 		try {

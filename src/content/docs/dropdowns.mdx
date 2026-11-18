@@ -1,0 +1,53 @@
+---
+title: Dropdowns
+description: Button-styled selector that defers a centered modal menu popup to ui.end().
+---
+
+import { DropdownShowcase } from "../../components/ExtrasShowcase";
+
+`ui.dropdown(...)` draws a `26px` tall (`OreUi.BUTTON_HEIGHT`) `OreVariant.GENERAL` trigger with left-aligned selection text and a right-aligned `OreIcon.CHEVRON_DOWN.small` glyph. When `open` is `true`, `OreUi` automatically defers rendering of the modal option popup (`280px` wide with `overlay`, `block`, `popupHeader`, and clipped `menuButton` rows) to `ui.end()`, keeping it clear of scroll panes and cards.
+
+<DropdownShowcase client:load />
+
+## Behavior
+
+- **Deferred modal layer**: Because the option popup renders during `ui.end()`, dropdowns work seamlessly inside `OrePanelScreen` scroll views and `cardContainer` slots without getting clipped.
+- **Input isolation**: Calling `ui.block()` inside the deferred popup ensures clicking an option or closing the popup never triggers widgets underneath.
+- **Single selection**: Clicking an option invokes `onSelect.accept(index)` and calls `toggle.run()` to close the popup.
+
+## Method Signature (`OreUi`)
+
+```java
+public void dropdown(int x, int y, int w, String selected, String[] options,
+                     boolean open, String key, String tip,
+                     Runnable toggle, IntConsumer onSelect)
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `x`, `y`, `w` | `int` | Trigger coordinates and width (height is `OreUi.BUTTON_HEIGHT = 26`). |
+| `selected` | `String` | Currently selected display text drawn inside the trigger button. |
+| `options` | `String[]` | Array of option strings listed as `menuButton` rows when `open` is `true`. |
+| `open` | `boolean` | Controls whether the deferred selection popup is rendered. |
+| `key` | `String` | Unique animation key (`"dropdown:" + key`). |
+| `tip` | `String` | Optional hover tooltip on the trigger button. |
+| `toggle` | `Runnable` | Invoked when clicking the trigger or the popup's close button. |
+| `onSelect` | `IntConsumer` | Invoked with the selected `0`-based index when an option is clicked. |
+
+## Example
+
+```java
+private boolean dropdownOpen = false;
+private int difficultyIndex = 2;
+private final String[] difficulties = { "Peaceful", "Easy", "Normal", "Hard" };
+
+ui.dropdown(x, y, 180, difficulties[difficultyIndex], difficulties, dropdownOpen,
+	"diffDrop", "Choose difficulty",
+	() -> dropdownOpen = !dropdownOpen,
+	idx -> {
+		difficultyIndex = idx;
+		dropdownOpen = false;
+	});
+```

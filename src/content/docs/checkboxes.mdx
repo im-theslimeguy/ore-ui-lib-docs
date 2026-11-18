@@ -1,0 +1,66 @@
+---
+title: Checkboxes
+description: Tri-state 14x14 checkbox supporting UNCHECKED, CHECKED, and INDETERMINATE states across semantic variants.
+---
+
+import { CheckboxShowcase } from "../../components/InputsShowcase";
+
+`ui.checkbox(...)` implements a `14×14` (`OreUi.CHECK_SIZE`) pixel checkbox supporting `OreCheck.UNCHECKED`, `OreCheck.CHECKED`, and `OreCheck.INDETERMINATE`.
+
+## Design & State Notes
+
+- **Unchecked**: Neutral `#B1B2B6` (`OreTone.CHECK_OFF`) fill with `#E3E3E5` (`OreTone.CHECK_OFF_STROKE`) top/right bevel regardless of `OreVariant`.
+- **Checked**: Switches to the `OreVariant` fill (`GENERAL` maps to `COLORED` green) with top/right stroke, left/bottom `variant.checkLight` highlight, and a crisp 7×5 tick with drop shadow.
+- **Indeterminate**: Renders an unrotated top/left `variant.checkLight` highlight with a centered horizontal bar (`CHECK_BAR`).
+
+## Interactive Preview & Matrix
+
+<CheckboxShowcase client:load />
+
+## Method Signatures (`OreUi`)
+
+```java
+// Tri-state checkbox enum
+public enum OreCheck {
+	UNCHECKED,
+	CHECKED,
+	INDETERMINATE;
+
+	public OreCheck next() {
+		return this == CHECKED ? UNCHECKED : CHECKED;
+	}
+}
+
+// Standard enabled checkbox
+public void checkbox(int x, int y, OreCheck state, OreVariant variant,
+                     boolean focused, String tip, Runnable action)
+
+// Full state control with grey disabled vs subtly disabled support
+public void checkbox(int x, int y, OreCheck state, OreVariant variant,
+                     boolean enabled, boolean subtlyDisabled, boolean focused,
+                     String tip, Runnable action)
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `x`, `y` | `int` | Top-left GUI pixel coordinates (`14×14` footprint). |
+| `state` | `OreCheck` | `UNCHECKED`, `CHECKED`, or `INDETERMINATE`. |
+| `variant` | `OreVariant` | Active palette when checked/indeterminate (`GENERAL` resolves to `COLORED`). |
+| `enabled` | `boolean` | Enables interaction (`false` renders grey fill or subtly disabled hue). |
+| `subtlyDisabled` | `boolean` | Keeps variant tint at 50% content alpha when `!enabled`. |
+| `focused` | `boolean` | Forces the `1px` white outer focus ring (automatic on `Tab`). |
+| `tip` | `String` | Optional hover tooltip. |
+| `action` | `Runnable` | Invoked when clicked or activated via `Enter`/`Space`. |
+
+## Example
+
+```java
+private OreCheck acceptTerms = OreCheck.UNCHECKED;
+
+ui.checkbox(x, y, acceptTerms, OreVariant.COLORED, false, "Toggle terms", () -> {
+	acceptTerms = acceptTerms.next();
+});
+ui.text("Accept terms", x + 20, y + 3, OreTone.TEXT);
+```

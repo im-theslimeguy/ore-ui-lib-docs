@@ -1,0 +1,50 @@
+---
+title: Selectable Icon Buttons
+description: Icon-first selection tiles with sunken dark-green active frames for visual pickers.
+---
+
+import { SelectableIconButtonShowcase } from "../../components/SelectionShowcase";
+
+`ui.selectableIconButton(...)` is built for visual pickers (packs, biomes, templates) where an icon sits above an optional centered label. Unlike `selectionButton`, tiles do not share borders; at rest they use the steel surface (`OreTone.STEEL`), and when selected (or disabled) they sink `2px` into a dark green frame (`OreTone.SELECTED_FACE` `#1C4A12`) with a 4-sided `OreTone.SELECTED_STROKE` (`#3C8527`) border and no inner highlight or drop shadow.
+
+## Interactive Preview
+
+<SelectableIconButtonShowcase client:load />
+
+## Method Signature (`OreUi`)
+
+```java
+// Height is 26 px when label == null, or 37 px when label is non-null
+public void selectableIconButton(int x, int y, int w, String label, String[] icon,
+                                 boolean selected, boolean enabled, boolean focused,
+                                 String key, String tip, Runnable action)
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `x`, `y` | `int` | Top-left GUI pixel coordinates. |
+| `w` | `int` | Tile width in GUI pixels (height is `37px` with `label`, `26px` without). |
+| `label` | `String` | Optional label centered `12px` below the icon, or `null` for icon-only. |
+| `icon` | `String[]` | `8×8` glyph rows (`OreIcon.*.small`). |
+| `selected` | `boolean` | Draws sunken dark-green frame with 4-sided stroke (`faceRing`). |
+| `enabled` | `boolean` | When `false`, locks to sunken frame with 50% text/icon opacity. |
+| `focused` | `boolean` | Forces the `1px` white outer focus ring (automatic on `Tab`). |
+| `key` | `String` | Unique hover transition key (`"pick:" + key`). |
+| `tip` | `String` | Optional hover tooltip. |
+| `action` | `Runnable` | Invoked on click or keyboard activation. |
+
+## Example
+
+```java
+String[] packs = { "Vanilla", "Classic", "Dark" };
+String[][] icons = { OreIcon.PACKAGE.small, OreIcon.LANDSCAPE.small, OreIcon.BUNDLE.small };
+
+for (int i = 0; i < packs.length; i++) {
+	int idx = i;
+	ui.selectableIconButton(x + i * 52, y, 44, packs[i], icons[i],
+		selectedPack == i, true, false, "pack:" + i,
+		"Select " + packs[i], () -> selectedPack = idx);
+}
+```

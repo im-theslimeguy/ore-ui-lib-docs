@@ -1,0 +1,46 @@
+---
+title: Searchboxes
+description: Sunken search input with a leading magnifying glass icon, horizontal scrolling, and invalid state support.
+---
+
+import { TextInputsShowcase } from "../../components/InputsShowcase";
+
+`ui.searchBox(...)` shares the sunken `#313233` frame, caret, selection, and clipboard behavior of `ui.textBox(...)`, adding a leading `OreIcon.SEARCH` magnifying glass icon at `x + 7` (`20px` inset before text). Unlike `textBox`, disabling a `searchBox` halves text and icon opacity on the dark surface (`#313233`) rather than switching to a light grey disabled fill.
+
+## Interactive Preview
+
+<TextInputsShowcase client:load />
+
+## Method Signatures (`OreUi`)
+
+```java
+// Default 31 px height (OreUi.FIELD_HEIGHT)
+public void searchBox(int x, int y, int w, OreTextField field, String placeholder, boolean enabled)
+
+// Custom height
+public void searchBox(int x, int y, int w, int h, OreTextField field, String placeholder, boolean enabled)
+
+// With invalid error state
+public void searchBox(int x, int y, int w, int h, OreTextField field,
+                      String placeholder, boolean enabled, boolean invalid)
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `x`, `y`, `w`, `h` | `int` | Box coordinates and dimensions (`h` defaults to `OreUi.FIELD_HEIGHT = 31`). |
+| `field` | `OreTextField` | Persistent field state storing search query and caret/selection state. |
+| `placeholder` | `String` | Muted hint text shown when `field.value()` is empty. |
+| `enabled` | `boolean` | When `false`, dims text and magnifying glass icon to 50% opacity. |
+| `invalid` | `boolean` | Applies invalid error tint when `true`. |
+
+## Example
+
+```java
+private final OreTextField searchField = new OreTextField();
+
+// Inside extractView / extractContent:
+ui.searchBox(x, y, 220, searchField, "Search packs...", true);
+String query = searchField.value().trim().toLowerCase();
+```

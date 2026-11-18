@@ -1,0 +1,225 @@
+.ore-checkbox-wrap {
+	--ore-px: 2px;
+	display: inline-flex;
+	align-items: center;
+	gap: calc(4 * var(--ore-px));
+	font-family: "Minecraft Seven", monospace;
+	font-weight: 400;
+	font-synthesis: none;
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.ore-checkbox-wrap--sm {
+	--ore-px: 2px;
+}
+
+.ore-checkbox-wrap--md {
+	--ore-px: 2px;
+}
+
+.ore-checkbox-wrap--lg {
+	--ore-px: 4px;
+}
+
+.ore-checkbox {
+	--cb-bg: var(--ore-colored-bg);
+	--cb-bg-hover: var(--ore-colored-bg-pressed);
+	--cb-stroke: var(--ore-colored-stroke);
+	--cb-stroke-hover: var(--ore-colored-stroke-hover);
+	--cb-light: var(--ore-colored-stroke-secondary);
+	--cb-light-hover: var(--ore-colored-stroke-hover-secondary);
+	--cb-text: var(--ore-colored-text);
+
+	display: inline-flex;
+	align-items: stretch;
+	justify-content: center;
+	width: calc(14 * var(--ore-px));
+	height: calc(14 * var(--ore-px));
+	padding: var(--ore-px);
+	margin: 0;
+	border: 0;
+	background: var(--ore-bg, #1e1e1f);
+	box-sizing: border-box;
+	cursor: pointer;
+	outline: none;
+	position: relative;
+	flex-shrink: 0;
+}
+
+.ore-checkbox--colored {
+	--cb-bg: var(--ore-colored-bg);
+	--cb-bg-hover: var(--ore-colored-bg-pressed);
+	--cb-stroke: var(--ore-colored-stroke);
+	--cb-stroke-hover: var(--ore-colored-stroke-hover);
+	--cb-light: var(--ore-colored-stroke-secondary);
+	--cb-light-hover: var(--ore-colored-stroke-hover-secondary);
+	--cb-text: var(--ore-colored-text);
+}
+
+.ore-checkbox--destructive {
+	--cb-bg: var(--ore-destructive-bg);
+	--cb-bg-hover: var(--ore-destructive-bg-pressed);
+	--cb-stroke: var(--ore-destructive-stroke);
+	--cb-stroke-hover: var(--ore-destructive-stroke-hover);
+	--cb-light: var(--ore-destructive-stroke-secondary);
+	--cb-light-hover: var(--ore-destructive-stroke-hover-secondary);
+	--cb-text: var(--ore-destructive-text);
+}
+
+.ore-checkbox--warning {
+	--cb-bg: var(--ore-warning-bg);
+	--cb-bg-hover: var(--ore-warning-bg-pressed);
+	--cb-stroke: var(--ore-warning-stroke);
+	--cb-stroke-hover: var(--ore-warning-stroke-hover);
+	--cb-light: var(--ore-warning-stroke-secondary);
+	--cb-light-hover: var(--ore-warning-stroke-hover-secondary);
+	--cb-text: var(--ore-warning-text);
+}
+
+.ore-checkbox--realms {
+	--cb-bg: var(--ore-realms-bg);
+	--cb-bg-hover: var(--ore-realms-bg-pressed);
+	--cb-stroke: var(--ore-realms-stroke);
+	--cb-stroke-hover: var(--ore-realms-stroke-hover);
+	--cb-light: var(--ore-realms-stroke-secondary);
+	--cb-light-hover: var(--ore-realms-stroke-hover-secondary);
+	--cb-text: var(--ore-realms-text);
+}
+
+.ore-checkbox__face {
+	display: flex;
+	align-items: stretch;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	background: var(--ore-general-bg-hover, #b1b2b6);
+	border-style: solid;
+	border-width: var(--ore-px) var(--ore-px) 0 0;
+	border-color: var(--ore-general-stroke, #e3e3e5);
+}
+
+.ore-checkbox__content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	color: var(--cb-text);
+}
+
+/* Checked: variant bg, top+right stroke, bottom+left inner highlight */
+.ore-checkbox--checked .ore-checkbox__face {
+	background: var(--cb-bg);
+	border-width: var(--ore-px) var(--ore-px) 0 0;
+	border-color: var(--cb-stroke);
+}
+
+.ore-checkbox--checked .ore-checkbox__content {
+	border-style: solid;
+	border-width: 0 0 var(--ore-px) var(--ore-px);
+	border-color: var(--cb-light);
+}
+
+/* Indeterminate: variant bg, bottom+right stroke, top+left inner highlight */
+.ore-checkbox--indeterminate .ore-checkbox__face {
+	background: var(--cb-bg);
+	border-width: 0 var(--ore-px) var(--ore-px) 0;
+	border-color: var(--cb-stroke);
+}
+
+.ore-checkbox--indeterminate .ore-checkbox__content {
+	border-style: solid;
+	border-width: var(--ore-px) 0 0 var(--ore-px);
+	border-color: var(--cb-light);
+}
+
+.ore-checkbox__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: calc(7 * var(--ore-px));
+	height: calc(7 * var(--ore-px));
+}
+
+.ore-checkbox__icon > svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+/* Hover */
+.ore-checkbox:not(:disabled):not([data-state="disabled"]):hover .ore-checkbox__face,
+.ore-checkbox[data-state="hover"] .ore-checkbox__face,
+.ore-checkbox[data-state="focus-hover"] .ore-checkbox__face {
+	border-color: var(--cb-stroke-hover);
+}
+
+.ore-checkbox--checked:not(:disabled):not([data-state="disabled"]):hover .ore-checkbox__face,
+.ore-checkbox--checked[data-state="hover"] .ore-checkbox__face,
+.ore-checkbox--checked[data-state="focus-hover"] .ore-checkbox__face,
+.ore-checkbox--indeterminate:not(:disabled):not([data-state="disabled"]):hover .ore-checkbox__face,
+.ore-checkbox--indeterminate[data-state="hover"] .ore-checkbox__face,
+.ore-checkbox--indeterminate[data-state="focus-hover"] .ore-checkbox__face {
+	background: var(--cb-bg-hover);
+	border-color: var(--cb-stroke-hover);
+}
+
+.ore-checkbox--checked:not(:disabled):not([data-state="disabled"]):hover .ore-checkbox__content,
+.ore-checkbox--checked[data-state="hover"] .ore-checkbox__content,
+.ore-checkbox--checked[data-state="focus-hover"] .ore-checkbox__content,
+.ore-checkbox--indeterminate:not(:disabled):not([data-state="disabled"]):hover .ore-checkbox__content,
+.ore-checkbox--indeterminate[data-state="hover"] .ore-checkbox__content,
+.ore-checkbox--indeterminate[data-state="focus-hover"] .ore-checkbox__content {
+	border-color: var(--cb-light-hover);
+}
+
+.ore-checkbox--unchecked:not(:disabled):not([data-state="disabled"]):hover .ore-checkbox__face,
+.ore-checkbox--unchecked[data-state="hover"] .ore-checkbox__face,
+.ore-checkbox--unchecked[data-state="focus-hover"] .ore-checkbox__face {
+	background: var(--ore-general-bg-hover, #b1b2b6);
+	border-color: var(--ore-general-stroke, #e3e3e5);
+}
+
+/* Focus-visible */
+.ore-checkbox:not(:disabled):not([data-state="disabled"]):focus-visible,
+.ore-checkbox[data-state="focus"],
+.ore-checkbox[data-state="focus-hover"] {
+	z-index: 2;
+	outline: var(--ore-px) solid var(--ore-focus-ring, #ffffff);
+	outline-offset: 0;
+}
+
+/* Disabled */
+.ore-checkbox:disabled,
+.ore-checkbox[data-state="disabled"] {
+	background: var(--ore-bg-disabled, #58585a);
+	cursor: not-allowed;
+}
+
+.ore-checkbox:disabled .ore-checkbox__face,
+.ore-checkbox[data-state="disabled"] .ore-checkbox__face {
+	background: var(--ore-disabled-bg, #b1b2b6);
+	border-width: 0;
+}
+
+.ore-checkbox:disabled .ore-checkbox__content,
+.ore-checkbox[data-state="disabled"] .ore-checkbox__content {
+	border-width: 0;
+	color: var(--ore-disabled-text, #595a5c);
+}
+
+.ore-checkbox__label {
+	color: #ffffff;
+	font-size: calc(8 * var(--ore-px));
+	line-height: 1.2;
+	cursor: pointer;
+	user-select: none;
+}
+
+.ore-checkbox-wrap--disabled .ore-checkbox__label {
+	color: #888888;
+	cursor: not-allowed;
+}

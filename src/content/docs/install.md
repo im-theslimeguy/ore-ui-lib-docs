@@ -1,15 +1,15 @@
 ---
 title: Installation
-description: How to add Ore UI Library to your Minecraft 26.3 Fabric mod project.
+description: Add Ore UI Library to your Fabric or NeoForge Gradle project and understand the runtime font asset pipeline.
 ---
 
-Ore UI Library is a client-side UI library mod targeting **Minecraft 26.3** (Fabric Loader `>=0.20.1`, Java `25`).
+`ore-ui-lib` is a client-side library mod targeting **Minecraft 26.3** and **Java 25** on both **Fabric** and **NeoForge**.
 
-## Adding to Gradle (Fabric)
+## Gradle Dependency
 
-Until a public Maven repository is published, include the compiled library jar from a local `libs/` directory in your mod project.
+Place the compiled `ore-ui-lib` jar inside a local `libs/` directory in your mod project (or bundle it with Jar-in-Jar / `include` if you prefer standalone distribution).
 
-In your `build.gradle`:
+### Fabric (`build.gradle`)
 
 ```groovy
 repositories {
@@ -19,22 +19,36 @@ repositories {
 }
 
 dependencies {
-    // Place ore-ui-lib-1.0.jar in your project's libs/ folder
-    modImplementation name: 'ore-ui-lib-1.0'
+    // Place ore-ui-lib-1.0.0.jar in your project's libs/ directory
+    modImplementation name: 'ore-ui-lib-1.0.0'
+
+    // Optional: bundle inside your mod jar (Jar-in-Jar)
+    // include modImplementation(name: 'ore-ui-lib-1.0.0')
 }
 ```
 
-If you want to bundle Ore UI Library inside your own mod jar (Jar-in-Jar) so players do not need to install it separately:
+### NeoForge (`build.gradle`)
 
 ```groovy
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 dependencies {
-    include modImplementation(name: 'ore-ui-lib-1.0')
+    implementation name: 'ore-ui-lib-1.0.0'
+
+    // Optional: bundle inside your mod jar (JarJar)
+    // jarJar name: 'ore-ui-lib-1.0.0'
 }
 ```
 
-## Fabric Mod Configuration
+## Mod Metadata
 
-If you are **not** bundling the library via `include`, declare `ore-ui-lib` as a client dependency in your `fabric.mod.json`:
+If you do not bundle the library inside your jar, declare `ore-ui-lib` (Fabric) or `ore_ui_lib` (NeoForge) as a client-side dependency.
+
+### `fabric.mod.json`
 
 ```json
 {
@@ -44,24 +58,31 @@ If you are **not** bundling the library via `include`, declare `ore-ui-lib` as a
   "name": "My Mod",
   "environment": "client",
   "depends": {
-    "fabricloader": ">=0.20.1",
-    "minecraft": "26.3",
+    "fabricloader": ">=0.19.3",
+    "minecraft": ">=26.3 <26.4",
     "java": ">=25",
-    "ore-ui-lib": ">=1.0"
+    "ore-ui-lib": ">=1.0.0"
   }
 }
 ```
 
-## Dynamic Font Asset Pipeline
+### `META-INF/neoforge.mods.toml`
 
-Ore UI Library does **not** bundle proprietary font binaries inside the mod jar. When Minecraft starts and an Ore UI screen is opened for the first time:
+```toml
+[[dependencies.my_mod]]
+modId="ore_ui_lib"
+type="required"
+versionRange="[1.0.0,)"
+ordering="NONE"
+side="CLIENT"
+```
 
-1. **Cache Check**: `OreFontManager` checks `gameDirectory/oreui/fonts/` for cached typography files.
-2. **Dynamic Download**: If missing, `OreAssetDownloadScreen` opens automatically and fetches:
-   - **Minecraft Ten v2** (`.woff2`) directly from Mojang's official web CDN.
-   - **Noto Sans Regular** (`.ttf`) directly from Google Fonts.
-3. **WOFF2 Unpacking**: The built-in `Woff2Converter` decodes WOFF2 into standard SFNT OpenType tables in memory.
-4. **4K GPU Atlas Generation**: `OreFontAtlas` rasterizes each font at a high-DPI 128px base into a `4096×4096` GPU texture atlas with vector antialiasing and subpixel kerning.
-5. **Loading Screen**: A blurred native Minecraft progress screen informs the user (`Downloading assets...`, `Unpacking WOFF2...`, `Generating atlas...`). Once cached on disk, subsequent launches are instantaneous.
+## Runtime Font Asset Pipeline
 
-Developers can force a cache reset and re-download at any time via `OreFontManager.resetFonts()`.
+`ore-ui-lib` does not redistribute proprietary font binaries inside the mod jar. When an Ore UI screen runs for the first time:
+
+1. **Cache Check**: `OreFontManager` inspects `gameDirectory/oreui/fonts/` for `Minecraft-Tenv2.otf` and `NotoSans-Regular.ttf`.
+2. **Dynamic Download**: If missing, `OreAssetDownloadScreen` fetches **Minecraft Ten v2** (`.woff2`) from Mojang's CDN and **Noto Sans Regular** (`.ttf`) from Google Fonts.
+3. **WOFF2 Conversion & 4K GPU Atlas**: `Woff2Converter` unpacks WOFF2 in memory, and `OreFontAtlas` rasterizes each typeface at `128px` base size into a `4096×4096` antialiased GPU texture atlas.
+
+Once cached on disk, subsequent launches load directly from `oreui/fonts/`. You can clear and re-download cached fonts programmatically via `OreFontManager.resetFonts()`.
