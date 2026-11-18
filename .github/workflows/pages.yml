@@ -26,7 +26,7 @@ jobs:
       - run: npm ci
       - run: npm run build
         env:
-          DOCS_BASE: /ambient-engine
+          DOCS_BASE: /ore-ui-lib-docs
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
