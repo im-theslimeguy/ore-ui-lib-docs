@@ -1,7 +1,6 @@
 ---
 import "../styles/site.css";
-import logo from "../assets/ambient_engine_logo.png";
-import wordmark from "../assets/ambient_engine_horizontal.png";
+import logo from "../assets/oreuilib_logo.png";
 import { groupFor, groups, pageHref, pages, type DocLink } from "../nav";
 
 interface Heading {
@@ -93,7 +92,7 @@ const base = import.meta.env.BASE_URL;
 					<div class="flex flex-row items-center justify-between">
 						<a href={pageHref("index")} class="inline-flex items-center shrink-0" style="gap: 10px;">
 							<img src={logo.src} alt="" width="48" height="48" class="object-contain" style="height: 48px; width: 48px;" />
-							<img src={wordmark.src} alt="Ore UI Library" width={wordmark.width} height={wordmark.height} class="w-auto" style="height: 22px;" />
+							<span class="pixel-text font-block font-semibold text-base text-white">Ore UI Library</span>
 						</a>
 						<nav class="flex items-center gap-6 lg:gap-7">
 							<a href={pageHref("index")} class="pixel-text font-block font-semibold text-sm text-white">Docs</a>
